@@ -4,14 +4,12 @@
  * for details see License.txt
  */
 #endregion
-        
-using System.Collections.Generic;
-using System.IO;
+
 using System.Text;
 
 namespace KataBankOCR
 {
-    class OcrScanner
+    public class OcrScanner
     {
         public IEnumerable<Entry> Scan(string path, string marker, int numberOfEntries)
         {
@@ -19,12 +17,11 @@ namespace KataBankOCR
             using (var reader = new StreamReader(path))
             {
                 // read until marker found
-                string line;
+                string? line;
                 do
                 {
                     line = reader.ReadLine();
-                }
-                while (line != null && (!reader.EndOfStream && !line.StartsWith(marker)));
+                } while (line != null && !reader.EndOfStream && !line.StartsWith(marker));
 
                 // scan the number of entries
                 for (int i = 0; i < numberOfEntries; i++)

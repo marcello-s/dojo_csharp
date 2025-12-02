@@ -4,8 +4,7 @@
  * for details see License.txt
  */
 #endregion
-        
-using System;
+
 using NUnit.Framework;
 
 namespace KataBankOCR
@@ -13,23 +12,23 @@ namespace KataBankOCR
     [TestFixture]
     public class TestFixture
     {
-        private OcrScanner _scanner;
         private const string FILE = "TestInput.txt";
-        private string _filePath;
+        private OcrScanner? scanner;
+        private string filePath = string.Empty;
 
         private static string CurrentDirectory = TestContext.CurrentContext.TestDirectory;
 
         [SetUp]
         public void Setup()
         {
-            _scanner = new OcrScanner();
-            _filePath = System.IO.Path.Combine(CurrentDirectory, FILE);
+            scanner = new OcrScanner();
+            filePath = Path.Combine(CurrentDirectory, FILE);
         }
 
         [TearDown]
         public void Teardown()
         {
-            _scanner = null;
+            scanner = null;
         }
 
         [Test]
@@ -43,7 +42,12 @@ namespace KataBankOCR
         [Test]
         public void TestScanMarker()
         {
-            var entries = _scanner.Scan(_filePath, "use case 1", 11);
+            var entries = scanner?.Scan(filePath, "use case 1", 11);
+            if (entries is null)
+            {
+                return;
+            }
+
             foreach (var entry in entries)
             {
                 Console.WriteLine(entry);
@@ -53,7 +57,12 @@ namespace KataBankOCR
         [Test]
         public void TestScanBrokenEntries()
         {
-            var entries = _scanner.Scan(_filePath, "use case 3", 3);
+            var entries = scanner?.Scan(filePath, "use case 3", 3);
+            if (entries is null)
+            {
+                return;
+            }
+
             foreach (var entry in entries)
             {
                 Console.WriteLine(entry);
@@ -63,7 +72,12 @@ namespace KataBankOCR
         [Test]
         public void TestFixBrokenEntries()
         {
-            var entries = _scanner.Scan(_filePath, "use case 4", 12);
+            var entries = scanner?.Scan(filePath, "use case 4", 12);
+            if (entries is null)
+            {
+                return;
+            }
+
             foreach (var entry in entries)
             {
                 Console.WriteLine(entry);

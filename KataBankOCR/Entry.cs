@@ -4,24 +4,25 @@
  * for details see License.txt
  */
 #endregion
-        
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 
 namespace KataBankOCR
 {
-    class Entry
+    public class Entry
     {
         private const string ERR = "ERR";
         private const string ILL = "ILL";
         private const string AMB = "AMB";
 
         private readonly IList<Digit> _digits = new List<Digit>();
-        public IEnumerable<Digit> Digits { get { return _digits; } }
+        public IEnumerable<Digit> Digits
+        {
+            get { return _digits; }
+        }
 
-        public string Number { get; set; }
-        public string State { get; set; }
+        public string Number { get; set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
 
         public void AddDigit(Digit digit)
         {
@@ -94,7 +95,7 @@ namespace KataBankOCR
              *   - check each candidate digit for correct checksum and get candidate entries
              * 2. for one single candidate entry -> accept, exit
              * 3. for a list of candidate entries -> list AMB values, exit
-             * 
+             *
              */
 
             var entryCandidates = new List<string>();
@@ -107,6 +108,11 @@ namespace KataBankOCR
                 for (int i = 0; i < 7; i++)
                 {
                     var changedInput = Digit.SetOrRemoveStroke(digitInput, i);
+                    if (changedInput is null)
+                    {
+                        continue;
+                    }
+
                     var digitCandidate = Digit.GetNumber(changedInput.GetHashCode());
                     if (!digitCandidate.Equals("?"))
                     {
@@ -117,7 +123,8 @@ namespace KataBankOCR
                 // check for correct checksum
                 foreach (var digitCandidate in digitCandidates)
                 {
-                    var entryCandidate = Number.Substring(0, digitIndex)
+                    var entryCandidate =
+                        Number.Substring(0, digitIndex)
                         + digitCandidate
                         + Number.Substring(digitIndex + 1, Number.Length - digitIndex - 1);
                     if (IsChecked(entryCandidate))
@@ -142,7 +149,6 @@ namespace KataBankOCR
                 entryCandidates.Sort();
                 ComputeState(entryCandidates);
             }
-
         }
     }
 }

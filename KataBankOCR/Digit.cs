@@ -4,26 +4,20 @@
  * for details see License.txt
  */
 #endregion
-                
+
 namespace KataBankOCR
 {
-    class Digit
+    public class Digit(string input, int index)
     {
-        private readonly string _input;
-        private readonly int _index;
+        private readonly string input = input;
+        private readonly int index = index;
 
-        public Digit(string input, int index)
-        {
-            _input = input;
-            _index = index;
-        }
-
-        public string Text { get; private set; }
-        public string Number { get; private set; }
+        public string? Text { get; private set; }
+        public string? Number { get; private set; }
 
         public Digit Parse()
         {
-            Text = DigitText(_input, _index);
+            Text = DigitText(input, index);
             Number = GetNumber(Text.GetHashCode());
             return this;
         }
@@ -38,54 +32,40 @@ namespace KataBankOCR
 
         public static string GetNumber(int hash)
         {
-            switch (hash)
+            return hash switch
             {
-                case 485846108:
-                    return "0";
-                case 1865122982:
-                    return "1";
-                case -1445372811:
-                    return "2";
-                case 900428925:
-                    return "3";
-                case -1441827709:
-                    return "4";
-                case -1610386307:
-                    return "5";
-                case 338779185:
-                    return "6";
-                case 1824294056:
-                    return "7";
-                case 485841969:
-                    return "8";
-                case -1463323523:
-                    return "9";
-                default:
-                    return "?";
-            }
+                485846108 => "0",
+                1865122982 => "1",
+                -1445372811 => "2",
+                900428925 => "3",
+                -1441827709 => "4",
+                -1610386307 => "5",
+                338779185 => "6",
+                1824294056 => "7",
+                485841969 => "8",
+                -1463323523 => "9",
+                _ => "?",
+            };
         }
 
-        public static string SetOrRemoveStroke(string input, int index)
+        public static string? SetOrRemoveStroke(string? input, int index)
         {
-            switch (index)
+            if (input is null)
             {
-                case 0:
-                    return ReplaceChar(input, 1, true);
-                case 1:
-                    return ReplaceChar(input, 3, false);
-                case 2:
-                    return ReplaceChar(input, 4, true);
-                case 3:
-                    return ReplaceChar(input, 5, false);
-                case 4:
-                    return ReplaceChar(input, 6, false);
-                case 5:
-                    return ReplaceChar(input, 7, true);
-                case 6:
-                    return ReplaceChar(input, 8, false);
-                default:
-                    return null;
+                return null;
             }
+
+            return index switch
+            {
+                0 => ReplaceChar(input, 1, true),
+                1 => ReplaceChar(input, 3, false),
+                2 => ReplaceChar(input, 4, true),
+                3 => ReplaceChar(input, 5, false),
+                4 => ReplaceChar(input, 6, false),
+                5 => ReplaceChar(input, 7, true),
+                6 => ReplaceChar(input, 8, false),
+                _ => null,
+            };
         }
 
         private static string ReplaceChar(string input, int index, bool isUnderscore)
