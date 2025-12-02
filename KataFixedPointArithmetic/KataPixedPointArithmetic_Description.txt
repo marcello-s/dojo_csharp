@@ -1,0 +1,17 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataFixedPointArithmetic: Introduce a fixed point value type
+============================================================
+
+Fixed point numbers represent fractional number values with limited precision.
+This data type is often used when there is no FPU available on a CPU. 
+For a fixed point data type integers can be used. The MSB can be used as the sign,
+and the radix point, the decimal notation, does not exist as such. 
+source: http://en.wikipedia.org/wiki/Fixed-point_arithmetic
+
+1) Implement a fixed point type as a .NET value type (struct). Clearly set the 
+number range of the type. Overload +,-,*,/ binary and unary operators for 
+very basic calculations.

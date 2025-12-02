@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="KataBankOCR/KataBankOCR.csproj" />
+  <Project Path="KataFixedPointArithmetic/KataFixedPointArithmetic.csproj" />
   <Project Path="KataPotter/KataPotter.csproj" />
   <Project Path="KataRomanNumerals/KataRomanNumerals.csproj" />
   <Project Path="KataSudoku/KataSudoku.csproj" />
