@@ -8,8 +8,8 @@ Create a solution
 
 Add a new project to the solution
 ```
-dotnet new console --output project_path/project
-dotnet sln add project_path/project
+dotnet new console --output project
+dotnet sln add project
 ```
 
 Add a package dependency, https://www.nuget.org/

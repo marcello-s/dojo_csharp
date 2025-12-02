@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataBankOCR", "KataBankOCR\KataBankOCR.csproj", "{34C85F7D-6973-4D0B-9768-C23E3F4486E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataPotter", "KataPotter\KataPotter.csproj", "{08515273-0672-42EA-9498-41ADDD04C05D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{34C85F7D-6973-4D0B-9768-C23E3F4486E6}.Release|x64.Build.0 = Release|Any CPU
 		{34C85F7D-6973-4D0B-9768-C23E3F4486E6}.Release|x86.ActiveCfg = Release|Any CPU
 		{34C85F7D-6973-4D0B-9768-C23E3F4486E6}.Release|x86.Build.0 = Release|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Debug|x64.Build.0 = Debug|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Debug|x86.Build.0 = Debug|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Release|x64.ActiveCfg = Release|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Release|x64.Build.0 = Release|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Release|x86.ActiveCfg = Release|Any CPU
+		{08515273-0672-42EA-9498-41ADDD04C05D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
