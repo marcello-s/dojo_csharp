@@ -6,6 +6,9 @@ https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-sln
 Create a solution
 ```dotnet new sln```
 
+Migrate to slnx format
+```dotnet sln migrate```
+
 Add a new project to the solution
 ```
 dotnet new console --output project

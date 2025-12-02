@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="KataBankOCR/KataBankOCR.csproj" />
+  <Project Path="KataPotter/KataPotter.csproj" />
+  <Project Path="KataRomanNumerals/KataRomanNumerals.csproj" />
+  <Project Path="KataSudoku/KataSudoku.csproj" />
+</Solution>
