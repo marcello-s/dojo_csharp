@@ -1,0 +1,14 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataEventAggregator: a EventAggregator implementation
+=====================================================
+
+An EventAggregator is a variaton of a publish/subscribe event- 
+notification system. It is often used to make loosly coupled 
+comoponents over an aggregated channel.
+
+1) Implement the event aggregator pattern using IObserver, 
+IObsevable, as well as ISubject/Subject types.
