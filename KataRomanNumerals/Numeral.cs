@@ -5,7 +5,6 @@
  */
 #endregion
 
-namespace KataRomanNumerals
-{
-    public record Numeral(string Letter, string LeftBound, string RightBound);
-}
+namespace KataRomanNumerals;
+
+public record Numeral(string Letter, string LeftBound, string RightBound);

@@ -7,81 +7,80 @@
 
 using NUnit.Framework;
 
-namespace KataBankOCR
+namespace KataBankOCR;
+
+[TestFixture]
+public class TestFixture
 {
-    [TestFixture]
-    public class TestFixture
+    private const string FILE = "TestInput.txt";
+    private OcrScanner? scanner;
+    private string filePath = string.Empty;
+
+    private static string CurrentDirectory = TestContext.CurrentContext.TestDirectory;
+
+    [SetUp]
+    public void Setup()
     {
-        private const string FILE = "TestInput.txt";
-        private OcrScanner? scanner;
-        private string filePath = string.Empty;
+        scanner = new OcrScanner();
+        filePath = Path.Combine(CurrentDirectory, FILE);
+    }
 
-        private static string CurrentDirectory = TestContext.CurrentContext.TestDirectory;
+    [TearDown]
+    public void Teardown()
+    {
+        scanner = null;
+    }
 
-        [SetUp]
-        public void Setup()
+    [Test]
+    public void TestChecksum()
+    {
+        Assert.That(Entry.IsChecked("000000051"), Is.True);
+        Assert.That(Entry.IsChecked("711111111"), Is.True);
+        Assert.That(Entry.IsChecked("457508000"), Is.True);
+    }
+
+    [Test]
+    public void TestScanMarker()
+    {
+        var entries = scanner?.Scan(filePath, "use case 1", 11);
+        if (entries is null)
         {
-            scanner = new OcrScanner();
-            filePath = Path.Combine(CurrentDirectory, FILE);
+            return;
         }
 
-        [TearDown]
-        public void Teardown()
+        foreach (var entry in entries)
         {
-            scanner = null;
+            Console.WriteLine(entry);
+        }
+    }
+
+    [Test]
+    public void TestScanBrokenEntries()
+    {
+        var entries = scanner?.Scan(filePath, "use case 3", 3);
+        if (entries is null)
+        {
+            return;
         }
 
-        [Test]
-        public void TestChecksum()
+        foreach (var entry in entries)
         {
-            Assert.That(Entry.IsChecked("000000051"), Is.True);
-            Assert.That(Entry.IsChecked("711111111"), Is.True);
-            Assert.That(Entry.IsChecked("457508000"), Is.True);
+            Console.WriteLine(entry);
+        }
+    }
+
+    [Test]
+    public void TestFixBrokenEntries()
+    {
+        var entries = scanner?.Scan(filePath, "use case 4", 12);
+        if (entries is null)
+        {
+            return;
         }
 
-        [Test]
-        public void TestScanMarker()
+        foreach (var entry in entries)
         {
-            var entries = scanner?.Scan(filePath, "use case 1", 11);
-            if (entries is null)
-            {
-                return;
-            }
-
-            foreach (var entry in entries)
-            {
-                Console.WriteLine(entry);
-            }
-        }
-
-        [Test]
-        public void TestScanBrokenEntries()
-        {
-            var entries = scanner?.Scan(filePath, "use case 3", 3);
-            if (entries is null)
-            {
-                return;
-            }
-
-            foreach (var entry in entries)
-            {
-                Console.WriteLine(entry);
-            }
-        }
-
-        [Test]
-        public void TestFixBrokenEntries()
-        {
-            var entries = scanner?.Scan(filePath, "use case 4", 12);
-            if (entries is null)
-            {
-                return;
-            }
-
-            foreach (var entry in entries)
-            {
-                Console.WriteLine(entry);
-            }
+            Console.WriteLine(entry);
         }
     }
 }

@@ -5,38 +5,37 @@
  */
 #endregion
 
-namespace KataPotter
+namespace KataPotter;
+
+public class GrandTotal(ShoppingBasket basket, IEnumerable<Discount> discounts)
 {
-    public class GrandTotal(ShoppingBasket basket, IEnumerable<Discount> discounts)
+    public decimal ItemTotal { get; set; }
+    public decimal DiscountTotal { get; set; }
+    public decimal Total { get; set; }
+
+    public void Calculate()
     {
-        public decimal ItemTotal { get; set; }
-        public decimal DiscountTotal { get; set; }
-        public decimal Total { get; set; }
+        CalculateItemTotal();
+        CalculateDiscountTotal();
+        Total = ItemTotal - DiscountTotal;
+    }
 
-        public void Calculate()
-        {
-            CalculateItemTotal();
-            CalculateDiscountTotal();
-            Total = ItemTotal - DiscountTotal;
-        }
+    private void CalculateItemTotal()
+    {
+        ItemTotal = basket.Items.Sum(item => item.Price);
+    }
 
-        private void CalculateItemTotal()
+    private void CalculateDiscountTotal()
+    {
+        foreach (var discount in discounts)
         {
-            ItemTotal = basket.Items.Sum(item => item.Price);
-        }
-
-        private void CalculateDiscountTotal()
-        {
-            foreach (var discount in discounts)
+            if (basket.Clone() is not ShoppingBasket basketClone)
             {
-                if (basket.Clone() is not ShoppingBasket basketClone)
-                {
-                    continue;
-                }
-
-                discount.Basket = basketClone;
-                DiscountTotal += discount.Calculate();
+                continue;
             }
+
+            discount.Basket = basketClone;
+            DiscountTotal += discount.Calculate();
         }
     }
 }

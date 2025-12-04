@@ -4,32 +4,31 @@
  * for details see License.txt
  */
 #endregion
-namespace KataPotter
+namespace KataPotter;
+
+public class ShoppingBasket : ICloneable
 {
-    public class ShoppingBasket : ICloneable
+    private readonly IList<Item> items = new List<Item>();
+    public IEnumerable<Item> Items => items;
+
+    public void AddItem(Item item)
     {
-        private readonly IList<Item> items = new List<Item>();
-        public IEnumerable<Item> Items => items;
+        items.Add(item);
+    }
 
-        public void AddItem(Item item)
+    public void RemoveItem(Item item)
+    {
+        items.Remove(item);
+    }
+
+    public object Clone()
+    {
+        var clone = new ShoppingBasket();
+        foreach (var item in Items)
         {
-            items.Add(item);
+            clone.AddItem(new Item(item.Name, item.Price));
         }
 
-        public void RemoveItem(Item item)
-        {
-            items.Remove(item);
-        }
-
-        public object Clone()
-        {
-            var clone = new ShoppingBasket();
-            foreach (var item in Items)
-            {
-                clone.AddItem(new Item(item.Name, item.Price));
-            }
-
-            return clone;
-        }
+        return clone;
     }
 }

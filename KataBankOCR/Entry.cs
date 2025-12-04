@@ -7,148 +7,147 @@
 
 using System.Text;
 
-namespace KataBankOCR
+namespace KataBankOCR;
+
+public class Entry
 {
-    public class Entry
+    private const string ERR = "ERR";
+    private const string ILL = "ILL";
+    private const string AMB = "AMB";
+
+    private readonly IList<Digit> _digits = new List<Digit>();
+    public IEnumerable<Digit> Digits
     {
-        private const string ERR = "ERR";
-        private const string ILL = "ILL";
-        private const string AMB = "AMB";
+        get { return _digits; }
+    }
 
-        private readonly IList<Digit> _digits = new List<Digit>();
-        public IEnumerable<Digit> Digits
+    public string Number { get; set; } = string.Empty;
+    public string State { get; set; } = string.Empty;
+
+    public void AddDigit(Digit digit)
+    {
+        _digits.Add(digit);
+        ComputeNumber();
+        if (Number.Length >= 9)
         {
-            get { return _digits; }
+            ComputeState();
+            if (State.Equals(ERR) || State.Equals(ILL))
+            {
+                AutoCorrect();
+            }
+        }
+    }
+
+    public override string ToString()
+    {
+        return Number + " " + State;
+    }
+
+    private void ComputeState()
+    {
+        State = IsChecked(Number) ? string.Empty : ERR;
+        State = Number.Contains("?") ? ILL : State;
+    }
+
+    private void ComputeState(IEnumerable<string> entryCandidates)
+    {
+        if (entryCandidates != null && entryCandidates.Any())
+        {
+            State = AMB + "[" + string.Join(",", entryCandidates.ToArray()) + "]";
+        }
+        else
+        {
+            ComputeState();
+        }
+    }
+
+    private void ComputeNumber()
+    {
+        var text = new StringBuilder();
+        foreach (var digit in Digits)
+        {
+            text.Append(digit.Number);
         }
 
-        public string Number { get; set; } = string.Empty;
-        public string State { get; set; } = string.Empty;
+        Number = text.ToString();
+    }
 
-        public void AddDigit(Digit digit)
+    public static bool IsChecked(string number)
+    {
+        if (number.Contains("?"))
         {
-            _digits.Add(digit);
-            ComputeNumber();
-            if (Number.Length >= 9)
+            return false;
+        }
+
+        var sum = 0;
+        for (int i = 0; i < 9; i++)
+        {
+            sum += (int)char.GetNumericValue(number, 8 - i) * (i + 1);
+        }
+
+        return sum % 11 == 0;
+    }
+
+    private void AutoCorrect()
+    {
+        /*
+         * 1. for each digit get a list of candidate digits, add/remove a stroke
+         *   - check each candidate digit for correct checksum and get candidate entries
+         * 2. for one single candidate entry -> accept, exit
+         * 3. for a list of candidate entries -> list AMB values, exit
+         *
+         */
+
+        var entryCandidates = new List<string>();
+        var digitIndex = 0;
+        foreach (var digit in Digits)
+        {
+            // digit candidates
+            var digitCandidates = new List<string>();
+            var digitInput = digit.Text;
+            for (int i = 0; i < 7; i++)
             {
-                ComputeState();
-                if (State.Equals(ERR) || State.Equals(ILL))
+                var changedInput = Digit.SetOrRemoveStroke(digitInput, i);
+                if (changedInput is null)
                 {
-                    AutoCorrect();
-                }
-            }
-        }
-
-        public override string ToString()
-        {
-            return Number + " " + State;
-        }
-
-        private void ComputeState()
-        {
-            State = IsChecked(Number) ? string.Empty : ERR;
-            State = Number.Contains("?") ? ILL : State;
-        }
-
-        private void ComputeState(IEnumerable<string> entryCandidates)
-        {
-            if (entryCandidates != null && entryCandidates.Any())
-            {
-                State = AMB + "[" + string.Join(",", entryCandidates.ToArray()) + "]";
-            }
-            else
-            {
-                ComputeState();
-            }
-        }
-
-        private void ComputeNumber()
-        {
-            var text = new StringBuilder();
-            foreach (var digit in Digits)
-            {
-                text.Append(digit.Number);
-            }
-
-            Number = text.ToString();
-        }
-
-        public static bool IsChecked(string number)
-        {
-            if (number.Contains("?"))
-            {
-                return false;
-            }
-
-            var sum = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                sum += (int)char.GetNumericValue(number, 8 - i) * (i + 1);
-            }
-
-            return sum % 11 == 0;
-        }
-
-        private void AutoCorrect()
-        {
-            /*
-             * 1. for each digit get a list of candidate digits, add/remove a stroke
-             *   - check each candidate digit for correct checksum and get candidate entries
-             * 2. for one single candidate entry -> accept, exit
-             * 3. for a list of candidate entries -> list AMB values, exit
-             *
-             */
-
-            var entryCandidates = new List<string>();
-            var digitIndex = 0;
-            foreach (var digit in Digits)
-            {
-                // digit candidates
-                var digitCandidates = new List<string>();
-                var digitInput = digit.Text;
-                for (int i = 0; i < 7; i++)
-                {
-                    var changedInput = Digit.SetOrRemoveStroke(digitInput, i);
-                    if (changedInput is null)
-                    {
-                        continue;
-                    }
-
-                    var digitCandidate = Digit.GetNumber(changedInput.GetHashCode());
-                    if (!digitCandidate.Equals("?"))
-                    {
-                        digitCandidates.Add(digitCandidate);
-                    }
+                    continue;
                 }
 
-                // check for correct checksum
-                foreach (var digitCandidate in digitCandidates)
+                var digitCandidate = Digit.GetNumber(changedInput.GetHashCode());
+                if (!digitCandidate.Equals("?"))
                 {
-                    var entryCandidate =
-                        Number.Substring(0, digitIndex)
-                        + digitCandidate
-                        + Number.Substring(digitIndex + 1, Number.Length - digitIndex - 1);
-                    if (IsChecked(entryCandidate))
-                    {
-                        entryCandidates.Add(entryCandidate);
-                    }
+                    digitCandidates.Add(digitCandidate);
                 }
-
-                digitIndex++;
             }
 
-            // accept single entry
-            if (entryCandidates.Count() == 1)
+            // check for correct checksum
+            foreach (var digitCandidate in digitCandidates)
             {
-                Number = entryCandidates.First();
-                ComputeState();
+                var entryCandidate =
+                    Number.Substring(0, digitIndex)
+                    + digitCandidate
+                    + Number.Substring(digitIndex + 1, Number.Length - digitIndex - 1);
+                if (IsChecked(entryCandidate))
+                {
+                    entryCandidates.Add(entryCandidate);
+                }
             }
 
-            // list AMB values
-            if (entryCandidates.Count() > 1)
-            {
-                entryCandidates.Sort();
-                ComputeState(entryCandidates);
-            }
+            digitIndex++;
+        }
+
+        // accept single entry
+        if (entryCandidates.Count() == 1)
+        {
+            Number = entryCandidates.First();
+            ComputeState();
+        }
+
+        // list AMB values
+        if (entryCandidates.Count() > 1)
+        {
+            entryCandidates.Sort();
+            ComputeState(entryCandidates);
         }
     }
 }

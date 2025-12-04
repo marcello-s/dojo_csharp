@@ -5,7 +5,6 @@
  */
 #endregion
 
-namespace KataPotter
-{
-    public record Item(string Name, decimal Price);
-}
+namespace KataPotter;
+
+public record Item(string Name, decimal Price);
