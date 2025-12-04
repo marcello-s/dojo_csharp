@@ -1,0 +1,38 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataEventSync: Event based Rules Engine
+---------------------------------------
+
+This Kata is about processing and synchronizing events. The idea is writing a component 
+to register a rule saying when multiple events have occured send out a message that the
+rule is satisfied.
+
+Examples (just some arbitrary notation):
+1) $rule1 := $event1 && $event2 && $event3
+When "$event1" and "$event2" and "$event3" come true, in whatever order they occur, send message "$rule1".
+
+2) $rule2 := $event4 || $event5
+Either "$event4" or "$event5" will satisfy the rule and send "$rule2"
+
+3) $rule3 := $rule1 && $rule2
+When a rule is satisfied it may also trigger other rules simultaneously. As a result two messages
+would be send: "$rule1, $rule3" or "$rule2, $rule3"
+
+4) $rule4 := $event6(UserName == "Fred") && $event6(UserName == "Mike")
+This rule is looking at properties of the event message. For instance, the message "$rule4" is send
+when two messages have been sent out containing these user names.
+
+5) $rule5 := $event7(UserName == "Fred", Online == "true") && $event7(UserName == "Mike", Online == "true")
+Assuming a login/logout action sends these messages, "$rule5" should be send when two 
+users are online at the same time. In this example the tricky part is replacing a previously 
+sent event message: $event7(UserName == "Fred", Online == "true") followed by 
+$event7(UserName == "Fred", Online == "false") would replace the previous message.
+
+
+1. The plumbing component for the Kata is a publish/subscribe implementation. 
+Think of a model for the messages, so that the Rules Engine can subscribe to broadcast messages.
+
+2. How should the messages be processed? Queueing/processing in parallel
