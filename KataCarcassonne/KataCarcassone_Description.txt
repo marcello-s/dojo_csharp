@@ -1,0 +1,30 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+Kata Carcassonne
+----------------
+
+On this boardbased game tiles can be layed on a infinit board when their adjacent neighbours match.
+Sides can either be part of a city or part of lawn. The tiles can be rotated to fit an opposite side.
+It is possible that two joining sides are connected, meaning they are part of the same city or lawn.
+
+1. Think of way to model the board and tiles.
+
+2. When placing a tile next to another, check that all sides match their adjacent neighbours.
+
+ +---+---+
+ |   .   .
+ + . + . +
+ |   |   |
+ +---+ . +
+
+ + card corner
+ | city wall
+ . lawn
+
+ 3. Detect closed city walls. Detect closed or connected areas of lawn or cities.
+
+ 4. The tiles can contain streets and crossings connecting two or three sides. The streets split lawns or cities in parts.
+    Check that the tiles match their adjacent tiles. Detect closed or connected areas of lawn or cities.
