@@ -1,0 +1,20 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataCommandDispatcher: Async Message Processing
+===============================================
+
+Implement a command queue / command dispatcher pattern. 
+Dispatching and execution of the command should be done in 
+a separate thread/task. Notify the caller of successful execution 
+or errors.
+
+1) Create the infrastructure for a command, command handler, queue 
+and dispatcher/executor. Use a WeakReference to notify the caller.
+
+2) Resolve the command handler by convention or through IoC. 
+
+source: 
+http://weblogs.asp.net/shijuvarghese/archive/2011/10/18/cqrs-commands-command-handlers-and-command-dispatcher.aspx

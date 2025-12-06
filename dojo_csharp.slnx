@@ -6,6 +6,7 @@
   </Configurations>
   <Project Path="KataBankOCR/KataBankOCR.csproj" />
   <Project Path="KataCarcassonne/KataCarcassonne.csproj" />
+  <Project Path="KataCommandDispatcher/KataCommandDispatcher.csproj" />
   <Project Path="KataEventAggregator/KataEventAggregator.csproj" />
   <Project Path="KataEventSync/KataEventSync.csproj" />
   <Project Path="KataFixedPointArithmetic/KataFixedPointArithmetic.csproj" />
