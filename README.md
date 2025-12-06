@@ -11,7 +11,7 @@ Migrate to slnx format
 
 Add a new project to the solution
 ```
-dotnet new console --output project
+dotnet new classlib --output project
 dotnet sln add project
 ```
 

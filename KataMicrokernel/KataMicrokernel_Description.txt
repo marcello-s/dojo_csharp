@@ -1,0 +1,25 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataMicrokernel: Type binding/resolving
+=======================================
+
+Dependency Injection (DI) frameworks offer functionality to bind 
+concrete implementation types to abstract definition types. The part 
+which has access to type bindings and can create instances of types 
+is called a (DI) microkernel. A microkernel also contains a cache for 
+objects that were declared singletons.
+
+1) Implement a type binding registry to register a type pair. Test  
+that the abstract type is assignable from the implementation type.
+
+2) Implement the creation/instanciation of types. The constructor 
+containing the most arguments should be chosen. Any dependencies must 
+be resolved and instanciated. Correctly treat default values. 
+For IEnumerable<T> and 'params' a list of instances should be passed.
+
+3) Extend the type binding registry with a 'singleton' scope 
+option. The microkernel should serve the same instance for these 
+bindings.

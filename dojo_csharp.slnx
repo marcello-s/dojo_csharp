@@ -9,6 +9,7 @@
   <Project Path="KataEventAggregator/KataEventAggregator.csproj" />
   <Project Path="KataEventSync/KataEventSync.csproj" />
   <Project Path="KataFixedPointArithmetic/KataFixedPointArithmetic.csproj" />
+  <Project Path="KataMicrokernel/KataMicrokernel.csproj" />
   <Project Path="KataPotter/KataPotter.csproj" />
   <Project Path="KataRomanNumerals/KataRomanNumerals.csproj" />
   <Project Path="KataSudoku/KataSudoku.csproj" />
