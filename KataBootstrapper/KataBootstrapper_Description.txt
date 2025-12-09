@@ -1,0 +1,25 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataBootstrapper: a framework bootstrapper
+==========================================
+
+The idea is to boot strap a framework at early start up of a process.
+This way it is possible to set up handlers or processing queues 
+and bring them into your own process rather than depend on external 
+services.
+
+1) Abstract the use of an Inversion of Control (IoC) Container. Have the 
+bootstrapper configure a IoC component of your choice.
+
+2) Abstract the use of an optional logging component. Have the bootstrapper
+configure a logging component of your choice. The logging abstraction will 
+be used until a logging service has been registered.
+
+3) Solve the problem of component re-composition. This means resolve 
+weak depedencies of instances. Re-compose instances when these dependencies
+are available in the system.
+Most IoC frameworks also offer to resolve dependencies on public properties.
+Compare constructure injection to property injection.
