@@ -1,0 +1,40 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataHeap: a Collection of Heap Structures
+=========================================
+
+In this Kata we will be practicing data structures. Sometimes they are also 
+called heaps or heap structures, because they allocate memory on the 
+heap. Traditionally these structures are used to organize and access 
+data items.
+
+1) Implement a linked list. 
+http://en.wikipedia.org/wiki/Linked_list
+Practice common operations such as Add, InsertAt, Remove, Find, Count.
+
+2) Implement a binary tree.
+http://en.wikipedia.org/wiki/Binary_tree
+Practice common operations such as Insert, Remove, Find, Iterate depth-first order and breadth-first order.
+
+3) Balance a binary tree.
+When keys are added in sorted order the tree becomes effectively a list. Rebuild the tree to be optimized 
+for the Find operation. The algorithm is:
+	- create a list of all elements (traverse breadth)
+	- clear the tree
+	- recursively break the list in halfs
+	  - return when the lists are empty
+	  - otherwise add the mid element to the tree
+
+4) Implement a B-tree.
+http://en.wikipedia.org/wiki/B-tree
+-
+
+5) Implement a Trie
+http://en.wikipedia.org/wiki/Trie
+Practice to store a word/annotation pair and retrieve the annotation for a given word. 
+In addition retrieve all annotations for a given prefix of a word.
+Note that a substring of a word will not return an annotation, for this a trie with a suffix tree 
+can be implemented. http://en.wikipedia.org/wiki/Suffix_tree
