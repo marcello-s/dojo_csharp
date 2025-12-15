@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TubeMap
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+  <Lines>
+    <Line name="Victoria">
+      <Stops>
+        <Stop name="Brixton" duration="0" />
+        <Stop name="Stockwell" duration="2" />
+        <Stop name="Vauxhall" duration="4" />
+        <Stop name="Pimlico" duration="3" />
+        <Stop name="Victoria" duration="4" />
+        <Stop name="Green Park" duration="3" />
+        <Stop name="Oxford Circus" duration="2" />
+        <Stop name="Warren Street" duration="4" />
+        <Stop name="Euston" duration="1" />
+        <Stop name="Kings's Cross, St. Pancras" duration="1" />
+        <Stop name="Highbury &amp; Islington" duration="6" />
+        <Stop name="Finsbury Park" duration="3" />
+        <Stop name="Seven Sisters" duration="2" />
+        <Stop name="Tottenham Hale" duration="1" />
+        <Stop name="Blackhorse Road" duration="1" />
+        <Stop name="Walthamstow Central" duration="1" />
+      </Stops>
+    </Line>
+    <Line name="Bakerloo">
+      <Stops>
+        <Stop name="Elephant &amp; Castle" duration="0" />
+        <Stop name="Lambeth North" duration="1" />
+        <Stop name="Waterloo" duration="2" />
+        <Stop name="Embankment" duration="1" />
+        <Stop name="Charing Cross" duration="1" />
+        <Stop name="Picadilly Circus" duration="2" />
+        <Stop name="Oxford Circus" duration="2" />
+        <Stop name="Regent's Park" duration="1" />
+        <Stop name="Baker Street" duration="1" />
+        <Stop name="Marylebone" duration="2" />
+        <Stop name="Edgware Road" duration="1" />
+        <Stop name="Paddington" duration="1" />
+        <Stop name="Warwick Avenue" duration="1" />
+        <Stop name="Maida Vale" duration="1" />
+        <Stop name="Kilburn Park" duration="1" />
+        <Stop name="Queen's Park" duration="1" />
+        <Stop name="Kensal Green" duration="1" />
+        <Stop name="Willesden Junction" duration="1" />
+        <Stop name="Harlesden" duration="1" />
+        <Stop name="Stonebridge Park" duration="1" />
+        <Stop name="Wembley Central" duration="1" />
+        <Stop name="North Wembley" duration="1" />
+        <Stop name="South Kenton" duration="1" />
+        <Stop name="Kenton" duration="2" />
+        <Stop name="Harrow &amp; Wealdstone" duration="1" />
+      </Stops>
+    </Line>
+    <Line name="Central">
+      <Stops>
+        <Stop name="West Ruislip" duration="0" />
+        <Stop name="Ruislip Gardens" duration="2" />
+        <Stop name="South Ruislip" duration="1" />
+        <Stop name="Northolt" duration="1" />
+        <Stop name="Greenford" duration="2" />
+        <Stop name="Perivale" duration="1" />
+        <Stop name="Hanger Lane" duration="1" />
+        <Stop name="North Acton" duration="4" />
+        <Stop name="East Acton" duration="1" />
+        <Stop name="White City" duration="2" />
+        <Stop name="Sheperd's Bush" duration="2" />
+        <Stop name="Holland Park" duration="2" />
+        <Stop name="Notting Hill Gate" duration="2" />
+        <Stop name="Queensway" duration="2" />
+        <Stop name="Lancaster Gate" duration="1" />
+        <Stop name="Marble Arch" duration="1" />
+        <Stop name="Bond Street" duration="1" />
+        <Stop name="Oxford Circus" duration="2" />
+        <Stop name="Tottenham Court Road" duration="2" />
+        <Stop name="Holborn" duration="3" />
+        <Stop name="Chancery Lane" duration="2" />
+        <Stop name="St. Paul's" duration="1" />
+        <Stop name="Bank" duration="2" />
+        <Stop name="Liverpool Stree" duration="4" />
+        <Stop name="Bethnal Green" duration="5" />
+        <Stop name="Mile End" duration="2" />
+        <Stop name="Stratford" duration="6" />
+        <Stop name="Leyton" duration="2" />
+        <Stop name="Leytonstone" duration="2" />
+        <Stop name="Snaresbrook" duration="3" />
+        <Stop name="South Woodford" duration="1" />
+        <Stop name="Woodford" duration="1" />
+        <Stop name="Buckhurst Hill" duration="3" />
+        <Stop name="Loughton" duration="1" />
+        <Stop name="Debden" duration="1" />
+        <Stop name="Theyden Bois" duration="1" />
+        <Stop name="Epping" duration="1" />
+      </Stops>
+    </Line>
+    <Line name="CentralEnd">
+      <Stops>
+        <Stop name="Ealing Broadway" duration="0" />
+        <Stop name="West Acton" duration="2" />
+        <Stop name="North Acton" duration="2" />
+      </Stops>
+    </Line>
+    <Line name="CentralLoop">
+      <Stops>
+        <Stop name="Rodding Valley" duration="0" />
+        <Stop name="Chigwell" duration="1" />
+        <Stop name="Grange Hill" duration="1" />
+        <Stop name="Hainault" duration="2" />
+        <Stop name="Fairlop" duration="1" />
+        <Stop name="Barkingside" duration="1" />
+        <Stop name="Newbury Park" duration="1" />
+        <Stop name="Gants Hill" duration="2" />
+        <Stop name="Redbridge" duration="1" />
+        <Stop name="Wanstead" duration="1" />
+        <Stop name="Leytonstone" duration="2" />
+      </Stops>
+    </Line>
+    <Line name="Circle">
+      <Stops>
+        <!--
+        <Stop name="Edgware Road" duration="0"/>
+        <Stop name="Paddington" duration="2"/>
+        -->
+        <Stop name="Bayswater" duration="2" />
+        <Stop name="Notting Hill Gate" duration="2" />
+        <Stop name="High Street Kensington" duration="2" />
+        <Stop name="Gloucester Road" duration="3" />
+        <Stop name="South Kensignton" duration="1" />
+        <Stop name="Sloan Square" duration="2" />
+        <Stop name="Victoria" duration="2" />
+        <Stop name="St. James's Park" duration="1" />
+        <Stop name="Westminster" duration="2" />
+        <Stop name="Embankment" duration="1" />
+        <Stop name="Temple" duration="2" />
+        <Stop name="Mansion House" duration="3" />
+        <Stop name="Cannon Street" duration="1" />
+        <Stop name="Monument" duration="2" />
+      </Stops>
+    </Line>
+  </Lines>
+</TubeMap>

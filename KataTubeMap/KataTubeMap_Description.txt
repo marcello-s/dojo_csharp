@@ -1,0 +1,28 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataTubeMap: Route Planner 
+==========================
+
+Imagine you are a british secret agent trying to leap across London 
+the fastest way possible. Of course you would use some fancy spy equipment 
+of Q-ish design to assist you, or maybe just grab your phone. 
+The question is, how can you make your way through London?
+
+1) The Kata aims towards route planning algorithms. Implement the 
+infrastructure code for graph nodes and edges/transitions. The infrastructure 
+should support bi-directional as well as directed transitions. The nodes 
+and edges must also support access to data used for decision making such 
+as train stops and distances or times between stops.
+
+2) Load a few train lines of the London Underground, or any other 
+city network into the graph model.
+
+3) Implement most common traversal algorithms, e.g. Dijkstra, Kruskal etc.
+
+4) Find all routes from one train stop to another.
+
+5) Find the fastest route from one train stop to another.
+ 

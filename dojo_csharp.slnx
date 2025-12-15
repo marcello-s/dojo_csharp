@@ -16,4 +16,5 @@
   <Project Path="KataPotter/KataPotter.csproj" />
   <Project Path="KataRomanNumerals/KataRomanNumerals.csproj" />
   <Project Path="KataSudoku/KataSudoku.csproj" />
+  <Project Path="KataTubeMap/KataTubeMap.csproj" />
 </Solution>
