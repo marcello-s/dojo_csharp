@@ -1,0 +1,9 @@
+﻿TextScannerInput
+================
+	tab	tab	tab	.
+The quick brown fox jumps over the lazy dog.
+   LeadingAndTrailingWhiteSpace   
+			LeadingAndTrailingTabs			
+1 2 3 45 67 890 ~`!@#$%^&*()-_=+,./<>?;'[]\{}|
+
+EOF

@@ -1,0 +1,22 @@
+﻿#region license and copyright
+/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+#endregion
+
+namespace KataCompiler;
+
+public class WhitespaceFilter : TextSpanFilterBase
+{
+    public WhitespaceFilter()
+        : base(null) { }
+
+    public WhitespaceFilter(ITextSpanFilter filter)
+        : base(filter) { }
+
+    protected override IEnumerable<TextSpan> DoFilter(IEnumerable<TextSpan> spans)
+    {
+        return spans.Where(span => span.SpanType != SpanTypeEnum.Whitespace);
+    }
+}

@@ -1,0 +1,118 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataCompiler: Interpreter, Compiler
+===================================
+
+Analyze and implement the steps necessary to parse code files from 
+source to executable output. In single steps break the source text 
+into interesting pieces and output a token stream. Work further
+on the token stream for lexycal analysis and build an abstract 
+syntax tree (AST). The AST is then transformed into an executable
+output.
+
+1) Implement a text file scanner.
+The scanner will output a stream of text tokens, this will serve as 
+input for a lexer. Whitespace characters can be compressed into a 
+single token, they may be filtered.
+
+2) Implement text filters.
+The stream of text tokens must be filtered from 
+- whitespace
+- C style comment, /* -block-comment- */, // -comment-line-
+- end of line, CRLF 
+before being passed to the lexer/tokenizer.
+
+3) Tokenizer
+This part is recognizing atomic parts of a language, the words that 
+are in the source text. Begin with emitting tokens for single punctuation 
+characters, (){}[]:;., etc.
+For operators the longest match rule can be considered, e.g.
+(<, <=), (&, &&, &=), (=, ==, ===)
+Can the longest match rule also be used to distiguish keywords from 
+identifier names, e.g. "if(", "ifSo", "function(", "functionA" ?
+Numbers can have many different formats, 2, 02, -2, 2.432, 1.5e3, 1.5E3, 
+but unary +/- operators should not be part of the number token.
+If there is no matching rule defined for a string, the tokenizer should 
+report an error where it has seen the string in the source text. 
+http://en.wikipedia.org/wiki/Tokenizer#Tokenizer
+
+Implement a hand written tokenizer for ECMAScript/JavaScript as it is 
+wildly used on the Internet.
+ECMAScript grammar
+http://en.wikipedia.org/wiki/Parentheses#Parentheses_.28_.29
+http://www.antlr3.org/grammar/1153976512034/ecmascriptA3.g
+http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+
+sources:
+http://en.wikipedia.org/wiki/Abstract_syntax_tree
+
+
+4) Parser
+To get a good understanding of parsing and building up nodes in the abstract 
+syntax tree (AST) a recursive descent LL(1) parser seems to be appropriate. 
+This approach may be less efficient than a table-driven shift-reduce parser 
+but it will be quite easy to implement by hand as opposed to using a tool 
+to generate parser code.
+While a simple grammar can be implemented with a couple of recursive methods 
+a more modular parser will be easier to manage complexity.
+The modular parser contains a recursive method to look up and delegate to 
+specific operator parsing methods of different precedences. 
+Before implementing the grammar of ECMAScript/JavaScript start by parsing 
+mathematical expressions, e.g. "-5 + 3 * (6 - 2)"
+The different types of operators are:
+- prefix: e.g. -<expr>, (<expr>
+- infix: e.g. <expr>+<expr>, <expr>/<expr>
+- mixfix: e.g. <expr>?<expr>:<expr>
+- postfix: e.g. <expr>!  
+
+sources:
+http://journal.stuffwithstuff.com/2011/03/19/pratt-parsers-expression-parsing-made-easy/
+http://en.wikipedia.org/wiki/Vaughan_Pratt
+http://en.wikipedia.org/wiki/Recursive_descent
+http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
+http://c2.com/cgi/wiki?RecursiveDescentParser
+
+** Experiences:
+I've been working on and off on this Kata for about one year so far. After 
+implementing a text-scanner with an approach of slicing and emitting 
+text-spans, i.e. structs of strings, I changed to a simpler character based 
+approach. Both scanner/tokenizer and LL(1) parser were inspired by the 
+source code of the magpie programming language.
+sources:
+http://magpie-lang.org/
+https://github.com/munificent/magpie
+
+
+5) Semantic Analysis
+The parser output is called Concrete Syntax Tree (CST) or parse tree. In our 
+Kata we already filter comment blocks, thus loosing the ability to reconstruct 
+the source code. Instead we want to process further on the parsed objects and 
+reduce it to the semantic meaning of our programming language. The next step 
+includes evaluating expressions and check visibility, scope, of name identifiers. 
+This will lead to the Abstract Syntax Tree (AST).
+Implement the Visitor-Pattern to traverse the object graph recursively. Resolve 
+constant mathematical expressions, numerical and boolean, and replacement them 
+with a constant value. If the condition of an 'if','while' and 'select' is 
+constant, then return only the reachable code path. Delete unreachable code 
+after 'break','continue','throw' and 'return'. Register and look-up named 
+identifiers in a stacked scope. 
+sources:
+http://en.wikipedia.org/wiki/Compiler
+
+5.1) Symbol Table, Cross References, Xref
+sources:
+- Dragon Book: Symbol Tables
+
+
+6) Compile to target language
+sources:
+http://en.wikipedia.org/wiki/P-code_machine
+http://en.wikipedia.org/wiki/Common_Language_Infrastructure
+
+
+7) Virtual Machine
+sources:
+http://en.wikipedia.org/wiki/Virtual_machine
