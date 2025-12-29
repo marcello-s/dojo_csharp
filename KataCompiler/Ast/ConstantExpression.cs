@@ -11,10 +11,10 @@ namespace KataCompiler.Ast;
 
 class ConstantExpression : IExpression
 {
-    private double _number;
-    private bool _boolean;
-    private bool _typeConverted;
-    public string Constant { get; private set; }
+    private double number;
+    private bool boolean;
+    private bool typeConverted;
+    public string? Constant { get; private set; }
     public ConstantType Type { get; private set; }
     public int Key { get; set; }
 
@@ -26,16 +26,16 @@ class ConstantExpression : IExpression
 
     public ConstantExpression(double number, ConstantType type = ConstantType.Number)
     {
-        _number = number;
+        this.number = number;
         Type = type;
-        _typeConverted = true;
+        typeConverted = true;
     }
 
     public ConstantExpression(bool boolean, ConstantType type = ConstantType.Boolean)
     {
-        _boolean = boolean;
+        this.boolean = boolean;
         Type = type;
-        _typeConverted = true;
+        typeConverted = true;
     }
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
@@ -71,26 +71,26 @@ class ConstantExpression : IExpression
 
     public double ToNumber()
     {
-        if (!_typeConverted)
+        if (!typeConverted && !string.IsNullOrEmpty(Constant))
         {
-            _number = Constant.StartsWith("0x")
+            number = Constant.StartsWith("0x")
                 ? Convert.ToUInt32(Constant, 16)
                 : double.Parse(Constant);
-            _typeConverted = true;
+            typeConverted = true;
         }
 
-        return _number;
+        return number;
     }
 
     public bool ToBoolean()
     {
-        if (!_typeConverted)
+        if (!typeConverted && !string.IsNullOrEmpty(Constant))
         {
-            _boolean = bool.Parse(Constant);
-            _typeConverted = true;
+            boolean = bool.Parse(Constant);
+            typeConverted = true;
         }
 
-        return _boolean;
+        return boolean;
     }
 }
 

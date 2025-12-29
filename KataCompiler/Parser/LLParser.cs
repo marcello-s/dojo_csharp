@@ -11,35 +11,35 @@ namespace KataCompiler.Parser;
 
 class LLParser
 {
-    private readonly ITokenReader _tokenReader;
-    private readonly Queue<TokenValue> _tokenBuffer;
-    private readonly IDictionary<Token, IPrefixParselet> _prefixParselets;
-    private readonly IDictionary<Token, IInfixParselet> _infixParselets;
+    private readonly ITokenReader tokenReader;
+    private readonly Queue<TokenValue> tokenBuffer;
+    private readonly IDictionary<Token, IPrefixParselet> prefixParselets;
+    private readonly IDictionary<Token, IInfixParselet> infixParselets;
 
     public IErrorReporter ErrorReporter { get; private set; }
 
     protected LLParser(ITokenReader tokenReader)
     {
-        _tokenReader = tokenReader;
-        _tokenBuffer = new Queue<TokenValue>();
-        _prefixParselets = new Dictionary<Token, IPrefixParselet>();
-        _infixParselets = new Dictionary<Token, IInfixParselet>();
+        this.tokenReader = tokenReader;
+        tokenBuffer = new Queue<TokenValue>();
+        prefixParselets = new Dictionary<Token, IPrefixParselet>();
+        infixParselets = new Dictionary<Token, IInfixParselet>();
         ErrorReporter = new ErrorReporter();
     }
 
     protected void RegisterParselet(Token tokenId, IPrefixParselet prefixParselet)
     {
-        if (!_prefixParselets.ContainsKey(tokenId))
+        if (!prefixParselets.ContainsKey(tokenId))
         {
-            _prefixParselets.Add(tokenId, prefixParselet);
+            prefixParselets.Add(tokenId, prefixParselet);
         }
     }
 
     protected void RegisterParselet(Token tokenId, IInfixParselet infixParselet)
     {
-        if (!_infixParselets.ContainsKey(tokenId))
+        if (!infixParselets.ContainsKey(tokenId))
         {
-            _infixParselets.Add(tokenId, infixParselet);
+            infixParselets.Add(tokenId, infixParselet);
         }
     }
 
@@ -67,7 +67,7 @@ class LLParser
     {
         var token = Consume();
 
-        if (!_prefixParselets.ContainsKey(token.TokenId))
+        if (!prefixParselets.ContainsKey(token.TokenId))
         {
             ErrorReporter.AddError(token, string.Format("Not able to parse '{0}'.", token.TokenId));
             return new IllegalExpression(
@@ -78,13 +78,13 @@ class LLParser
             );
         }
 
-        var prefix = _prefixParselets[token.TokenId];
+        var prefix = prefixParselets[token.TokenId];
         var left = prefix.Parse(this, token);
 
         while (precedence < GetPrecedence())
         {
             token = Consume();
-            var infix = _infixParselets[token.TokenId];
+            var infix = infixParselets[token.TokenId];
             left = infix.Parse(this, left, token);
         }
 
@@ -99,7 +99,7 @@ class LLParser
     private TokenValue Consume()
     {
         LookAhead(0);
-        return _tokenBuffer.Dequeue();
+        return tokenBuffer.Dequeue();
     }
 
     public TokenValue Consume(Token expectedToken)
@@ -136,18 +136,18 @@ class LLParser
 
     private TokenValue LookAhead(int distance)
     {
-        while (distance >= _tokenBuffer.Count)
+        while (distance >= tokenBuffer.Count)
         {
-            _tokenBuffer.Enqueue(_tokenReader.ReadToken());
+            tokenBuffer.Enqueue(tokenReader.ReadToken());
         }
 
-        return _tokenBuffer.ToArray()[distance];
+        return tokenBuffer.ToArray()[distance];
     }
 
     private int GetPrecedence()
     {
         var token = LookAhead(0).TokenId;
-        return _infixParselets.ContainsKey(token) ? _infixParselets[token].Precedence : 0;
+        return infixParselets.ContainsKey(token) ? infixParselets[token].Precedence : 0;
     }
 
     public bool Match(params Token[] expectedTokens)
@@ -165,7 +165,7 @@ class LLParser
         return true;
     }
 
-    public virtual IExpression ParseBlock()
+    public virtual IExpression? ParseBlock()
     {
         return null;
     }

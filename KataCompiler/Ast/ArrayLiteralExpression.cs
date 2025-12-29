@@ -9,14 +9,9 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class ArrayLiteralExpression : IExpression
+class ArrayLiteralExpression(IExpression values) : IExpression
 {
-    public IExpression Values { get; private set; }
-
-    public ArrayLiteralExpression(IExpression values)
-    {
-        Values = values;
-    }
+    public IExpression Values { get; private set; } = values;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

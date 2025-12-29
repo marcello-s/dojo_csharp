@@ -9,16 +9,10 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class CallExpression : IExpression
+class CallExpression(IExpression function, IExpression args) : IExpression
 {
-    public IExpression Function { get; private set; }
-    public IExpression Args { get; private set; }
-
-    public CallExpression(IExpression function, IExpression args)
-    {
-        Function = function;
-        Args = args;
-    }
+    public IExpression Function { get; private set; } = function;
+    public IExpression Args { get; private set; } = args;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

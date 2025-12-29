@@ -9,14 +9,9 @@ using KataCompiler.Ast;
 
 namespace KataCompiler.Parser;
 
-class PrefixOperatorParselet : IPrefixParselet
+class PrefixOperatorParselet(int precedence) : IPrefixParselet
 {
-    public int Precedence { get; private set; }
-
-    public PrefixOperatorParselet(int precedence)
-    {
-        Precedence = precedence;
-    }
+    public int Precedence { get; private set; } = precedence;
 
     public IExpression Parse(LLParser parser, TokenValue token)
     {

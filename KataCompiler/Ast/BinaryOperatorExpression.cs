@@ -9,18 +9,12 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class BinaryOperatorExpression : IExpression
+class BinaryOperatorExpression(IExpression left, Parser.Token tokenId, IExpression right)
+    : IExpression
 {
-    public IExpression Left { get; private set; }
-    public Parser.Token TokenId { get; private set; }
-    public IExpression Right { get; private set; }
-
-    public BinaryOperatorExpression(IExpression left, Parser.Token tokenId, IExpression right)
-    {
-        Left = left;
-        TokenId = tokenId;
-        Right = right;
-    }
+    public IExpression Left { get; private set; } = left;
+    public Parser.Token TokenId { get; private set; } = tokenId;
+    public IExpression Right { get; private set; } = right;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

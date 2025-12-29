@@ -11,9 +11,9 @@ namespace KataCompiler.Compiler;
 
 abstract class BaseExpressionVisitor : IExpressionVisitor<IExpression, Scope>
 {
-    public virtual IExpression Evaluate(IExpression expr, Scope scope)
+    public virtual IExpression Evaluate(IExpression? expr, Scope scope)
     {
-        return expr == null ? null : expr.Accept(this, scope);
+        return expr == null ? null! : expr.Accept(this, scope);
     }
 
     public virtual IExpression Visit(AccessorExpression expr, Scope scope)

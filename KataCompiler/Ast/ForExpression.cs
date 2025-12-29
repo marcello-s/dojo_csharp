@@ -9,25 +9,17 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class ForExpression : IExpression
+class ForExpression(
+    IEnumerable<IExpression> initExprs,
+    IExpression? conditionExpr,
+    IExpression? incrementExpr,
+    IExpression expr
+) : IExpression
 {
-    public IEnumerable<IExpression> InitExprs { get; private set; }
-    public IExpression ConditionExpr { get; private set; }
-    public IExpression IncrementExpr { get; private set; }
-    public IExpression Expr { get; private set; }
-
-    public ForExpression(
-        IEnumerable<IExpression> initExprs,
-        IExpression conditionExpr,
-        IExpression incrementExpr,
-        IExpression expr
-    )
-    {
-        InitExprs = initExprs;
-        ConditionExpr = conditionExpr;
-        IncrementExpr = incrementExpr;
-        Expr = expr;
-    }
+    public IEnumerable<IExpression> InitExprs { get; private set; } = initExprs;
+    public IExpression? ConditionExpr { get; private set; } = conditionExpr;
+    public IExpression? IncrementExpr { get; private set; } = incrementExpr;
+    public IExpression Expr { get; private set; } = expr;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

@@ -7,18 +7,11 @@
 
 namespace KataCompiler;
 
-public abstract class TextSpanFilterBase : ITextSpanFilter
+public abstract class TextSpanFilterBase(ITextSpanFilter? filter) : ITextSpanFilter
 {
-    private readonly ITextSpanFilter _filter;
-
-    protected TextSpanFilterBase(ITextSpanFilter filter)
-    {
-        _filter = filter;
-    }
-
     public IEnumerable<TextSpan> Apply(IEnumerable<TextSpan> spans)
     {
-        return DoFilter(_filter != null ? _filter.Apply(spans) : spans);
+        return DoFilter(filter != null ? filter.Apply(spans) : spans);
     }
 
     protected abstract IEnumerable<TextSpan> DoFilter(IEnumerable<TextSpan> spans);

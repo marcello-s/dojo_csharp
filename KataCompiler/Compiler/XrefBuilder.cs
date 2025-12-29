@@ -13,7 +13,7 @@ class XrefBuilder : BaseExpressionVisitor
 {
     public override IExpression Visit(ConstantExpression expr, Scope scope)
     {
-        object value;
+        object? value;
 
         switch (expr.Type)
         {
@@ -33,7 +33,10 @@ class XrefBuilder : BaseExpressionVisitor
                 break;
         }
 
-        expr.Key = scope.AddConstant(value, expr.Type);
+        if (value != null)
+        {
+            expr.Key = scope.AddConstant(value, expr.Type);
+        }
 
         return expr;
     }

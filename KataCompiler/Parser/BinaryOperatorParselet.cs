@@ -9,16 +9,10 @@ using KataCompiler.Ast;
 
 namespace KataCompiler.Parser;
 
-class BinaryOperatorParselet : IInfixParselet
+class BinaryOperatorParselet(int precedence, bool isRight) : IInfixParselet
 {
-    public int Precedence { get; private set; }
-    public bool IsRight { get; set; }
-
-    public BinaryOperatorParselet(int precedence, bool isRight)
-    {
-        Precedence = precedence;
-        IsRight = isRight;
-    }
+    public int Precedence { get; private set; } = precedence;
+    public bool IsRight { get; set; } = isRight;
 
     public IExpression Parse(LLParser parser, IExpression left, TokenValue token)
     {

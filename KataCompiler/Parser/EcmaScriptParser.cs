@@ -195,7 +195,7 @@ class EcmaScriptParser : LLParser
         var conditionalExpr = ParseExpression();
         Consume(Token.RightBracket);
         var expr = ParseStatementOrBlock();
-        IExpression elseExpr = null;
+        IExpression? elseExpr = null;
         if (LookAhead(Token.Else))
         {
             Consume(Token.Else);
@@ -257,9 +257,9 @@ class EcmaScriptParser : LLParser
     private IExpression ParseFor()
     {
         var initializationExprs = new List<IExpression>();
-        IExpression objectExpr = null;
-        IExpression conditionExpr = null;
-        IExpression incrementExpr = null;
+        IExpression? objectExpr = null;
+        IExpression? conditionExpr = null;
+        IExpression? incrementExpr = null;
         var isForInStatement = false;
 
         Consume(Token.LeftBracket);
@@ -319,7 +319,7 @@ class EcmaScriptParser : LLParser
         Consume(Token.RightBracket);
         var catchExprs = ParseBlock();
 
-        IExpression finallyExprs = null;
+        IExpression? finallyExprs = null;
         if (LookAhead(Token.Finally))
         {
             Consume(Token.Finally);
@@ -340,7 +340,7 @@ class EcmaScriptParser : LLParser
         while (LookAhead(Token.Case) || LookAhead(Token.Default))
         {
             var isDefault = false;
-            IExpression caseExpr = null;
+            IExpression? caseExpr = null;
 
             if (LookAhead(Token.Default))
             {

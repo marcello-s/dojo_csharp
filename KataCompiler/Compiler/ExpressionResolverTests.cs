@@ -222,7 +222,7 @@ public class ExpressionResolverTests
         var exprs = Resolve(input);
         var assignExpr = exprs.ElementAt(1) as AssignExpression;
         Assert.That(assignExpr, Is.Not.Null);
-        Assert.That(assignExpr.Tag, Is.Not.Null);
+        Assert.That(assignExpr!.Tag, Is.Not.Null);
         var identifierExpr = (IdentifierExpression)assignExpr.Left;
         Assert.That(identifierExpr.Name, Is.EqualTo("MyObject.MyOtherObject.MyValue"));
     }
@@ -256,7 +256,7 @@ public class ExpressionResolverTests
         var exprs = Resolve(input);
         var assignExpr = exprs.ElementAt(0) as AssignExpression;
         Assert.That(assignExpr, Is.Not.Null);
-        Assert.That(assignExpr.Tag, Is.Null);
+        Assert.That(assignExpr!.Tag, Is.Null);
     }
 
     [Test]
@@ -425,7 +425,7 @@ public class ExpressionResolverTests
         );
         var assignExpr = exprs.ElementAt(1) as AssignExpression;
         Assert.That(assignExpr, Is.Not.Null);
-        Assert.That(assignExpr.Tag, Is.Not.Null);
+        Assert.That(assignExpr!.Tag, Is.Not.Null);
     }
 
     [Test]
@@ -447,7 +447,7 @@ public class ExpressionResolverTests
         );
         var assignExpr = exprs.ElementAt(1) as AssignExpression;
         Assert.That(assignExpr, Is.Not.Null);
-        Assert.That(assignExpr.Tag, Is.Not.Null);
+        Assert.That(assignExpr!.Tag, Is.Not.Null);
     }
 
     [Test]
@@ -737,8 +737,8 @@ public class ExpressionResolverTests
 
     private static IEnumerable<IExpression> Resolve(string text)
     {
-        IEnumerable<IExpression> exprs = null;
-        IList<IExpression> resolvedExpr = null;
+        IEnumerable<IExpression>? exprs = null;
+        IList<IExpression>? resolvedExpr = null;
         var bytes = Encoding.Default.GetBytes(text);
 
         using (var ms = new MemoryStream(bytes))

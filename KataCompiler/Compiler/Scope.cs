@@ -11,18 +11,19 @@ namespace KataCompiler.Compiler;
 
 class Scope
 {
-    private MethodScope _current;
-    private readonly IList<Assignment> _assignments;
-    private readonly IDictionary<int, Constant> _constants;
-    private int _constantKeyMax;
+    private MethodScope? current;
+    private readonly IList<Assignment> assignments;
+    private readonly IDictionary<int, Constant> constants;
+    private int constantKeyMax;
 
     public IEnumerable<Assignment> Assignments
     {
-        get { return _assignments; }
+        get { return assignments; }
     }
+
     public IDictionary<int, Constant> Constants
     {
-        get { return _constants; }
+        get { return constants; }
     }
 
     public bool IsAllocationMode { get; private set; }
@@ -31,18 +32,18 @@ class Scope
     {
         Push();
         ResetAllocationMode();
-        _assignments = new List<Assignment>();
-        _constants = new Dictionary<int, Constant>();
+        assignments = new List<Assignment>();
+        constants = new Dictionary<int, Constant>();
     }
 
     public void Push()
     {
-        _current = new MethodScope(_current);
+        current = new MethodScope(current);
     }
 
     public void Pop()
     {
-        _current = _current.Parent;
+        current = current?.Parent;
     }
 
     public void SetAllocationMode()
@@ -57,19 +58,24 @@ class Scope
 
     public bool Define(string identifier, IExpression expr)
     {
-        return _current.Define(identifier, expr);
+        if (current == null)
+        {
+            return false;
+        }
+
+        return current.Define(identifier, expr);
     }
 
-    public IExpression Lookup(string identifier)
+    public IExpression? Lookup(string identifier)
     {
-        var item = _current.Lookup(identifier);
+        var item = current != null ? current.Lookup(identifier) : null;
         return item != null ? item.Expr : null;
     }
 
     public Assignment Assign(IExpression left, IExpression right)
     {
         var assignment = new Assignment(left, right);
-        _assignments.Add(assignment);
+        assignments.Add(assignment);
 
         return assignment;
     }
@@ -77,40 +83,35 @@ class Scope
     public int AddConstant(object value, ConstantType type)
     {
         if (
-            !_constants.Any(c =>
+            !constants.Any(c =>
                 c.Value.Value.ToString() == value.ToString() && c.Value.Type == type
             )
         )
         {
-            var key = _constantKeyMax;
-            _constants.Add(key, new Constant(value, type));
-            ++_constantKeyMax;
+            var key = constantKeyMax;
+            constants.Add(key, new Constant(value, type));
+            ++constantKeyMax;
             return key;
         }
 
-        return _constants
+        return constants
             .Single(c => c.Value.Value.ToString() == value.ToString() && c.Value.Type == type)
             .Key;
     }
 
-    class MethodScope
+    class MethodScope(MethodScope? parent)
     {
-        private readonly MethodScope _parent;
-        private readonly IList<NamedItem> _items;
+        private readonly MethodScope? parent = parent;
+        private readonly IList<NamedItem> items = new List<NamedItem>();
 
-        public MethodScope Parent
+        public MethodScope? Parent
         {
-            get { return _parent; }
+            get { return parent; }
         }
+
         public IEnumerable<NamedItem> Items
         {
-            get { return _items; }
-        }
-
-        public MethodScope(MethodScope parent)
-        {
-            _parent = parent;
-            _items = new List<NamedItem>();
+            get { return items; }
         }
 
         public bool Define(string identifier, IExpression expr)
@@ -120,21 +121,21 @@ class Scope
                 identifier = string.Empty;
             }
 
-            if (_items.Any(i => i.Name.Equals(identifier)))
+            if (items.Any(i => i.Name.Equals(identifier)))
             {
                 return false;
             }
 
-            _items.Add(new NamedItem(identifier, expr));
+            items.Add(new NamedItem(identifier, expr));
             return true;
         }
 
-        public NamedItem Lookup(string identifier)
+        public NamedItem? Lookup(string identifier)
         {
             return LookupRecursive(this, identifier);
         }
 
-        private static NamedItem LookupRecursive(MethodScope scope, string identifier)
+        private static NamedItem? LookupRecursive(MethodScope? scope, string identifier)
         {
             if (scope == null)
             {
@@ -150,51 +151,27 @@ class Scope
         }
     }
 
-    class NamedItem
+    class NamedItem(string name, IExpression expr)
     {
-        public string Name { get; private set; }
-        public IExpression Expr { get; private set; }
-
-        public NamedItem(string name, IExpression expr)
-        {
-            Name = name;
-            Expr = expr;
-        }
+        public string Name { get; private set; } = name;
+        public IExpression Expr { get; private set; } = expr;
     }
 
-    public class Assignment
+    public class Assignment(IExpression left, IExpression right)
     {
-        public IExpression Left { get; private set; }
-        public IExpression Right { get; private set; }
-
-        public Assignment(IExpression left, IExpression right)
-        {
-            Left = left;
-            Right = right;
-        }
+        public IExpression Left { get; private set; } = left;
+        public IExpression Right { get; private set; } = right;
     }
 
-    public class Pair
+    public class Pair(string key, object obj)
     {
-        public string Key { get; private set; }
-        public object Obj { get; private set; }
-
-        public Pair(string key, object obj)
-        {
-            Key = key;
-            Obj = obj;
-        }
+        public string Key { get; private set; } = key;
+        public object Obj { get; private set; } = obj;
     }
 
-    public class Constant
+    public class Constant(object value, ConstantType type)
     {
-        public object Value { get; private set; }
-        public ConstantType Type { get; private set; }
-
-        public Constant(object value, ConstantType type)
-        {
-            Value = value;
-            Type = type;
-        }
+        public object Value { get; private set; } = value;
+        public ConstantType Type { get; private set; } = type;
     }
 }

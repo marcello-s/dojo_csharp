@@ -9,16 +9,10 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class SwitchExpression : IExpression
+class SwitchExpression(IExpression switchExpr, IExpression caseExpr) : IExpression
 {
-    public IExpression SwitchExpr { get; private set; }
-    public IExpression CaseExpr { get; private set; }
-
-    public SwitchExpression(IExpression switchExpr, IExpression caseExpr)
-    {
-        SwitchExpr = switchExpr;
-        CaseExpr = caseExpr;
-    }
+    public IExpression SwitchExpr { get; private set; } = switchExpr;
+    public IExpression CaseExpr { get; private set; } = caseExpr;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

@@ -9,25 +9,17 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class IllegalExpression : IExpression
+class IllegalExpression(
+    IExpression? left,
+    IExpression? expr,
+    string message,
+    Parser.TokenValue token
+) : IExpression
 {
-    public IExpression Left { get; private set; }
-    public IExpression Expr { get; private set; }
-    public string Message { get; private set; }
-    public Parser.TokenValue Token { get; private set; }
-
-    public IllegalExpression(
-        IExpression left,
-        IExpression expr,
-        string message,
-        Parser.TokenValue token
-    )
-    {
-        Left = left;
-        Expr = expr;
-        Message = message;
-        Token = token;
-    }
+    public IExpression? Left { get; private set; } = left;
+    public IExpression? Expr { get; private set; } = expr;
+    public string Message { get; private set; } = message;
+    public Parser.TokenValue Token { get; private set; } = token;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

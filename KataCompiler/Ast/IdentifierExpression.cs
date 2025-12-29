@@ -9,14 +9,9 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class IdentifierExpression : IExpression
+class IdentifierExpression(string name) : IExpression
 {
-    public string Name { get; private set; }
-
-    public IdentifierExpression(string name)
-    {
-        Name = name;
-    }
+    public string Name { get; private set; } = name;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

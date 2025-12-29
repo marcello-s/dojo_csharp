@@ -88,7 +88,7 @@ public class XrefBuilderTests
 
     private IEnumerable<IExpression> BuildXref(string text)
     {
-        IList<IExpression> xrefExpr = null;
+        IList<IExpression>? xrefExpr = null;
         var bytes = Encoding.Default.GetBytes(text);
 
         using (var ms = new MemoryStream(bytes))

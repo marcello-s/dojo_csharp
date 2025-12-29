@@ -9,17 +9,11 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class AssignExpression : IExpression
+class AssignExpression(IExpression left, IExpression right) : IExpression
 {
-    public IExpression Left { get; private set; }
-    public IExpression Right { get; private set; }
-    public object Tag { get; set; }
-
-    public AssignExpression(IExpression left, IExpression right)
-    {
-        Left = left;
-        Right = right;
-    }
+    public IExpression Left { get; private set; } = left;
+    public IExpression Right { get; private set; } = right;
+    public object? Tag { get; set; }
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

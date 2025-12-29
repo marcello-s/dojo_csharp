@@ -32,6 +32,6 @@ class FunctionParselet : IPrefixParselet
 
         var body = parser.ParseBlock();
 
-        return new MethodExpression(name.Literal, new SequenceExpression(args), body);
+        return new MethodExpression(name.Literal, new SequenceExpression(args), body!);
     }
 }

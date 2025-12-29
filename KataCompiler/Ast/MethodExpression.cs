@@ -9,18 +9,11 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class MethodExpression : IExpression
+class MethodExpression(string name, IExpression args, IExpression body) : IExpression
 {
-    public string Name { get; private set; }
-    public IExpression Args { get; private set; }
-    public IExpression Body { get; private set; }
-
-    public MethodExpression(string name, IExpression args, IExpression body)
-    {
-        Name = name;
-        Args = args;
-        Body = body;
-    }
+    public string Name { get; private set; } = name;
+    public IExpression Args { get; private set; } = args;
+    public IExpression Body { get; private set; } = body;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

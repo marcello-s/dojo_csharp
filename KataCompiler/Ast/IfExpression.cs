@@ -9,18 +9,12 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class IfExpression : IExpression
+class IfExpression(IExpression conditionalExpr, IExpression expr, IExpression? elseExpr)
+    : IExpression
 {
-    public IExpression ConditionalExpr { get; private set; }
-    public IExpression Expr { get; private set; }
-    public IExpression ElseExpr { get; private set; }
-
-    public IfExpression(IExpression conditionalExpr, IExpression expr, IExpression elseExpr)
-    {
-        ConditionalExpr = conditionalExpr;
-        Expr = expr;
-        ElseExpr = elseExpr;
-    }
+    public IExpression ConditionalExpr { get; private set; } = conditionalExpr;
+    public IExpression Expr { get; private set; } = expr;
+    public IExpression? ElseExpr { get; private set; } = elseExpr;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

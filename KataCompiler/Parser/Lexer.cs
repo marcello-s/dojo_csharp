@@ -11,21 +11,21 @@ namespace KataCompiler.Parser;
 
 class Lexer : ITokenReader
 {
-    private readonly TextReader _textReader;
-    private int _line,
-        _column;
-    private int _startLine,
-        _startColumn;
-    private readonly char[] _buffer = new char[1];
-    private readonly StringBuilder _text;
-    private Token _last;
+    private readonly TextReader textReader;
+    private int line,
+        column;
+    private int startLine,
+        startColumn;
+    private readonly char[] buffer = new char[1];
+    private readonly StringBuilder text;
+    private Token last;
     private const string NumberPunctuation = ".-+abcdefx";
     private const string HexNumberPunctuation = "abcdef";
 
     public Lexer(TextReader textReader)
     {
-        _textReader = textReader;
-        _text = new StringBuilder();
+        this.textReader = textReader;
+        text = new StringBuilder();
     }
 
     public TokenValue ReadToken()
@@ -63,9 +63,9 @@ class Lexer : ITokenReader
 
                     default:
                         if (
-                            _last.Equals(Token.Identifier)
-                            || _last.Equals(Token.NumberLiteral)
-                            || _last.Equals(Token.RightBracket)
+                            last.Equals(Token.Identifier)
+                            || last.Equals(Token.NumberLiteral)
+                            || last.Equals(Token.RightBracket)
                         )
                         {
                             token = ReadOperator();
@@ -97,11 +97,11 @@ class Lexer : ITokenReader
                 }
                 else if (IsPunctuation(c))
                 {
-                    token = CreateToken(Punctuation.Punctuators[_text.ToString()]);
+                    token = CreateToken(Punctuation.Punctuators[text.ToString()]);
                 }
                 else
                 {
-                    token = CreateToken(Token.Illegal, _text.ToString(), "Unrecognized literal.");
+                    token = CreateToken(Token.Illegal, text.ToString(), "Unrecognized literal.");
                 }
                 break;
         }
@@ -129,7 +129,7 @@ class Lexer : ITokenReader
     private TokenValue ReadString()
     {
         var escaping = new StringBuilder();
-        var singleQuoted = _text.ToString().Substring(0, 1).Equals("'");
+        var singleQuoted = text.ToString().Substring(0, 1).Equals("'");
 
         while (true)
         {
@@ -225,7 +225,7 @@ class Lexer : ITokenReader
                 case '\0':
                     return CreateToken(
                         Token.Illegal,
-                        _text.ToString(),
+                        text.ToString(),
                         "Unterminated block comment."
                     );
             }
@@ -277,16 +277,16 @@ class Lexer : ITokenReader
             var p = Peek();
             if (IsOperator(p))
             {
-                if ((_text + p.ToString()).Equals("!!"))
+                if ((text + p.ToString()).Equals("!!"))
                 {
-                    return CreateToken(Punctuation.Operators[_text.ToString()]);
+                    return CreateToken(Punctuation.Operators[text.ToString()]);
                 }
 
                 Advance();
             }
             else
             {
-                return CreateToken(Punctuation.Operators[_text.ToString()]);
+                return CreateToken(Punctuation.Operators[text.ToString()]);
             }
         }
     }
@@ -350,7 +350,7 @@ class Lexer : ITokenReader
             }
             else
             {
-                var text = _text.ToString();
+                var text = this.text.ToString();
                 if (Punctuation.FutureReservedWord.Contains(text))
                 {
                     return CreateToken(Token.Illegal, text, "This is a future reserved keyword.");
@@ -386,25 +386,25 @@ class Lexer : ITokenReader
 
     private char Peek()
     {
-        return (char)_textReader.Peek();
+        return (char)textReader.Peek();
     }
 
     private char Advance()
     {
         var c = char.MinValue;
-        if (_textReader.Read(_buffer, 0, 1) > 0)
+        if (textReader.Read(buffer, 0, 1) > 0)
         {
-            c = _buffer[0];
-            _text.Append(_buffer);
+            c = buffer[0];
+            text.Append(buffer);
 
             if (c == '\n')
             {
-                _line++;
-                _column = 0;
+                line++;
+                column = 0;
             }
             else
             {
-                _column++;
+                column++;
             }
         }
 
@@ -416,13 +416,13 @@ class Lexer : ITokenReader
         var position = CreatePosition();
         var text = string.IsNullOrEmpty(literal) ? position.Text : literal;
 
-        _startLine = _line;
-        _startColumn = _column;
-        _text.Clear();
+        startLine = line;
+        startColumn = column;
+        this.text.Clear();
 
         if (!tokenId.Equals(Token.WhiteSpace))
         {
-            _last = tokenId;
+            last = tokenId;
         }
 
         return new TokenValue
@@ -436,6 +436,6 @@ class Lexer : ITokenReader
 
     private Position CreatePosition()
     {
-        return new Position(_text.ToString(), _startLine, _line, _startColumn, _column);
+        return new Position(text.ToString(), startLine, line, startColumn, column);
     }
 }

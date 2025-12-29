@@ -29,9 +29,9 @@ public class ParserTests
 
         var parser = new ExpressionParser();
         var expr = parser.Parse(tokens);
-        var value = expr.Evaluate();
+        var value = expr?.Evaluate();
         Console.WriteLine("value:{0}", value);
-        PrintExpression(expr, 0);
+        PrintExpression(expr!, 0);
 
         //      *
         //     / \
@@ -59,9 +59,9 @@ public class ParserTests
 
         var parser = new ExpressionParser();
         var expr = parser.Parse(tokens);
-        var value = expr.Evaluate();
+        var value = expr?.Evaluate();
         Console.WriteLine("value:{0}", value);
-        PrintExpression(expr, 0);
+        PrintExpression(expr!, 0);
 
         //       +
         //      / \
@@ -92,9 +92,9 @@ public class ParserTests
 
         var parser = new ExpressionParser();
         var expr = parser.Parse(tokens);
-        var value = expr.Evaluate();
+        var value = expr?.Evaluate() ?? 0;
         Console.WriteLine("value:{0}", value);
-        PrintExpression(expr, 0);
+        PrintExpression(expr!, 0);
 
         //        +
         //       / \
@@ -115,7 +115,7 @@ public class ParserTests
         if (expr is BinaryOperator)
         {
             var op = expr as BinaryOperator;
-            Console.WriteLine(indent + op.OpCode);
+            Console.WriteLine(indent + op!.OpCode);
             PrintExpression(op.Left, level + 1);
             PrintExpression(op.Right, level + 1);
         }
@@ -123,7 +123,7 @@ public class ParserTests
         if (expr is Constant)
         {
             var c = expr as Constant;
-            Console.WriteLine(indent + c.Value);
+            Console.WriteLine(indent + c!.Value);
         }
     }
 }
@@ -149,35 +149,43 @@ public class ExpressionParser
     // F --> P ["^" F]
     // P --> v | "(" E ")" | "-" T
 
-    public Expression Parse(IEnumerable<TokenValue> tokens)
+    public Expression? Parse(IEnumerable<TokenValue> tokens)
     {
         var stream = tokens.GetEnumerator();
         stream.MoveNext();
         return E(stream);
     }
 
-    private Expression E(IEnumerator<TokenValue> stream)
+    private Expression? E(IEnumerator<TokenValue> stream)
     {
         return Eopt(T(stream), stream);
     }
 
-    private Expression T(IEnumerator<TokenValue> stream)
+    private Expression? T(IEnumerator<TokenValue> stream)
     {
         return Topt(F(stream), stream);
     }
 
-    private Expression Eopt(Expression expr, IEnumerator<TokenValue> stream)
+    private Expression? Eopt(Expression? expr, IEnumerator<TokenValue> stream)
     {
         switch (stream.Current.TokenId)
         {
             case Token.Plus:
                 stream.MoveNext();
-                expr = Eopt(new BinaryOperator(expr, T(stream), "+"), stream);
+                var tExpr = T(stream);
+                if (expr != null && tExpr != null)
+                {
+                    expr = Eopt(new BinaryOperator(expr, tExpr, "+"), stream);
+                }
                 break;
 
             case Token.Minus:
                 stream.MoveNext();
-                expr = Eopt(new BinaryOperator(expr, T(stream), "-"), stream);
+                var ttExpr = T(stream);
+                if (expr != null && ttExpr != null)
+                {
+                    expr = Eopt(new BinaryOperator(expr, ttExpr, "-"), stream);
+                }
                 break;
 
             default:
@@ -187,9 +195,9 @@ public class ExpressionParser
         return expr;
     }
 
-    private Expression F(IEnumerator<TokenValue> stream)
+    private Expression? F(IEnumerator<TokenValue> stream)
     {
-        Expression e = null;
+        Expression? e = null;
         switch (stream.Current.TokenId)
         {
             case Token.NumberLiteral:
@@ -209,7 +217,11 @@ public class ExpressionParser
 
             case Token.Minus:
                 stream.MoveNext();
-                e = new BinaryOperator(new Constant(-1d), F(stream), "*");
+                var fExpr = F(stream);
+                if (fExpr != null)
+                {
+                    e = new BinaryOperator(new Constant(-1d), fExpr, "*");
+                }
                 break;
 
             default:
@@ -219,18 +231,26 @@ public class ExpressionParser
         return e;
     }
 
-    private Expression Topt(Expression expr, IEnumerator<TokenValue> stream)
+    private Expression? Topt(Expression? expr, IEnumerator<TokenValue> stream)
     {
         switch (stream.Current.TokenId)
         {
             case Token.Asterisk:
                 stream.MoveNext();
-                expr = Topt(new BinaryOperator(expr, P(stream), "*"), stream);
+                var pExpr = P(stream);
+                if (expr != null && pExpr != null)
+                {
+                    expr = Topt(new BinaryOperator(expr, pExpr, "*"), stream);
+                }
                 break;
 
             case Token.Slash:
                 stream.MoveNext();
-                expr = Topt(new BinaryOperator(expr, P(stream), "/"), stream);
+                var ppExpr = P(stream);
+                if (expr != null && ppExpr != null)
+                {
+                    expr = Topt(new BinaryOperator(expr, ppExpr, "/"), stream);
+                }
                 break;
 
             default:
@@ -240,18 +260,22 @@ public class ExpressionParser
         return expr;
     }
 
-    private Expression P(IEnumerator<TokenValue> stream)
+    private Expression? P(IEnumerator<TokenValue> stream)
     {
         return Popt(F(stream), stream);
     }
 
-    private Expression Popt(Expression expr, IEnumerator<TokenValue> stream)
+    private Expression? Popt(Expression? expr, IEnumerator<TokenValue> stream)
     {
         switch (stream.Current.TokenId)
         {
             case Token.Carot:
                 stream.MoveNext();
-                expr = Popt(new BinaryOperator(expr, F(stream), "^"), stream);
+                var fExpr = F(stream);
+                if (expr != null && fExpr != null)
+                {
+                    expr = Popt(new BinaryOperator(expr, fExpr, "^"), stream);
+                }
                 break;
 
             default:

@@ -9,14 +9,9 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class SequenceExpression : IExpression
+class SequenceExpression(IEnumerable<IExpression> exprs) : IExpression
 {
-    public IEnumerable<IExpression> Exprs { get; private set; }
-
-    public SequenceExpression(IEnumerable<IExpression> exprs)
-    {
-        Exprs = exprs;
-    }
+    public IEnumerable<IExpression> Exprs { get; private set; } = exprs;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

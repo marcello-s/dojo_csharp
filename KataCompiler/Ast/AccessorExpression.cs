@@ -9,16 +9,10 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class AccessorExpression : IExpression
+class AccessorExpression(IExpression member, IExpression accessorExpr) : IExpression
 {
-    public IExpression Member { get; private set; }
-    public IExpression AccessorExpr { get; private set; }
-
-    public AccessorExpression(IExpression member, IExpression accessorExpr)
-    {
-        Member = member;
-        AccessorExpr = accessorExpr;
-    }
+    public IExpression Member { get; private set; } = member;
+    public IExpression AccessorExpr { get; private set; } = accessorExpr;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

@@ -9,22 +9,15 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class ConditionalExpression : IExpression
+class ConditionalExpression(
+    IExpression condition,
+    IExpression truthyBranch,
+    IExpression falsyBranch
+) : IExpression
 {
-    public IExpression Condition { get; private set; }
-    public IExpression TruthyBranch { get; private set; }
-    public IExpression FalsyBranch { get; private set; }
-
-    public ConditionalExpression(
-        IExpression condition,
-        IExpression truthyBranch,
-        IExpression falsyBranch
-    )
-    {
-        Condition = condition;
-        TruthyBranch = truthyBranch;
-        FalsyBranch = falsyBranch;
-    }
+    public IExpression Condition { get; private set; } = condition;
+    public IExpression TruthyBranch { get; private set; } = truthyBranch;
+    public IExpression FalsyBranch { get; private set; } = falsyBranch;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

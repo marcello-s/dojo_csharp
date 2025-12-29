@@ -9,18 +9,12 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class CaseExpression : IExpression
+class CaseExpression(IExpression? caseExpr, IExpression stmtExpr, bool isDefault = false)
+    : IExpression
 {
-    public IExpression CaseExpr { get; private set; }
-    public IExpression StmtExpr { get; private set; }
-    public bool IsDefault { get; private set; }
-
-    public CaseExpression(IExpression caseExpr, IExpression stmtExpr, bool isDefault = false)
-    {
-        CaseExpr = caseExpr;
-        StmtExpr = stmtExpr;
-        IsDefault = isDefault;
-    }
+    public IExpression? CaseExpr { get; private set; } = caseExpr;
+    public IExpression StmtExpr { get; private set; } = stmtExpr;
+    public bool IsDefault { get; private set; } = isDefault;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

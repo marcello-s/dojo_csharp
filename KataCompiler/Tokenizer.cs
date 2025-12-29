@@ -12,7 +12,8 @@ namespace KataCompiler;
 public class Tokenizer
 {
     // punctuation character dictionary - keep in sync with Token enum
-    private int[] _punctuationListOffsetTable;
+    private int[]? punctuationListOffsetTable;
+
     public readonly IDictionary<char, string[]> Punctuation = new Dictionary<char, string[]>
     {
         { '(', new[] { "(" } },
@@ -105,12 +106,12 @@ public class Tokenizer
     public IEnumerable<TokenValue> Tokenize(IEnumerable<TextSpan> spans)
     {
         var buffer = new StringBuilder();
-        _punctuationListOffsetTable = ComputePunctuationListOffsetTable();
+        punctuationListOffsetTable = ComputePunctuationListOffsetTable();
 
         // these fields keep the state while tokenizing
         // an fsm class should be used instead, with the
         // tokenizer as a stateful object
-        string[] punctuation = null;
+        string[]? punctuation = null;
         var punctuationIndex = 0;
         var numberLiteralMode = false;
         var stringLiteralMode = false;
@@ -321,7 +322,12 @@ public class Tokenizer
     )
     {
         var listIndex = punctuation.ToList().IndexOf(accu);
-        var tokenIndex = _punctuationListOffsetTable[punctuationIndex] + listIndex;
+        var tokenIndex = 0;
+        if (punctuationListOffsetTable != null)
+        {
+            tokenIndex = punctuationListOffsetTable[punctuationIndex] + listIndex;
+        }
+
         var tokenId = (Token)Enum.ToObject(typeof(Token), tokenIndex);
         return new TokenValue { Span = span, TokenId = tokenId };
     }

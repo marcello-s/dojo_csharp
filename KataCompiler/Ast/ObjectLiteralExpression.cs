@@ -9,14 +9,9 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class ObjectLiteralExpression : IExpression
+class ObjectLiteralExpression(IExpression definitions) : IExpression
 {
-    public IExpression Definitions { get; private set; }
-
-    public ObjectLiteralExpression(IExpression definitions)
-    {
-        Definitions = definitions;
-    }
+    public IExpression Definitions { get; private set; } = definitions;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

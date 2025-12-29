@@ -9,16 +9,10 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class ForInExpression : IExpression
+class ForInExpression(IExpression? objectExpr, IExpression expr) : IExpression
 {
-    public IExpression ObjectExpr { get; private set; }
-    public IExpression Expr { get; private set; }
-
-    public ForInExpression(IExpression objectExpr, IExpression expr)
-    {
-        ObjectExpr = objectExpr;
-        Expr = expr;
-    }
+    public IExpression? ObjectExpr { get; private set; } = objectExpr;
+    public IExpression Expr { get; private set; } = expr;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {
@@ -29,7 +23,7 @@ class ForInExpression : IExpression
     {
         sb.Append("for-in: ");
         sb.Append("object=");
-        ObjectExpr.AppendTo(sb);
+        ObjectExpr?.AppendTo(sb);
         sb.AppendLine("{");
         Expr.AppendTo(sb);
         sb.AppendLine("}");

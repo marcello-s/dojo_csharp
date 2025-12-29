@@ -35,7 +35,7 @@ public class StatementParserTests
 
 public class StatementParser
 {
-    public Statement Parse(IEnumerable<TokenValue> tokens)
+    public Statement? Parse(IEnumerable<TokenValue> tokens)
     {
         // block
         // { [<block|statement [statement]>] }
@@ -48,9 +48,9 @@ public class StatementParser
         return ParseStatement(stream);
     }
 
-    private Statement ParseStatement(IEnumerator<TokenValue> stream)
+    private Statement? ParseStatement(IEnumerator<TokenValue> stream)
     {
-        Statement s = null;
+        Statement? s = null;
         switch (stream.Current.TokenId)
         {
             case Token.If:
@@ -85,7 +85,7 @@ public class StatementParser
         }
 
         var conditionStatement = ParseStatement(stream);
-        return new IfStatement(condition, conditionStatement, null);
+        return new IfStatement(condition, conditionStatement!, null!);
     }
 
     private BooleanExpression ParseExpression(IEnumerator<TokenValue> stream)

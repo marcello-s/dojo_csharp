@@ -7,20 +7,13 @@
 
 namespace KataCompiler.Parser;
 
-class Morpher : ITokenReader
+class Morpher(ITokenReader tokenReader) : ITokenReader
 {
-    private readonly ITokenReader _tokenReader;
-
-    public Morpher(ITokenReader tokenReader)
-    {
-        _tokenReader = tokenReader;
-    }
-
     public TokenValue ReadToken()
     {
         while (true)
         {
-            var token = _tokenReader.ReadToken();
+            var token = tokenReader.ReadToken();
 
             switch (token.TokenId)
             {

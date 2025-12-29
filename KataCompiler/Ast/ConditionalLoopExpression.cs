@@ -9,22 +9,15 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class ConditionalLoopExpression : IExpression
+class ConditionalLoopExpression(
+    IExpression conditionalExpr,
+    IExpression expr,
+    bool postEvaluation = false
+) : IExpression
 {
-    public IExpression ConditionalExpr { get; private set; }
-    public IExpression Expr { get; private set; }
-    public bool PostEvaluation { get; private set; }
-
-    public ConditionalLoopExpression(
-        IExpression conditionalExpr,
-        IExpression expr,
-        bool postEvaluation = false
-    )
-    {
-        ConditionalExpr = conditionalExpr;
-        Expr = expr;
-        PostEvaluation = postEvaluation;
-    }
+    public IExpression ConditionalExpr { get; private set; } = conditionalExpr;
+    public IExpression Expr { get; private set; } = expr;
+    public bool PostEvaluation { get; private set; } = postEvaluation;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

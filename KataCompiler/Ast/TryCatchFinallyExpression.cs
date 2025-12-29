@@ -9,25 +9,17 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class TryCatchFinallyExpression : IExpression
+class TryCatchFinallyExpression(
+    IExpression tryExprs,
+    IExpression catchVariable,
+    IExpression catchExprs,
+    IExpression? finallyExprs = null
+) : IExpression
 {
-    public IExpression TryExprs { get; private set; }
-    public IExpression CatchVariable { get; private set; }
-    public IExpression CatchExprs { get; private set; }
-    public IExpression FinallyExprs { get; private set; }
-
-    public TryCatchFinallyExpression(
-        IExpression tryExprs,
-        IExpression catchVariable,
-        IExpression catchExprs,
-        IExpression finallyExprs = null
-    )
-    {
-        TryExprs = tryExprs;
-        CatchVariable = catchVariable;
-        CatchExprs = catchExprs;
-        FinallyExprs = finallyExprs;
-    }
+    public IExpression TryExprs { get; private set; } = tryExprs;
+    public IExpression CatchVariable { get; private set; } = catchVariable;
+    public IExpression CatchExprs { get; private set; } = catchExprs;
+    public IExpression? FinallyExprs { get; private set; } = finallyExprs;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

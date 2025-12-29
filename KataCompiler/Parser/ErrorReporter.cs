@@ -11,21 +11,22 @@ namespace KataCompiler.Parser;
 
 class ErrorReporter : IErrorReporter
 {
-    private readonly IList<ReportEntry> _entries = new List<ReportEntry>();
-    private int _textLine;
+    private readonly IList<ReportEntry> entries = new List<ReportEntry>();
+    private int textLine;
 
     public int NumberOfErrors
     {
-        get { return _entries.Count(e => e.Kind == ReportEntryKind.Error); }
+        get { return entries.Count(e => e.Kind == ReportEntryKind.Error); }
     }
+
     public int NumberOfWarnings
     {
-        get { return _entries.Count(e => e.Kind == ReportEntryKind.Warning); }
+        get { return entries.Count(e => e.Kind == ReportEntryKind.Warning); }
     }
 
     public void AddError(TokenValue token, string message)
     {
-        _entries.Add(
+        entries.Add(
             new ReportEntry
             {
                 Kind = ReportEntryKind.Error,
@@ -37,7 +38,7 @@ class ErrorReporter : IErrorReporter
 
     public void AddWarning(TokenValue token, string message)
     {
-        _entries.Add(
+        entries.Add(
             new ReportEntry
             {
                 Kind = ReportEntryKind.Warning,
@@ -53,7 +54,7 @@ class ErrorReporter : IErrorReporter
 
         sb.AppendFormat("errors: {0} - warnings: {1}", NumberOfErrors, NumberOfWarnings);
         sb.AppendLine();
-        foreach (var reportEntry in _entries)
+        foreach (var reportEntry in entries)
         {
             var src = reportEntry.Token.SrcPosition;
             var line = AdvanceReaderToTextLine(src.StartLine, textReader);
@@ -71,17 +72,17 @@ class ErrorReporter : IErrorReporter
         return sb.ToString();
     }
 
-    private string AdvanceReaderToTextLine(int textLine, TextReader textReader)
+    private string? AdvanceReaderToTextLine(int textLine, TextReader textReader)
     {
-        var lines = textLine - _textLine;
-        string line = string.Empty;
+        var lines = textLine - this.textLine;
+        string? line = string.Empty;
 
         for (var i = 0; i < lines; ++i)
         {
             line = textReader.ReadLine();
         }
 
-        _textLine = textLine;
+        this.textLine = textLine;
         return line;
     }
 

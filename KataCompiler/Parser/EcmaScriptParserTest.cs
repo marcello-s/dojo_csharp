@@ -623,7 +623,7 @@ public class EcmaScriptParserTest
 
     private static IEnumerable<IExpression> Parse(string text)
     {
-        IEnumerable<IExpression> exprs = null;
+        IEnumerable<IExpression>? exprs = null;
         var bytes = Encoding.Default.GetBytes(text);
 
         using (var ms = new MemoryStream(bytes))

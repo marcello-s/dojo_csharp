@@ -9,16 +9,10 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class PrefixExpression : IExpression
+class PrefixExpression(Parser.Token tokenId, IExpression right) : IExpression
 {
-    public Parser.Token TokenId { get; private set; }
-    public IExpression Right { get; private set; }
-
-    public PrefixExpression(Parser.Token tokenId, IExpression right)
-    {
-        TokenId = tokenId;
-        Right = right;
-    }
+    public Parser.Token TokenId { get; private set; } = tokenId;
+    public IExpression Right { get; private set; } = right;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

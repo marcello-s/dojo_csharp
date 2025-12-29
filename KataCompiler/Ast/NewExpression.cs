@@ -9,14 +9,9 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class NewExpression : IExpression
+class NewExpression(IExpression callExpr) : IExpression
 {
-    public IExpression CallExpr { get; private set; }
-
-    public NewExpression(IExpression callExpr)
-    {
-        CallExpr = callExpr;
-    }
+    public IExpression CallExpr { get; private set; } = callExpr;
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

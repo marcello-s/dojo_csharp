@@ -12,20 +12,21 @@ namespace KataCompiler.Compiler;
 
 class CompilerErrorReporter : ICompilerErrorReporter
 {
-    private readonly IList<ReportEntry> _entries = new List<ReportEntry>();
+    private readonly IList<ReportEntry> entries = new List<ReportEntry>();
 
     public int NumberOfErrors
     {
-        get { return _entries.Count(e => e.Kind == ReportEntryKind.Error); }
+        get { return entries.Count(e => e.Kind == ReportEntryKind.Error); }
     }
+
     public int NumberOfWarnings
     {
-        get { return _entries.Count(e => e.Kind == ReportEntryKind.Warning); }
+        get { return entries.Count(e => e.Kind == ReportEntryKind.Warning); }
     }
 
     public void AddError(IExpression expr, string message)
     {
-        _entries.Add(
+        entries.Add(
             new ReportEntry
             {
                 Kind = ReportEntryKind.Error,
@@ -37,7 +38,7 @@ class CompilerErrorReporter : ICompilerErrorReporter
 
     public void AddWarning(IExpression expr, string message)
     {
-        _entries.Add(
+        entries.Add(
             new ReportEntry
             {
                 Kind = ReportEntryKind.Warning,
@@ -54,7 +55,7 @@ class CompilerErrorReporter : ICompilerErrorReporter
         sb.AppendFormat("errors: {0} - warnings: {1}", NumberOfErrors, NumberOfWarnings);
         sb.AppendLine();
 
-        foreach (var entry in _entries)
+        foreach (var entry in entries)
         {
             entry.Expr.AppendTo(sb);
             sb.AppendFormat(" - '{0}'", entry.Message);

@@ -9,17 +9,11 @@ using System.Text;
 
 namespace KataCompiler.Ast;
 
-class DefinitionExpression : IExpression
+class DefinitionExpression(IExpression identifierExpr, IExpression definitionExpr) : IExpression
 {
-    public IExpression IdentifierExpr { get; private set; }
-    public IExpression DefinitionExpr { get; private set; }
-    public object Tag { get; set; }
-
-    public DefinitionExpression(IExpression identifierExpr, IExpression definitionExpr)
-    {
-        IdentifierExpr = identifierExpr;
-        DefinitionExpr = definitionExpr;
-    }
+    public IExpression IdentifierExpr { get; private set; } = identifierExpr;
+    public IExpression DefinitionExpr { get; private set; } = definitionExpr;
+    public object? Tag { get; set; }
 
     public R Accept<R, S>(IExpressionVisitor<R, S> visitor, S scope)
     {

@@ -102,7 +102,7 @@ class ExpressionResolver : BaseExpressionVisitor
 
             if (leftConst.Type == rightConst.Type)
             {
-                IExpression constExpr = null;
+                IExpression? constExpr = null;
 
                 switch (leftConst.Type)
                 {
@@ -122,7 +122,7 @@ class ExpressionResolver : BaseExpressionVisitor
                         break;
 
                     case ConstantType.String:
-                        var text = Op.Concat(leftConst.Constant, rightConst.Constant);
+                        var text = Op.Concat(leftConst.Constant!, rightConst.Constant!);
                         constExpr = new ConstantExpression(text, ConstantType.String);
                         break;
 
@@ -135,7 +135,7 @@ class ExpressionResolver : BaseExpressionVisitor
                         break;
                 }
 
-                return constExpr;
+                return constExpr!;
             }
 
             // type mismatch
@@ -206,9 +206,9 @@ class ExpressionResolver : BaseExpressionVisitor
             de.IdentifierExpr is ConstantExpression
                 ? ((ConstantExpression)expr.IdentifierExpr).Constant
                 : ((IdentifierExpression)expr.IdentifierExpr).Name;
-        scope.Define(identifierName, expr.IdentifierExpr);
+        scope.Define(identifierName ?? "undefined", expr.IdentifierExpr);
 
-        var tag = new List<object>();
+        var tag = new List<object?>();
         var objectLiteralExpr = de.DefinitionExpr as ObjectLiteralExpression;
         if (objectLiteralExpr != null)
         {
@@ -229,7 +229,7 @@ class ExpressionResolver : BaseExpressionVisitor
             tag.Add(constantExpr.Constant);
         }
 
-        de.Tag = new Scope.Pair(identifierName, tag.ToArray());
+        de.Tag = new Scope.Pair(identifierName ?? "NULL-identifier", tag.ToArray());
 
         return de;
     }
@@ -255,8 +255,8 @@ class ExpressionResolver : BaseExpressionVisitor
     private static string RenderIdentifierParts(IdentifierPartExpression expr)
     {
         var currentPart = expr;
-        IdentifierPartExpression previousPart = null;
-        IdentifierExpression identifier = null;
+        IdentifierPartExpression? previousPart = null;
+        IdentifierExpression? identifier;
         var identifiers = new List<string>();
 
         while (currentPart != null)
@@ -363,7 +363,7 @@ class ExpressionResolver : BaseExpressionVisitor
                 var objects = RenderObjectNames(tag);
                 foreach (var obj in objects)
                 {
-                    scope.Define(obj, null);
+                    scope.Define(obj, null!);
                 }
             }
         }
@@ -373,7 +373,7 @@ class ExpressionResolver : BaseExpressionVisitor
 
     private static IEnumerable<string> RenderObjectNames(
         Scope.Pair tag,
-        IList<string> objects = null,
+        IList<string>? objects = null,
         string partialName = ""
     )
     {
@@ -415,7 +415,7 @@ class ExpressionResolver : BaseExpressionVisitor
         if (pe.Right is ConstantExpression)
         {
             var rightConst = (ConstantExpression)pe.Right;
-            IExpression constExpr = null;
+            IExpression? constExpr = null;
 
             switch (rightConst.Type)
             {
@@ -437,7 +437,7 @@ class ExpressionResolver : BaseExpressionVisitor
                     break;
             }
 
-            return constExpr;
+            return constExpr!;
         }
 
         return pe;
