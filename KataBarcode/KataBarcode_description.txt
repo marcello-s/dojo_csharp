@@ -1,0 +1,46 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2025 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataBarcode: Image processing
+=============================
+
+This kata's goal is to implement image processing algorithms. 
+The idea behind the kata is to do some kind of picture recognition, 
+for instance recognition of a barcode taken from a phone camera. 
+In order to get there the region of interest has to be found by converting 
+and cleaning raw image data.
+The actual scanning and decoding of the barcode is secondary to 
+this kata.
+
+add package:
+$ dotnet add package System.Drawing.Common
+
+1) Convert an image to grayscale:
+Gray Scale = 0.3*Red + 0.59*Green + 0.11*Blue 
+http://en.wikipedia.org/wiki/Grayscale 
+
+2) Implement the kernel for 2D convolution: 
+http://en.wikipedia.org/wiki/Convolution
+http://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+3) Create a binary image:
+http://en.wikipedia.org/wiki/Binary_image
+http://en.wikipedia.org/wiki/Thresholding_(image_processing)
+http://en.wikipedia.org/wiki/Otsu%27s_Method
+http://www.codeproject.com/Articles/38319/Famous-Otsu-Thresholding-in-C
+http://en.wikipedia.org/wiki/Watershed_algorithm
+
+4) Implement erosion and dilation filters
+http://en.wikipedia.org/wiki/Mathematical_morphology
+http://en.wikipedia.org/wiki/Erosion_(morphology)
+http://en.wikipedia.org/wiki/Dilation_(morphology)
+http://en.wikipedia.org/wiki/Opening_(morphology)
+http://en.wikipedia.org/wiki/Closing_(morphology)
+
+5) Implement Hough Transform:
+http://en.wikipedia.org/wiki/Hough_transform
+
+6) Implement the Bresenham Algorithm (line)
+https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm

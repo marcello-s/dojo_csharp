@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="KataBankOCR/KataBankOCR.csproj" />
+  <Project Path="KataBarcode/KataBarcode.csproj" />
   <Project Path="KataBootstrapper/KataBootstrapper.csproj" />
   <Project Path="KataCarcassonne/KataCarcassonne.csproj" />
   <Project Path="KataCommandDispatcher/KataCommandDispatcher.csproj" />
