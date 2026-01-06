@@ -1,0 +1,28 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2026 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataMotionControl: Acceleration/Speed Calculation
+=================================================
+
+For this kata there is some physics involved. You need to calculate 
+acceleration ramps, speed and distance segments. In a second step the 
+segments need to be aligned and adapted. The last part covers 
+circular vs. linear movements.
+
+1) A motor object contains the properties minimal and maximal 
+acceleration. Calculate a distance/time segment to reach a maximal 
+velocity. If possible use maximal acceleration, but if the velocity 
+is reached with lower than the minimal acceleration, flag this as 
+an error condition. Acceleration is constant.
+
+2) A simple gantry robot contains 3 motors. You need to make a 
+linear move between two points in 3D space, i.e. along a line. 
+Adapt the segments of all 3 motors to match the slowest accelerating 
+motor. All 3 motors must accelerate and drive synchronously. 
+Acceleration is constant.
+
+3) Using the X/Y motors of a gantry robot, describe a circular 
+movement. Translate the segments to harmonic waves. Also accelerate 
+for the circular movement.

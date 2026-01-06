@@ -15,6 +15,7 @@
   <Project Path="KataFixedPointArithmetic/KataFixedPointArithmetic.csproj" />
   <Project Path="KataHeap/KataHeap.csproj" />
   <Project Path="KataMicrokernel/KataMicrokernel.csproj" />
+  <Project Path="KataMotionControl/KataMotionControl.csproj" />
   <Project Path="KataNumberConvergence/KataNumberConvergence.csproj" />
   <Project Path="KataPotter/KataPotter.csproj" />
   <Project Path="KataRomanNumerals/KataRomanNumerals.csproj" />
