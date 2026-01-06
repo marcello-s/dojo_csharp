@@ -1,0 +1,16 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2026 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataNumberConvergence: Calculate Square Root
+============================================
+
+1) Implement the simple "Heron's Method" to converge a number towards 
+its square root. xn_1 = (xn + a/xn)/2.0 ; xn = (a + 1.0)/2.0
+source: http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method
+After how many iterations is the result accurate enough?
+
+2) Try to compute the square root by multiple tasks/threads at the same time 
+and print the result to console output.
+Where are the problems when an instance is shared accross all tasks?
