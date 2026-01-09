@@ -28,3 +28,11 @@ dotnet build
 dotnet run
 dotnet test --logger "console;verbosity=detailed"
 ```
+
+SDK upgrade
+```
+dotnet clean
+dotnet new globaljson --sdk-version 10.0.101 --roll-forward latestFeature
+dotnet workload restore
+```
+update <TargetFramework> in .csproj to new version
