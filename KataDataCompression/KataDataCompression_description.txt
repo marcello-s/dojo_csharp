@@ -1,0 +1,99 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2026 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataDataCompression
+===================
+
+Implementations of various entropy encoders.
+
+1) Run-Length Encoding (RLE)
+Encoded as stream of 8bit bytes:
+<[n count],[n value]>,<[n+1 count],[n+1 value+]> ..
+How does the compression ratio uncompressed/compressed perform for different type of data?
+ascii image vs. source code file
+
+source:
+https://en.wikipedia.org/wiki/Run-length_encoding
+
+2) Lempel-Ziv Encoding (LZ), LZ77 (LZ1), LZ78 (LZ2)
+Using a dictionary/view to keep track of repeating pattern in a sliding window. 
+
+1. Set the coding position to the beginning of the input stream.
+2. Find the longest match of in the window for the lookahead buffer.
+3. If the match is found, output the pointer/position P. Move the coding position and the window L bytes forward.
+4. If a match is not found, output a null pointer and the first byte in the lookahead buffer. Move the coding position and the window one byte forward.
+5. If the lookahead buffer is not empty, return to step 2
+
+fill view from input
+while (view is not empty) do
+begin
+	find longest prefix p of view starting in coded part
+	i := position of p in window
+	j := length of p
+	X := first char after p in view
+	output(i,j,X)
+	add j+1 chars
+end
+
+The position i denotes 'how many steps back' in the window to copy the length j to the output.
+For position = 0 and length = 0 the value X is copied to the output.
+
+1       9
+AABCBBABC
+
+encoding	window		lookahead	comment
+<0,0,A>		A			A
+<1,1>		AA			B			1 step back, 1 copy
+<0,0,B>		AAB			C
+<0,0,C>		AABC		B
+<2,1>		AABCB		B			2 steps back, 1 copy
+<1,1>		AABCBB		ABC			1 step back, 1 copy
+<5,3>		AABCBBABC				5 steps back, 3 copy
+
+-> {0,0,A,1,1,0,0,B,0,0,C,2,1,1,1,5,3}
+
+The lookahead buffer is filled as long as there exists a match in the window.
+The match can be found by creating a suffix tree for the window.
+Alternatively a hash table / dictionary can be produced of all unique slices of the window, as the window grows.
+When the window size is reached, the window slides along (ringbuffer) with the input stream.
+
+pseudo code:
+
+fetch or exit
+begin 
+  test match 
+  if (is match)
+  begin
+      while (fetch or break)
+	  begin 
+	    test match
+		if (not a match)
+		begin 
+		  output pointer
+		  advance window by match size, set lookahead to last fetched
+		end 
+	  end 
+  end 
+  else 
+  begin 
+    output null pointer
+	advance window by one, reset lookahead
+  end
+end 
+
+if (is match)
+begin 
+  output pointer
+end
+
+source:
+https://en.wikipedia.org/wiki/LZ77_and_LZ78
+https://msdn.microsoft.com/en-us/library/ee916854.aspx
+https://gist.github.com/mjs3339/c5c26638a7485afaaed6ed171f1bfb0d
+https://searchcode.com/codesearch/view/65550044/
+
+
+sources:
+https://en.wikipedia.org/wiki/Data_compression

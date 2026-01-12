@@ -10,6 +10,7 @@
   <Project Path="KataCarcassonne/KataCarcassonne.csproj" />
   <Project Path="KataCommandDispatcher/KataCommandDispatcher.csproj" />
   <Project Path="KataCompiler/KataCompiler.csproj" />
+  <Project Path="KataDataCompression/KataDataCompression.csproj" />
   <Project Path="KataEventAggregator/KataEventAggregator.csproj" />
   <Project Path="KataEventSync/KataEventSync.csproj" />
   <Project Path="KataFixedPointArithmetic/KataFixedPointArithmetic.csproj" />
