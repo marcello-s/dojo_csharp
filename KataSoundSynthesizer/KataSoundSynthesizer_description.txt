@@ -1,0 +1,147 @@
+﻿/*
+ * The MIT License, Copyright (c) 2011-2026 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataSoundSynthesizer: FM-Synthesizer
+====================================
+
+This Kata is about generating audible sound. The goal is to study 
+a low-level OS API to play stereo buffers of sound output until a 
+simple beep can be played back. Implement voices of different 
+instruments, e.g. 60's electric piano, bass, percussions. Play them 
+on the musical scale based on tone A (440 Hz). Play back sequences of 
+multiple instruments.
+
+1) DirectSound API / WASAPI
+Implement audio buffer output using the DirectSound API. Play back a 
+stereo buffer of a simple beep.
+>> DirectSound API turned out to cause memory access violations. 
+>> Settled with Windows MultiMedia API instead.
+
+sources:
+NAUDIO library
+$ dotnet add package NAudio
+
+2) Musical scale based on tone A (440 Hz)
+Calculate frequencies of the musical scale for 88 keys (piano). 
+An octave contains 8 main tones and 4 half-tones, 12 tones in total.
+
+sources:
+http://en.wikipedia.org/wiki/Equal_temperament
+
+3) FM-Synthesis
+Implement sine-, square-, triangle-, and saw-tooth wave forms.
+Implement a FIR low-pass and a cut-off filter, implement echo. 
+Use a low-frequency oscillator to modulate frequency and/or amplitude 
+of the main tone oscillator. Pass the signal through filters to shape 
+the tone.
+
+sources:
+http://en.wikipedia.org/wiki/Square_wave
+http://en.wikipedia.org/wiki/Triangle_wave
+http://en.wikipedia.org/wiki/Sawtooth_wave
+http://en.wikipedia.org/wiki/State_variable_filter
+
+4) Envelope Curve ADSR (Attack, Decay, Sustain, Release)
+Control the amplitude of the signal using an envelope function.
+
+   /\
+  /  \
+ /    \_________
+/               \
+A    D     S    R
+
+5) Phase shift
+How does phase shift affect the tone? Do you need two sets of oscillators, 
+or can you just phase shift the signal in the output buffers.
+
+6) MIDI
+Read the Midi File Format and use the key note message to cue tones that play.
+The message contains the key number, whether the key was pressed or released
+and a delta time when the next key is cued.
+The implementation should convert the delta time to number of samples which 
+have to generated until the next key is played.
+For instruments such as a piano the synthesizer voice should be polyphonic, 
+meaning it shoould be able to play at least 10 keys at the same time.
+
+sources:
+
+
+7) PCM / music samples
+It turns out percussions are hard to generate. Therefore for this kind of sound 
+sampled music can be played. 
+Read the .wav file format. Convert 16bit PCM (pulse code modulation) to float 
+format so they can be integrated with synthesized voices.
+Configure the wave voice in such a way that it can be looped or played in reverse. 
+The wave voice should also be able to cue on the midi message.
+Map the voice to GM2 (General MIDI Level 2) instruments.
+
+Selection (Control Change Message):
+cc#0 (Bank Select MSB) = 121
+cc#32 (Bank Select LSB) = 0
+Program Change
+
+32 simultaneous notes
+16 channels
+16 simultaneous melodic instruments (all channels)
+2 percussion kits (channels 10,11)
+
+patch#	bank#	instrumnet
+117		0		Melodic Tom 1
+		1		Melodic Tom 2
+		2		Real Tom
+		3		Rock Tom
+118		0		Synth Drum
+		1		Analog Tom
+		2		Electric Percussion
+119		0		Reverse Cymbal
+
+Drum bank selection:
+cc#0 (Bank Select MSB) = 120
+cc#32 (Bank Select LSB) = 0
+Program Change select drum kit
+1	Standard Kit (MIDI Level 1)
+9	Room Kit
+17	Power Kit
+25	Electronic Kit
+26	TR-808 Kit
+33	Jazz Kit
+41	Brush Kit
+49	Orchestra Kit
+57	Sound FX
+
+Channel 10
+note#	instrument
+35		Bass Drum 2
+36		Bass Drum 1
+38		Snare Drum 1
+40		Snare Drum 2
+41		Low Tom 2
+42		Closed Hi-hat
+43		Low Tom 1
+44		Pedal Hi-hat
+45		Mid Tom 2
+46		Open Hi-hat
+47		Mid Tom 1
+48		High Tom 2
+49		Crash Cymbal 1
+50		High Tom 1
+
+
+sources:
+https://en.wikipedia.org/wiki/General_MIDI
+https://en.wikipedia.org/wiki/General_MIDI_Level_2
+
+8) Drum Beats
+Implement a simple drum pattern, i.e. Rock'n Roll.
+
+          1 & 2 & 3 & 4 &
+high hat  *   *   *   *
+snare         *       *
+bass      *       *  
+
+          1 & 2 & 3 & 4 &
+high hat  * * * * * * * *
+snare         *       *
+bass      *     * *  
