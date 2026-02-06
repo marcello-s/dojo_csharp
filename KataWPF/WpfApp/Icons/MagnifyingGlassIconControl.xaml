@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="WpfApp.Icons.MagnifyingGlassIconControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="48">
+    <Canvas>
+        <Canvas.RenderTransform>
+            <TranslateTransform X="-20" Y="-20"/>
+        </Canvas.RenderTransform>
+
+        <Path x:Name="Path_Copy66" Stretch="Fill" Fill="#FFBFDEE2" Data="F1 M 740.082,725.941C 737.162,729.814 731.657,730.585 727.785,727.666C 723.911,724.745 723.141,719.239 726.061,715.366C 728.979,711.495 734.487,710.723 738.358,713.645C 742.229,716.565 742.999,722.069 740.082,725.941 Z M 740.486,710.825C 735.055,706.729 727.335,707.811 723.239,713.241C 719.146,718.669 720.227,726.39 725.658,730.485C 730.393,734.054 736.87,733.687 741.165,729.934C 741.165,729.934 758.153,742.766 759.613,743.847C 761.074,744.93 763.873,741.005 762.666,739.799C 761.461,738.594 744.217,725.886 744.217,725.886C 746.646,720.723 745.221,714.395 740.486,710.825 Z "/>
+    </Canvas>
+</UserControl>

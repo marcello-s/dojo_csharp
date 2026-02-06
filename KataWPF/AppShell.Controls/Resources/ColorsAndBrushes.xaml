@@ -1,0 +1,32 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="ButtonGreyDark" Color="#FFB6B5B6" />
+    <SolidColorBrush x:Key="ButtonGreyLight" Color="#FFCFD0D1" />
+    <SolidColorBrush x:Key="ButtonOrangeLight" Color="#FFE9D6B0" />
+    <SolidColorBrush x:Key="ButtonOrangeDark" Color="#FFF39A27" />
+    <SolidColorBrush x:Key="ButtonOrange" Color="#FFE64821" />
+    <SolidColorBrush x:Key="ButtonYellow" Color="#FFE7E814" />
+    <LinearGradientBrush x:Key="ButtonGreyGradient" StartPoint="0.500004,0.0930607" EndPoint="0.500004,0.949565">
+        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+        <GradientStop Color="#FFCFD0D1" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonOrangeGradient" StartPoint="0.500004,0.0930607" EndPoint="0.500004,0.949565">
+        <GradientStop Color="#FFE9D6B0" Offset="0"/>
+        <GradientStop Color="#FFF39A27" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonYellowGradient" StartPoint="0.500004,0.0930607" EndPoint="0.500004,0.949565">
+        <GradientStop Color="#FFE9D6B0" Offset="0"/>
+        <GradientStop Color="#FFE7E814" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GreyGradientBrush" StartPoint="0.5,0" EndPoint="0.5,1.0">
+        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+        <GradientStop Color="#FFCFD0D1" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ReversedGreyGradientBrush" StartPoint="0.5,0" EndPoint="0.5,1.0">
+        <GradientStop Color="#FFCFD0D1" Offset="0"/>
+        <GradientStop Color="#FFFFFFFF" Offset="1"/>
+    </LinearGradientBrush>
+</ResourceDictionary>

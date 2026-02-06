@@ -1,0 +1,50 @@
+<UserControl x:Class="WpfApp.Views.SelectRangeView"
+             xmlns:my="clr-namespace:AppShell.Controls;assembly=AppShell.Controls"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Resources\Manifest.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Margin="10">
+        <Border Height="30" Style="{StaticResource ShellViewRegionBackgroundBorderStyle}" CornerRadius="6">
+            <TextBlock x:Name="Title" 
+                       TextWrapping="Wrap" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Left" 
+                       Margin="10,0,0,0"
+                       FontFamily="Tahoma"
+                       FontSize="16"
+                       Foreground="White"
+                       Text="Select Range"/>
+        </Border>
+        
+        <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
+            <TextBlock x:Name="Instruction" Text="Please put empty vials on Grid(s):"/>
+            <TextBlock x:Name="GridRange" Text="10 - 11" Margin="5,0,0,0"/>
+        </StackPanel>        
+        <RadioButton x:Name="AllTubes" Margin="0,20,0,0">
+            <TextBlock x:Name="AllTubesText" Text="All tubes"/>
+        </RadioButton>
+        <RadioButton x:Name="SpecifyRange" Margin="0,20,0,0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="SpecifyRangeText" Text="Specify Range"/>
+                <TextBlock x:Name="RangeLowerValueText" Text="[1]" Margin="10,0,0,0"/>
+                <TextBlock Text="-" Margin="5,0,0,0"/>
+                <TextBlock x:Name="RangeUpperValueText" Text="[160]" Margin="5,0,0,0"/>
+            </StackPanel>
+        </RadioButton>
+        <Border Height="40" Style="{StaticResource ShellViewRegionBackgroundBorderStyle}" CornerRadius="6" Margin="0,20,0,0">
+            <my:RangeSlider x:Name="TubeRange" Minimum="1" Maximum="160" Margin="30,0,30,0" VerticalAlignment="Center"/>
+        </Border>
+        
+    </StackPanel>
+</UserControl>

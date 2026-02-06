@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>        
+        <ResourceDictionary Source="ToggleTouchButtonTemplate.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="ToggleTouchButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template" Value="{StaticResource ToggleTouchButtonTemplate}"/>
+    </Style>
+</ResourceDictionary>

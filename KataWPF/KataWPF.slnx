@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AppShell.Controls/AppShell.Controls.csproj" />
+  <Project Path="ViewModelLib.Tests/ViewModelLib.Tests.csproj" />
+  <Project Path="ViewModelLib/ViewModelLib.csproj" />
+  <Project Path="WpfApp/WpfApp.csproj" />
+</Solution>

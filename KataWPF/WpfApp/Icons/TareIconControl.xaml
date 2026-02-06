@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="WpfApp.Icons.TareIconControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="48">
+    <Canvas>
+        <Canvas.RenderTransform>
+            <TranslateTransform X="-14" Y="-20"/>
+        </Canvas.RenderTransform>
+        <Path x:Name="Path_Tube" Stretch="Fill" Data="F1 M 564.84,142.164C 560.227,142.785 557.547,144.064 557.545,145.401L 557.545,145.401C 557.545,145.401 557.386,174.689 557.386,176.003L 557.386,176.003C 557.386,178.565 560.278,182.396 569.821,182.396L 569.821,182.396C 576.36,182.396 583.488,181.586 583.488,177.814L 583.488,177.814C 583.488,177.435 583.556,171.335 583.606,145.444L 583.606,145.444C 583.606,144.909 583.176,144.364 582.272,143.851L 582.272,143.851C 579.996,142.556 575.328,141.803 570.485,141.803L 570.485,141.803C 568.585,141.803 566.66,141.919 564.84,142.164 Z ">
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="-3.02616e-005,0.500005" EndPoint="0.999981,0.500005">
+                    <GradientStop Color="#FFA6A8AC" Offset="0"/>
+                    <GradientStop Color="#FFA6A8AC" Offset="0.00508118"/>
+                    <GradientStop Color="#FFF1F1F2" Offset="0.5"/>
+                    <GradientStop Color="#FFA6A8AC" Offset="0.989853"/>
+                    <GradientStop Color="#FFA6A8AC" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Path x:Name="Path_Top" Stretch="Fill" Data="F1 M 565.124,142.166C 559.072,142.979 556.573,145.006 559.539,146.691L 559.539,146.691C 562.505,148.378 569.817,149.083 575.867,148.27L 575.867,148.27C 581.919,147.457 584.419,145.43 581.452,143.745L 581.452,143.745C 579.321,142.534 574.948,141.828 570.411,141.828L 570.411,141.828C 568.632,141.828 566.828,141.936 565.124,142.166 Z " >
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0.243944,1.41712" EndPoint="2.17972,1.41712">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <SkewTransform CenterX="0.243944" CenterY="1.41712" AngleX="-58.9555" AngleY="0"/>
+                            <RotateTransform CenterX="0.243944" CenterY="1.41712" Angle="-74.4777"/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                    <GradientStop Color="#FFFFFFFF" Offset="0.00508118"/>
+                    <GradientStop Color="#FFBCBEC0" Offset="0.55838"/>
+                    <GradientStop Color="#FFF1F1F2" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Path x:Name="Path_Bottom" Stretch="Fill" Data="F1 M 581.878,176.663C 581.878,178.375 576.906,180.939 570.619,180.939C 564.333,180.939 559.112,178.375 559.112,176.663C 559.112,174.951 564.209,173.563 570.495,173.563C 576.782,173.563 581.878,174.951 581.878,176.663 Z " Canvas.Left="2" Canvas.Top="32">
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0.00733258,0.5" EndPoint="1.00735,0.5">
+                    <GradientStop Color="#B3FFFFFF" Offset="0"/>
+                    <GradientStop Color="#B3FFFFFF" Offset="0.00508118"/>
+                    <GradientStop Color="#B3FFFFFF" Offset="0.55838"/>
+                    <GradientStop Color="#B3F1F1F2" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+    </Canvas>  
+    
+</UserControl>

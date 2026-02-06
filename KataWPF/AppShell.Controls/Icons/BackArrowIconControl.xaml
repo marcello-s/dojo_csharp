@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="AppShell.Controls.Icons.BackArrowIconControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="48">
+    <Canvas>
+        <Canvas.RenderTransform>
+            <TranslateTransform X="-20" Y="-20" />
+        </Canvas.RenderTransform>
+        <Path Stretch="Fill" Data="F1 M 454.238,162.699L 454.267,162.727L 475.42,183.883L 475.42,172.123L 487.046,172.123L 487.046,153.353L 475.423,153.353L 475.423,141.518L 454.238,162.699 Z " >
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0.500008,-0.0364123" EndPoint="0.500008,1.05894">
+                    <GradientStop Color="#FFBFDEE1" Offset="0"/>
+                    <GradientStop Color="#FFBFDEE1" Offset="0.155731"/>
+                    <GradientStop Color="#FF437B85" Offset="0.509995"/>
+                    <GradientStop Color="#FF437B85" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Path Stretch="Fill" StrokeThickness="1.33333" StrokeLineJoin="Round" Stroke="#FF437C86" Data="F1 M 487.046,172.122L 475.42,172.122L 475.42,183.884L 454.268,162.727L 454.238,162.7L 475.423,141.518L 475.423,153.354L 487.046,153.354L 487.046,172.122 Z " />
+    </Canvas>
+</UserControl>

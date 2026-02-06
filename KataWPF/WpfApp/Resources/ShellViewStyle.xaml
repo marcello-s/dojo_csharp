@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ColorsAndBrushes.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="ShellViewBackgroundGridStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{StaticResource ShellViewBackgroundBrush}"/>
+    </Style>
+    
+    <Style x:Key="ShellViewRegionBackgroundBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource ShellViewRegionBackgroundBrush}"/>
+    </Style>
+    
+    <Style x:Key="ShellViewErrorBackgroundBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource ShellViewErrorBackgroundBrush}"/>
+    </Style>
+    
+    <Style x:Key="ShellViewBackgroundCanvasStyle" TargetType="{x:Type Canvas}">
+        <Setter Property="Background" Value="{StaticResource ShellViewRegionBackgroundBrush}"/>
+    </Style>
+</ResourceDictionary>

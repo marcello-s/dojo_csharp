@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="WpfApp.Icons.ControlBoxExitIconControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="35">
+    <Canvas>
+        <Canvas.RenderTransform>
+            <TranslateTransform X="-16" Y="-16"/>
+        </Canvas.RenderTransform>
+        <StackPanel>
+            <Path Stretch="Fill" StrokeThickness="1.33333" StrokeLineJoin="Round" Fill="#FFBFDEE2" Data="F1 M 896.96,481.754L 896.965,481.76L 888.257,490.468C 887.82,490.908 887.598,491.484 887.598,492.06L 887.598,492.069C 887.598,492.645 887.82,493.221 888.257,493.661L 892.441,497.842C 892.864,498.268 893.413,498.481 893.965,498.5L 894.11,498.5C 894.662,498.481 895.209,498.268 895.634,497.842L 904.342,489.134L 913.048,497.842C 913.473,498.268 914.02,498.481 914.574,498.5L 914.717,498.5C 915.269,498.481 915.82,498.268 916.241,497.842L 920.426,493.659C 920.864,493.221 921.085,492.645 921.088,492.072L 921.088,492.057C 921.085,491.481 920.864,490.908 920.426,490.468L 911.717,481.76L 911.722,481.754L 920.426,473.052C 920.866,472.612 921.088,472.036 921.088,471.457L 921.088,471.455C 921.088,470.877 920.866,470.301 920.426,469.861L 916.241,465.676C 915.361,464.793 913.932,464.793 913.048,465.676L 904.342,474.385L 895.634,465.676C 894.752,464.793 893.324,464.793 892.441,465.676L 888.257,469.861C 887.817,470.301 887.598,470.88 887.598,471.455L 887.598,471.457C 887.598,472.033 887.817,472.612 888.257,473.052L 896.96,481.754 Z "/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" FontFamily="Arial" FontSize="10" Foreground="#FFBDDFE7" Text="close"/>            
+        </StackPanel>                
+    </Canvas>
+
+</UserControl>

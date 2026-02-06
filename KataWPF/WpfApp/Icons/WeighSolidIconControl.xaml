@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="WpfApp.Icons.WeighSolidIconControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="48">
+    <Canvas>
+        <Canvas.RenderTransform>
+            <TranslateTransform X="-14" Y="-20"/>
+        </Canvas.RenderTransform>
+        <Path x:Name="Path_Tube" Stretch="Fill" Data="F1 M 564.836,229.191C 560.224,229.812 557.546,231.092 557.543,232.428L 557.543,232.428C 557.543,232.428 557.384,261.714 557.384,263.029L 557.384,263.029C 557.384,265.591 560.276,269.422 569.82,269.422L 569.82,269.422C 576.359,269.422 583.487,268.613 583.487,264.841L 583.487,264.841C 583.487,264.46 583.555,258.362 583.605,232.471L 583.605,232.471C 583.605,231.936 583.176,231.391 582.27,230.877L 582.27,230.877C 579.995,229.584 575.326,228.831 570.482,228.831L 570.482,228.831C 568.582,228.831 566.656,228.946 564.836,229.191 Z ">
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="9.3109e-006,0.500005" EndPoint="0.999981,0.500005">
+                    <GradientStop Color="#FFA6A8AC" Offset="0"/>
+                    <GradientStop Color="#FFA6A8AC" Offset="0.00508118"/>
+                    <GradientStop Color="#FFF1F1F2" Offset="0.5"/>
+                    <GradientStop Color="#FFA6A8AC" Offset="0.989853"/>
+                    <GradientStop Color="#FFA6A8AC" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Path x:Name="Path_Top" Stretch="Fill" Data="F1 M 565.204,229.193C 559.154,230.007 556.655,232.032 559.621,233.719L 559.621,233.719C 562.588,235.405 569.899,236.111 575.949,235.298L 575.949,235.298C 582.001,234.484 584.501,232.457 581.535,230.772L 581.535,230.772C 579.402,229.561 575.029,228.856 570.492,228.856L 570.492,228.856C 568.713,228.856 566.909,228.964 565.204,229.193 Z ">
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0.244421,1.41745" EndPoint="2.18023,1.41745">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <SkewTransform CenterX="0.244421" CenterY="1.41745" AngleX="-58.9566" AngleY="0"/>
+                            <RotateTransform CenterX="0.244421" CenterY="1.41745" Angle="-74.4783"/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                    <GradientStop Color="#FFFFFFFF" Offset="0.00508118"/>
+                    <GradientStop Color="#FFBCBEC0" Offset="0.55838"/>
+                    <GradientStop Color="#FFF1F1F2" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Path x:Name="Path_Highlight" Stretch="Fill" Fill="#FFECEDEE" Data="F1 M 578.35,236.816L 578.342,246.272C 578.986,246.42 579.583,246.589 580.116,246.776L 580.116,236.816L 578.35,236.816 Z " Canvas.Top="8" Canvas.Left="20"/>
+        <Path x:Name="Path_Solid" Stretch="Fill" Data="F1 M 581.536,263.37C 581.536,265.082 576.565,267.646 570.279,267.646C 563.992,267.646 558.77,265.082 558.77,263.37C 558.77,245.202 563.867,243.56 570.154,243.56C 576.44,243.56 581.536,245.932 581.536,263.37 Z " Canvas.Top="15" Canvas.Left="1">
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0.00734064,0.499989" EndPoint="1.00736,0.499989">
+                    <GradientStop Color="#B3FFFFFF" Offset="0"/>
+                    <GradientStop Color="#B3FFFFFF" Offset="0.00508118"/>
+                    <GradientStop Color="#B3FFFFFF" Offset="0.55838"/>
+                    <GradientStop Color="#B3F1F1F2" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Path x:Name="Path_SolidShade" Stretch="Fill" Fill="#FFC7CACB" Data="F1 M 581.536,263.37C 581.536,265.082 576.565,267.646 570.278,267.646C 560.784,267.646 558.309,263.37 558.771,263.37C 573.93,263.37 581.536,245.932 581.536,263.37 Z " Canvas.Top="26" Canvas.Left="1" />        
+    </Canvas>
+</UserControl>
