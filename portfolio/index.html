@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcel Schneider | Software Engineer & Creative Developer</title>
+    <meta name="description" content="Software Engineer. Passionate about C#, C++, and music production.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#home" class="logo">
+                    <span class="logo-text">Marcel</span>
+                    <span class="logo-accent">Schneider</span>
+                </a>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#media" class="nav-link">Media</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-grid"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-up">
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="gradient-text">Marcel Schneider</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Software Engineer <span class="separator">•</span> Creative Developer
+                    </p>
+                    <p class="hero-description">
+                        A tech-savvy software engineer with a background in hardware, passionate about building robust systems and creating music.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#projects" class="btn btn-primary">
+                            View My Work
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            Get In Touch
+                        </a>
+                    </div>
+                    <div class="hero-social">
+                        <a href="https://github.com/marcello-s" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/marcel-schneider-05480512b/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@marcellos5778" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image" data-aos="fade-left">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <span class="window-dot red"></span>
+                            <span class="window-dot yellow"></span>
+                            <span class="window-dot green"></span>
+                        </div>
+                        <div class="window-content">
+                            <pre><code><span class="code-keyword">class</span> <span class="code-class">Developer</span> {
+<span class="code-keyword">public</span>:
+    <span class="code-function">Developer</span>() {
+        name = <span class="code-string">"Marcel Schneider"</span>;
+        role = <span class="code-string">"Software Engineer"</span>;
+        company = <span class="code-string">"..."</span>;
+        skills = {<span class="code-string">"C#"</span>, <span class="code-string">"WPF"</span>, <span class="code-string">"C++"</span>};
+        passion = {<span class="code-string">"Travel"</span>, <span class="code-string">"Music"</span>};
+    }
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Get to know me better</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right">
+                    <div class="about-card">
+                        <h3>Background & Experience</h3>
+                        <p>
+                            I'm a tech-savvy software engineer currenntly open for work.
+                            With a unique background that bridges both 
+                            hardware and software engineering, I bring a comprehensive understanding of technology 
+                            from the ground up.
+                        </p>
+                        <p>
+                            My expertise spans across multiple domains, from desktop application development with C# and WPF
+                            to C++ programming. I'm 
+                            passionate about building robust, efficient systems that solve real-world problems.
+                        </p>
+                        <p>
+                            Beyond coding, I have a deep appreciation for <strong>travel</strong> and <strong>music</strong>. 
+                            I channel my creative energy into music production, sharing tutorials and compositions on 
+                            my YouTube channel. This balance between technical precision and creative expression shapes 
+                            my approach to problem-solving.
+                        </p>
+                    </div>
+                    
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div>
+                                <h4>Current Position</h4>
+                                <p>currently open for work</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-code"></i>
+                            <div>
+                                <h4>Specialization</h4>
+                                <p>C#, WPF, C++</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-music"></i>
+                            <div>
+                                <h4>Creative Side</h4>
+                                <p>Music Production & Tutorial Creator</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-globe"></i>
+                            <div>
+                                <h4>Interests</h4>
+                                <p>Travel & Music</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-stats" data-aos="fade-left">
+                    <div class="stat-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Multiple</h3>
+                        <p>Active Projects</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-code-branch"></i>
+                        <h3>Open Source</h3>
+                        <p>Contributor</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-video"></i>
+                        <h3>20+</h3>
+                        <p>Tutorial Videos</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Passion</h3>
+                        <p>Driven Developer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Technical Skills</h2>
+                <p class="section-subtitle">Technologies I work with</p>
+            </div>
+            
+            <div class="skills-grid">
+                <!-- Programming Languages -->
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <h3>
+                        <i class="fas fa-code"></i>
+                        Programming Languages
+                    </h3>
+                    <div class="skill-tags">                        
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                
+                <!-- Frameworks & Technologies -->
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <h3>
+                        <i class="fas fa-layer-group"></i>
+                        Frameworks & UI
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">WPF</span>
+                        <span class="skill-tag">.NET</span>
+                        <span class="skill-tag">XAML</span>
+                    </div>
+                </div>
+                
+                <!-- Tools & DevOps -->
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                    <h3>
+                        <i class="fas fa-tools"></i>
+                        Tools & DevOps
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">CMake</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">CI/CD</span>
+                    </div>
+                </div>
+                
+                <!-- Specialized Skills -->
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+                    <h3>
+                        <i class="fas fa-broadcast-tower"></i>
+                        Specialized
+                    </h3>
+                    <div class="skill-tags">                                                
+                        <span class="skill-tag">Clean Code</span>
+                        <span class="skill-tag">Unit Testing</span>
+                    </div>
+                </div>
+                
+                <!-- Creative Skills -->
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
+                    <h3>
+                        <i class="fas fa-music"></i>
+                        Creative
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Cakewalk</span>
+                        <span class="skill-tag">Music Production</span>
+                        <span class="skill-tag">Audio Engineering</span>
+                        <span class="skill-tag">Content Creation</span>
+                    </div>
+                </div>
+                
+                <!-- Soft Skills -->
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="600">
+                    <h3>
+                        <i class="fas fa-users"></i>
+                        Professional
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Team Collaboration</span>
+                        <span class="skill-tag">Documentation</span>
+                        <span class="skill-tag">Teaching</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Showcasing my latest work</p>
+            </div>
+            
+            <div class="projects-grid">                
+                <!-- Project 1: KataWPF -->
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/marcello-s/dojo_csharp/tree/main/KataWPF" target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-tech-badge">C#</div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">KataWPF - C# Dojo</h3>
+                        <p class="project-description">
+                            A collection of coding kata exercises and practice projects focusing on WPF (Windows Presentation Foundation) 
+                            desktop application development. Part of the broader dojo_csharp repository, showcasing clean code practices, 
+                            MVVM architecture, and C# proficiency.
+                        </p>
+                        <div class="project-tech">
+                            <span>C#</span>
+                            <span>WPF</span>
+                            <span>XAML</span>
+                            <span>.NET</span>
+                            <span>MVVM</span>
+                        </div>
+                        <a href="https://github.com/marcello-s/dojo_csharp/tree/main/KataWPF" target="_blank" rel="noopener noreferrer" class="btn btn-small">
+                            View Project <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Heliconia -->
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/marcello-s/Heliconia" target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-tech-badge">C++</div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Heliconia</h3>
+                        <p class="project-description">
+                            A helloworld project built with C++. Features comprehensive 
+                            CI/CD pipeline using GitHub Actions, CMake build system, and extensive unit testing. 
+                            Demonstrates expertise CMake, unit-testing, and modern C++ practices.
+                        </p>
+                        <div class="project-tech">
+                            <span>C++</span>
+                            <span>CMake</span>
+                            <span>GitHub Actions</span>
+                            <span>CI/CD</span>
+                            <span>Unit Testing</span>
+                        </div>
+                        <a href="https://github.com/marcello-s/Heliconia" target="_blank" rel="noopener noreferrer" class="btn btn-small">
+                            View Project <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- More projects placeholder -->
+                <div class="project-card placeholder" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-image">
+                        <div class="coming-soon">
+                            <i class="fas fa-code"></i>
+                            <span>More Projects on GitHub</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Exploring New Technologies</h3>
+                        <p class="project-description">
+                            View more repositories on GitHub. Stay tuned for updates!
+                        </p>
+                        <div class="project-tech">
+                            <span>In Development</span>
+                        </div>
+                        <a href="https://github.com/marcello-s" target="_blank" rel="noopener noreferrer" class="btn btn-small">
+                            Visit GitHub <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Section (YouTube) -->
+    <section id="media" class="media section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Media & Content</h2>
+                <p class="section-subtitle">Music production tutorials and creative works</p>
+            </div>
+            
+            <div class="media-content">
+                <div class="media-intro" data-aos="fade-right">
+                    <div class="youtube-badge">
+                        <i class="fab fa-youtube"></i>
+                        <span>@marcellos5778</span>
+                    </div>
+                    <h3>Cakewalk Tutorials & Music Making</h3>
+                    <p>
+                        On my YouTube channel, I share my passion for music production through comprehensive tutorials 
+                        on Cakewalk DAW. From project setup and MIDI manipulation to advanced mixing techniques, 
+                        I guide fellow music enthusiasts through the creative process step-by-step.
+                    </p>
+                    <div class="media-stats">
+                        <div class="stat">
+                            <i class="fas fa-video"></i>
+                            <span>20+ Videos</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span>10 Subscribers</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <span>Regular Updates</span>
+                        </div>
+                    </div>
+                    <a href="https://www.youtube.com/@marcellos5778" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <i class="fab fa-youtube"></i>
+                        Visit My Channel
+                    </a>
+                </div>
+                
+                <div class="video-showcase" data-aos="fade-left">
+                    <div class="video-grid">
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>Cakewalk - Exporting & Mixing</h4>
+                            <p>14:42 • 16 views</p>
+                        </div>
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>Combining & Splitting Midi-Tracks</h4>
+                            <p>17:10 • 595 views</p>
+                        </div>
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>Cakewalk - Midi Chord Analyzer</h4>
+                            <p>599 views</p>
+                        </div>
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>Cakewalk - Markers and Sections</h4>
+                            <p>305 views</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="playlist-section" data-aos="fade-up">
+                <h3><i class="fas fa-list"></i> Featured Playlist: Making Music step-by-step</h3>
+                <p>A comprehensive series covering the creative process of music production</p>
+                <div class="playlist-videos">
+                    <div class="playlist-item">
+                        <i class="fas fa-music"></i>
+                        <span>Finding Ideas for Music Making</span>
+                        <span class="views">15 views</span>
+                    </div>
+                    <div class="playlist-item">
+                        <i class="fas fa-music"></i>
+                        <span>Project Template</span>
+                        <span class="views">26 views</span>
+                    </div>
+                    <div class="playlist-item">
+                        <i class="fas fa-music"></i>
+                        <span>Repetition and Variation</span>
+                        <span class="views">10 views</span>
+                    </div>
+                    <div class="playlist-item">
+                        <i class="fas fa-music"></i>
+                        <span>Arrangement Template</span>
+                        <span class="views">48 views</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's create something amazing together</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-text">
+                        <h3>Let's Connect</h3>
+                        <p>
+                            I'm always interested in hearing about new projects, opportunities, and collaborations. 
+                            Whether you want to discuss software development, music production, or just say hello, 
+                            feel free to reach out!
+                        </p>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <a href="https://www.linkedin.com/in/marcel-schneider-05480512b/" target="_blank" rel="noopener noreferrer" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>LinkedIn</h4>
+                                <p>Connect professionally</p>
+                            </div>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                        <a href="https://github.com/marcello-s" target="_blank" rel="noopener noreferrer" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>GitHub</h4>
+                                <p>Explore my code</p>
+                            </div>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                        <a href="https://www.youtube.com/@marcellos5778" target="_blank" rel="noopener noreferrer" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>YouTube</h4>
+                                <p>Watch my tutorials</p>
+                            </div>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                        <div class="contact-method email-placeholder">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Email</h4>
+                                <p>marcelschn@gmail.com</p>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <h3>Marcel Schneider</h3>
+                        <p>Software Engineer • Creative Developer</p>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Navigation</h4>
+                            <ul>
+                                <li><a href="#home">Home</a></li>
+                                <li><a href="#about">About</a></li>
+                                <li><a href="#skills">Skills</a></li>
+                                <li><a href="#projects">Projects</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4>Connect</h4>
+                            <ul>
+                                <li><a href="https://github.com/marcello-s" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                                <li><a href="https://www.linkedin.com/in/marcel-schneider-05480512b/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                                <li><a href="https://www.youtube.com/@marcellos5778" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4>Interests</h4>
+                            <ul>
+                                <li>Software-Defined Radio</li>
+                                <li>Music Production</li>
+                                <li>Travel</li>
+                                <li>Open Source</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Marcel Schneider. Built with passion, code, and a touch of AI.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/marcello-s" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/marcel-schneider-05480512b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@marcellos5778" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
