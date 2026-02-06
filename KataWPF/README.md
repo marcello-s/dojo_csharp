@@ -12,9 +12,9 @@ touchscreen buttons. The demo includes a center area for screens and a navigatio
 - error overview
 - result screen
 
-|![welcome screen](/docs/images/1_welcome_screen.png)|![slider control](/docs/images/2_slider_control.png)|
-|----------------------------------------------------|----------------------------------------------------|
-|![error overview](/docs/images/3_error_overview.png)|![result screen](/docs/images/4_result_screen.png)  |
+|![welcome screen](docs/images/1_welcome_screen.png)|![slider control](docs/images/2_slider_control.png)|
+|---------------------------------------------------|---------------------------------------------------|
+|![error overview](docs/images/3_error_overview.png)|![result screen](docs/images/4_result_screen.png)  |
 
 ## Setup
 
