@@ -6,9 +6,10 @@
     --bg-primary: #ffffff;
     --bg-secondary: #f8fafc;
     --bg-tertiary: #f1f5f9;
+    --text-hero: #f1f5f9;
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --text-tertiary: #64748b;
+    --text-tertiary: #64748b;    
     --accent-primary: #3b82f6;
     --accent-secondary: #8b5cf6;
     --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
@@ -46,6 +47,7 @@
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --bg-tertiary: #334155;
+    --text-hero: #f1f5f9;
     --text-primary: #f1f5f9;
     --text-secondary: #cbd5e1;
     --text-tertiary: #94a3b8;
@@ -79,6 +81,20 @@ body {
     line-height: 1.6;
     transition: background-color var(--transition-base), color var(--transition-base);
     overflow-x: hidden;
+    background-image: url("../img/bkg_blur.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;    
+}
+
+/* Optional: add readability overlay */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  pointer-events: none;
 }
 
 a {
@@ -273,14 +289,23 @@ button {
 }
 
 .hero-title {
+    color: var(--text-hero);
     font-size: 3.5rem;
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: var(--spacing-md);
 }
 
+.hero-card {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
 .hero-subtitle {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-md);
     font-weight: 500;
@@ -329,7 +354,8 @@ button {
 .btn-secondary {
     background-color: transparent;
     border: 2px solid var(--border-color);
-    color: var(--text-primary);
+    /* color: var(--text-primary); */
+    color: white;
 }
 
 .btn-secondary:hover {
@@ -449,6 +475,14 @@ button {
 .section-subtitle {
     font-size: 1.125rem;
     color: var(--text-tertiary);
+}
+
+.section-card {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
 }
 
 /* ===================================
@@ -971,8 +1005,15 @@ button {
     box-shadow: var(--shadow-md);
 }
 
+.contact-card {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
 .email-placeholder {
-    /* opacity: 0.6; */
     cursor: default;
 }
 
