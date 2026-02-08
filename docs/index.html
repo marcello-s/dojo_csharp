@@ -372,6 +372,26 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- Image Gallery -->
+                 <div>
+                    <!-- 2x2 Grid -->
+                    <div class="gallery-grid gallery-card" id="gallery" data-aos="fade-up" data-aos-delay="300">
+                        <!-- Thumbnails will be inserted here by JavaScript -->
+                    </div>
+
+                    <!-- Lightbox Overlay -->
+                    <div class="lightbox-overlay" id="lightbox">
+                        <button class="close-btn" onclick="closeLightbox()">&times;</button>
+                        <button class="nav-btn prev" onclick="changeImage(-1)">&#10094;</button>
+                        <button class="nav-btn next" onclick="changeImage(1)">&#10095;</button>
+                        
+                        <div class="lightbox-content">
+                            <img class="lightbox-image" id="lightbox-img" src="" alt="">
+                            <div class="image-counter" id="counter">1 / 4</div>
+                        </div>
+                    </div>
+                 </div>
                 
                 <!-- More projects placeholder -->
                 <div class="project-card placeholder" data-aos="fade-up" data-aos-delay="300">

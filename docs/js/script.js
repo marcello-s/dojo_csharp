@@ -317,6 +317,20 @@ document.addEventListener('keydown', (e) => {
             mobileMenuToggle.click();
         }
     }
+
+    // Image gallery
+    if (!lightbox.classList.contains('active')) {
+        return;
+    }    
+    if (e.key === 'Escape') {
+        closeLightbox();
+    }
+    if (e.key === 'ArrowLeft') {
+        changeImage(-1);
+    }
+    if (e.key === 'ArrowRight') {
+        changeImage(1);
+    }
 });
 
 // ===================================
@@ -433,3 +447,95 @@ navMenuObserver.observe(navMenu, { attributes: true });
 // Loading Complete
 // ===================================
 console.log('%c✨ Portfolio loaded successfully!', 'font-size: 16px; color: #10b981; font-weight: bold;');
+
+// ===================================
+// Image Gallery
+// ===================================
+
+// Image Data - Using the fetched images
+const images = [
+    {
+        src: "img/vmlib/1_welcome_screen.png",
+        title: "Welcome Screen",
+        alt: "app welcome screen"
+    },
+    {
+        src: "img/vmlib/2_slider_control.png",
+        title: "Slider Control",
+        alt: "app screen slider control"
+    },
+    {
+        src: "img/vmlib/3_error_overview.png",
+        title: "Error Overview",
+        alt: "app screen error overview"
+    },
+    {
+        src: "img/vmlib/4_result_screen.png",
+        title: "Result Screen",
+        alt: "app result screen"
+    }
+];
+
+let currentIndex = 0;
+const gallery = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const counter = document.getElementById('counter');
+
+// Initialize Gallery
+function initGallery() {
+    images.forEach((img, index) => {
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'thumbnail';
+        thumbnail.onclick = () => openLightbox(index);
+        
+        thumbnail.innerHTML = `
+            <img src="${img.src}" alt="${img.alt}" loading="lazy">
+            <div class="thumbnail-overlay">
+                <div class="thumbnail-title">${img.title}</div>
+            </div>
+        `;
+        
+        gallery.appendChild(thumbnail);
+    });
+}
+
+// Open Lightbox
+function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+// Close Lightbox
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+}
+
+// Change Image (Next/Previous)
+function changeImage(direction) {
+    currentIndex += direction;
+    
+    // Loop navigation
+    if (currentIndex >= images.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    
+    updateLightbox();
+}
+
+// Update Lightbox Content
+function updateLightbox() {
+    lightboxImg.src = images[currentIndex].src;
+    lightboxImg.alt = images[currentIndex].alt;
+    counter.textContent = `${currentIndex + 1} / ${images.length}`;
+}
+
+// Close on background click
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+// Initialize
+initGallery();
