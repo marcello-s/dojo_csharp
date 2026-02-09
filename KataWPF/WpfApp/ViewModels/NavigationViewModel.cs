@@ -102,6 +102,38 @@ public class NavigationViewModel : ViewModelBase
         }
     }
 
+    public IEnumerable<IResult> Back()
+    {
+        var navigator = IoC.GetInstance<IScreenNavigator>();
+        var item = navigator?.Back();
+        if (item != null)
+        {
+            results.Clear();
+            yield return new NotificationActionResultGeneric<IEnumerable<IResult>>(
+                NavigationEventEnum.BeginBack.ToString(),
+                EnqueuResult
+            );
+            foreach (var result in results)
+            {
+                yield return result;
+            }
+
+            yield return new ShowScreenResult(navigator?.Current.Target as Type ?? typeof(object));
+            results.Clear();
+
+            yield return new NotificationActionResultGeneric<IEnumerable<IResult>>(
+                NavigationEventEnum.EndBack.ToString(),
+                EnqueuResult
+            );
+            foreach (var result in results)
+            {
+                yield return result;
+            }
+        }
+
+        yield return null!;
+    }
+
     public bool CanSelectTare
     {
         get { return state.SelectTareState.CanExecute; }
@@ -172,6 +204,16 @@ public class NavigationViewModel : ViewModelBase
         }
     }
 
+    public IEnumerable<IResult> SelectWeighSolid()
+    {
+        var navigator = IoC.GetInstance<IScreenNavigator>();
+        navigator?.NavigateTo(typeof(SelectRangeViewModel));
+
+        yield return new ShowScreenResultGeneric<SelectRangeViewModel>().Configured(vm =>
+            vm.WithMode(ModeEnum.WeighSolid)
+        );
+    }
+
     public bool CanSelectDilute
     {
         get { return state.SelectDiluteState.CanExecute; }
@@ -202,6 +244,16 @@ public class NavigationViewModel : ViewModelBase
         }
     }
 
+    public IEnumerable<IResult> SelectDilute()
+    {
+        var navigator = IoC.GetInstance<IScreenNavigator>();
+        navigator?.NavigateTo(typeof(SelectRangeViewModel));
+
+        yield return new ShowScreenResultGeneric<SelectRangeViewModel>().Configured(vm =>
+            vm.WithMode(ModeEnum.Dilute)
+        );
+    }
+
     public bool CanGo
     {
         get { return state.GoState.CanExecute; }
@@ -220,6 +272,38 @@ public class NavigationViewModel : ViewModelBase
             state.GoState = state.GoState with { IsVisible = value };
             NotifyOfPropertyChange(() => GoVisibility);
         }
+    }
+
+    public IEnumerable<IResult> Go()
+    {
+        var navigator = IoC.GetInstance<IScreenNavigator>();
+        var item = navigator?.Forward();
+        if (item != null)
+        {
+            results.Clear();
+            yield return new NotificationActionResultGeneric<IEnumerable<IResult>>(
+                NavigationEventEnum.BeginGo.ToString(),
+                EnqueuResult
+            );
+            foreach (var result in results)
+            {
+                yield return result;
+            }
+
+            yield return new ShowScreenResult(navigator?.Current.Target as Type ?? typeof(object));
+            results.Clear();
+
+            yield return new NotificationActionResultGeneric<IEnumerable<IResult>>(
+                NavigationEventEnum.EndGo.ToString(),
+                EnqueuResult
+            );
+            foreach (var result in results)
+            {
+                yield return result;
+            }
+        }
+
+        yield return null!;
     }
 
     public void ApplyState(GenericMessage<NavigationViewModelState> message)
