@@ -169,4 +169,10 @@ public class SelectRangeViewModel(SharedState state) : ViewModelBase, IScreen
     }
 
     public void Validate() { }
+
+    public void WithMode(ModeEnum mode)
+    {
+        state.Mode = mode;
+        Title = mode.ToString();
+    }
 }

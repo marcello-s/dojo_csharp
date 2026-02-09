@@ -76,16 +76,26 @@ public class ShellViewModel : ScreenConductor, IShell
             var itemRange = new NavigationItem(typeof(SelectRangeViewModel));
             var itemOverview = new NavigationItem(typeof(ProcessingOverviewViewModel));
             var itemTaraDetails = new NavigationItem(typeof(TareProcessingDetailsViewModel));
+            var itemWeighSolidDetails = new NavigationItem(
+                typeof(WeighSolidProcessingDetailsViewModel)
+            );
+            var itemDiluteDetails = new NavigationItem(typeof(DiluteProcessingDetailsViewModel));
             itemRange.Previous = itemWelcome;
             itemRange.Next = itemOverview;
             itemOverview.Previous = itemRange;
             itemOverview.Next = itemWelcome;
             itemTaraDetails.Previous = itemOverview;
             itemTaraDetails.Next = itemWelcome;
+            itemWeighSolidDetails.Previous = itemOverview;
+            itemWeighSolidDetails.Next = itemWelcome;
+            itemDiluteDetails.Previous = itemOverview;
+            itemDiluteDetails.Next = itemWelcome;
             navigator.Add(itemWelcome);
             navigator.Add(itemRange);
             navigator.Add(itemOverview);
             navigator.Add(itemTaraDetails);
+            navigator.Add(itemWeighSolidDetails);
+            navigator.Add(itemDiluteDetails);
 
             navigator.NavigateTo(itemWelcome.Target!);
             if (navigator.Current != null)

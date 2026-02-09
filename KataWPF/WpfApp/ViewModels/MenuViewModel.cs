@@ -7,7 +7,9 @@
 
 using System.ComponentModel.Composition;
 using System.Windows;
+using System.Windows.Controls;
 using ViewModelLib;
+using ViewModelLib.Messaging;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
@@ -15,10 +17,16 @@ namespace WpfApp.ViewModels;
 [Export(typeof(MenuViewModel))]
 public class MenuViewModel : ViewModelBase
 {
-    private CommandState exportState = new CommandState(true, false, false);
-    private CommandState importState = new CommandState(true, false, false);
+    private MenuViewModelState state = new MenuViewModelState();
     private bool notification;
-    private string notificationText = string.Empty;
+    private IList<IResult> results = new List<IResult>();
+
+    public MenuViewModel()
+    {
+        state.SetWelcomeState();
+        var broker = IoC.GetInstance<IMessageBroker>();
+        broker?.Register<GenericMessage<MenuViewModelState>>(this, ApplyState);
+    }
 
     public override DependencyObject? CustomFindControl(
         FrameworkElement view,
@@ -40,40 +48,40 @@ public class MenuViewModel : ViewModelBase
 
     public bool CanExport
     {
-        get { return exportState.CanExecute; }
+        get { return state.ExportState.CanExecute; }
         set
         {
-            exportState = exportState with { CanExecute = value };
+            state.ExportState = state.ExportState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanExport);
         }
     }
 
     public bool ExportVisibility
     {
-        get { return exportState.IsVisible; }
+        get { return state.ExportState.IsVisible; }
         set
         {
-            exportState = exportState with { IsVisible = value };
+            state.ExportState = state.ExportState with { IsVisible = value };
             NotifyOfPropertyChange(() => ExportVisibility);
         }
     }
 
     public bool CanImport
     {
-        get { return importState.CanExecute; }
+        get { return state.ImportState.CanExecute; }
         set
         {
-            importState = importState with { CanExecute = value };
+            state.ImportState = state.ImportState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanImport);
         }
     }
 
     public bool ImportVisibility
     {
-        get { return importState.IsVisible; }
+        get { return state.ImportState.IsVisible; }
         set
         {
-            importState = importState with { IsVisible = value };
+            state.ImportState = state.ImportState with { IsVisible = value };
             NotifyOfPropertyChange(() => ImportVisibility);
         }
     }
@@ -90,11 +98,31 @@ public class MenuViewModel : ViewModelBase
 
     public string NotificationText
     {
-        get { return notificationText; }
+        get { return state.NotificationText; }
         set
         {
-            notificationText = value;
+            state.NotificationText = value;
             NotifyOfPropertyChange(() => NotificationText);
+        }
+    }
+
+    public void ApplyState(GenericMessage<MenuViewModelState> message)
+    {
+        state = message.Content;
+        CanExport = state.ExportState.CanExecute;
+        ExportVisibility = state.ExportState.IsVisible;
+        CanImport = state.ImportState.CanExecute;
+        ImportVisibility = state.ImportState.IsVisible;
+
+        NotificationText = state.NotificationText;
+        Notification = !string.IsNullOrEmpty(state.NotificationText);
+    }
+
+    public void EnqueueResult(IResult result)
+    {
+        if (result != null)
+        {
+            results.Add(result);
         }
     }
 }

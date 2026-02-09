@@ -8,6 +8,8 @@
 using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
+using ViewModelLib.Messaging;
+using ViewModelLib.Navigation;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
@@ -15,11 +17,14 @@ namespace WpfApp.ViewModels;
 [Export(typeof(NavigationViewModel))]
 public class NavigationViewModel : ViewModelBase
 {
-    private CommandState backState = new CommandState(true, false, false);
-    private CommandState selectTareState = new CommandState(true, true, false);
-    private CommandState selectWeighSolidState = new CommandState(true, true, false);
-    private CommandState selectDiluteState = new CommandState(true, true, false);
-    private CommandState goState = new CommandState(true, false, false);
+    private NavigationViewModelState state = new NavigationViewModelState();
+    private IList<IResult> results = new List<IResult>();
+
+    public NavigationViewModel()
+    {
+        var broker = IoC.GetInstance<IMessageBroker>();
+        broker?.Register<GenericMessage<NavigationViewModelState>>(this, ApplyState);
+    }
 
     public override DependencyObject? CustomFindControl(
         FrameworkElement view,
@@ -79,131 +84,175 @@ public class NavigationViewModel : ViewModelBase
 
     public bool CanBack
     {
-        get { return backState.CanExecute; }
+        get { return state.BackState.CanExecute; }
         set
         {
-            backState = backState with { CanExecute = value };
+            state.BackState = state.BackState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanBack);
         }
     }
 
     public bool BackVisibility
     {
-        get { return backState.IsVisible; }
+        get { return state.BackState.IsVisible; }
         set
         {
-            backState = backState with { IsVisible = value };
+            state.BackState = state.BackState with { IsVisible = value };
             NotifyOfPropertyChange(() => BackVisibility);
         }
     }
 
     public bool CanSelectTare
     {
-        get { return selectTareState.CanExecute; }
+        get { return state.SelectTareState.CanExecute; }
         set
         {
-            selectTareState = selectTareState with { CanExecute = value };
+            state.SelectTareState = state.SelectTareState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanSelectTare);
         }
     }
 
     public bool SelectTareVisibility
     {
-        get { return selectTareState.IsVisible; }
+        get { return state.SelectTareState.IsVisible; }
         set
         {
-            selectTareState = selectTareState with { IsVisible = value };
+            state.SelectTareState = state.SelectTareState with { IsVisible = value };
             NotifyOfPropertyChange(() => SelectTareVisibility);
         }
     }
 
     public bool IsSelectTareChecked
     {
-        get { return selectTareState.IsChecked ?? false; }
+        get { return state.SelectTareState.IsChecked ?? false; }
         set
         {
-            selectTareState = selectTareState with { IsChecked = value };
+            state.SelectTareState = state.SelectTareState with { IsChecked = value };
             NotifyOfPropertyChange(() => IsSelectTareChecked);
         }
     }
 
+    public IEnumerable<IResult> SelectTare()
+    {
+        var navigator = IoC.GetInstance<IScreenNavigator>();
+        navigator?.NavigateTo(typeof(SelectRangeViewModel));
+
+        yield return new ShowScreenResultGeneric<SelectRangeViewModel>().Configured(vm =>
+            vm.WithMode(ModeEnum.Tare)
+        );
+    }
+
     public bool CanSelectWeighSolid
     {
-        get { return selectWeighSolidState.CanExecute; }
+        get { return state.SelectWeighSolidState.CanExecute; }
         set
         {
-            selectWeighSolidState = selectWeighSolidState with { CanExecute = value };
+            state.SelectWeighSolidState = state.SelectWeighSolidState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanSelectWeighSolid);
         }
     }
 
     public bool SelectWeighSolidVisibility
     {
-        get { return selectWeighSolidState.IsVisible; }
+        get { return state.SelectWeighSolidState.IsVisible; }
         set
         {
-            selectWeighSolidState = selectWeighSolidState with { IsVisible = value };
+            state.SelectWeighSolidState = state.SelectWeighSolidState with { IsVisible = value };
             NotifyOfPropertyChange(() => SelectWeighSolidVisibility);
         }
     }
 
     public bool IsSelectWeighSolidChecked
     {
-        get { return selectWeighSolidState.IsChecked ?? false; }
+        get { return state.SelectWeighSolidState.IsChecked ?? false; }
         set
         {
-            selectWeighSolidState = selectWeighSolidState with { IsChecked = value };
+            state.SelectWeighSolidState = state.SelectWeighSolidState with { IsChecked = value };
             NotifyOfPropertyChange(() => IsSelectWeighSolidChecked);
         }
     }
 
     public bool CanSelectDilute
     {
-        get { return selectDiluteState.CanExecute; }
+        get { return state.SelectDiluteState.CanExecute; }
         set
         {
-            selectDiluteState = selectDiluteState with { CanExecute = value };
+            state.SelectDiluteState = state.SelectDiluteState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanSelectDilute);
         }
     }
 
     public bool SelectDiluteVisibility
     {
-        get { return selectDiluteState.IsVisible; }
+        get { return state.SelectDiluteState.IsVisible; }
         set
         {
-            selectDiluteState = selectDiluteState with { IsVisible = value };
+            state.SelectDiluteState = state.SelectDiluteState with { IsVisible = value };
             NotifyOfPropertyChange(() => SelectDiluteVisibility);
         }
     }
 
     public bool IsDiluteChecked
     {
-        get { return selectDiluteState.IsChecked ?? false; }
+        get { return state.SelectDiluteState.IsChecked ?? false; }
         set
         {
-            selectDiluteState = selectDiluteState with { IsChecked = value };
+            state.SelectDiluteState = state.SelectDiluteState with { IsChecked = value };
             NotifyOfPropertyChange(() => IsDiluteChecked);
         }
     }
 
     public bool CanGo
     {
-        get { return goState.CanExecute; }
+        get { return state.GoState.CanExecute; }
         set
         {
-            goState = goState with { CanExecute = value };
+            state.GoState = state.GoState with { CanExecute = value };
             NotifyOfPropertyChange(() => CanGo);
         }
     }
 
     public bool GoVisibility
     {
-        get { return goState.IsVisible; }
+        get { return state.GoState.IsVisible; }
         set
         {
-            goState = goState with { IsVisible = value };
+            state.GoState = state.GoState with { IsVisible = value };
             NotifyOfPropertyChange(() => GoVisibility);
+        }
+    }
+
+    public void ApplyState(GenericMessage<NavigationViewModelState> message)
+    {
+        state = message.Content;
+        CanSelectTare = state.SelectTareState.CanExecute;
+        SelectTareVisibility = state.SelectTareState.IsVisible;
+        IsSelectTareChecked = state.SelectTareState.IsChecked ?? false;
+
+        CanSelectWeighSolid = state.SelectWeighSolidState.CanExecute;
+        SelectWeighSolidVisibility = state.SelectWeighSolidState.IsVisible;
+        IsSelectWeighSolidChecked = state.SelectWeighSolidState.IsChecked ?? false;
+
+        CanSelectDilute = state.SelectDiluteState.CanExecute;
+        SelectDiluteVisibility = state.SelectDiluteState.IsVisible;
+        IsDiluteChecked = state.SelectDiluteState.IsChecked ?? false;
+
+        CanBack = state.BackState.CanExecute;
+        BackVisibility = state.BackState.IsVisible;
+        CanGo = state.GoState.CanExecute;
+        GoVisibility = state.GoState.IsVisible;
+    }
+
+    public void EnqueuResult(IEnumerable<IResult> results)
+    {
+        if (results == null)
+        {
+            return;
+        }
+
+        foreach (var r in results)
+        {
+            this.results.Add(r);
         }
     }
 }
