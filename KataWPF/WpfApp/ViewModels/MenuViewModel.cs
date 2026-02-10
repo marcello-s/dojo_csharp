@@ -48,41 +48,63 @@ public class MenuViewModel : ViewModelBase
 
     public bool CanExport
     {
-        get { return state.ExportState.CanExecute; }
+        get { return state.ExportState!.CanExecute; }
         set
         {
-            state.ExportState = state.ExportState with { CanExecute = value };
+            state.ExportState = state.ExportState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanExport);
         }
     }
 
     public bool ExportVisibility
     {
-        get { return state.ExportState.IsVisible; }
+        get { return state.ExportState!.IsVisible; }
         set
         {
-            state.ExportState = state.ExportState with { IsVisible = value };
+            state.ExportState = state.ExportState! with { IsVisible = value };
             NotifyOfPropertyChange(() => ExportVisibility);
+        }
+    }
+
+    public IEnumerable<IResult> Export()
+    {
+        System.Diagnostics.Trace.WriteLine(MenuEventEnum.Export.ToString());
+        results.Clear();
+        yield return new NotificationActionResult(MenuEventEnum.Export.ToString(), EnqueueResult);
+        foreach (var result in results)
+        {
+            yield return result;
         }
     }
 
     public bool CanImport
     {
-        get { return state.ImportState.CanExecute; }
+        get { return state.ImportState!.CanExecute; }
         set
         {
-            state.ImportState = state.ImportState with { CanExecute = value };
+            state.ImportState = state.ImportState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanImport);
         }
     }
 
     public bool ImportVisibility
     {
-        get { return state.ImportState.IsVisible; }
+        get { return state.ImportState!.IsVisible; }
         set
         {
-            state.ImportState = state.ImportState with { IsVisible = value };
+            state.ImportState = state.ImportState! with { IsVisible = value };
             NotifyOfPropertyChange(() => ImportVisibility);
+        }
+    }
+
+    public IEnumerable<IResult> Import()
+    {
+        System.Diagnostics.Trace.WriteLine(MenuEventEnum.Import.ToString());
+        results.Clear();
+        yield return new NotificationActionResult(MenuEventEnum.Import.ToString(), EnqueueResult);
+        foreach (var result in results)
+        {
+            yield return result;
         }
     }
 
@@ -98,7 +120,7 @@ public class MenuViewModel : ViewModelBase
 
     public string NotificationText
     {
-        get { return state.NotificationText; }
+        get { return state.NotificationText ?? string.Empty; }
         set
         {
             state.NotificationText = value;
@@ -109,12 +131,18 @@ public class MenuViewModel : ViewModelBase
     public void ApplyState(GenericMessage<MenuViewModelState> message)
     {
         state = message.Content;
-        CanExport = state.ExportState.CanExecute;
-        ExportVisibility = state.ExportState.IsVisible;
-        CanImport = state.ImportState.CanExecute;
-        ImportVisibility = state.ImportState.IsVisible;
+        if (state.ExportState != null)
+        {
+            CanExport = state.ExportState.CanExecute;
+            ExportVisibility = state.ExportState.IsVisible;
+        }
+        if (state.ImportState != null)
+        {
+            CanImport = state.ImportState.CanExecute;
+            ImportVisibility = state.ImportState.IsVisible;
+        }
 
-        NotificationText = state.NotificationText;
+        NotificationText = state.NotificationText ?? string.Empty;
         Notification = !string.IsNullOrEmpty(state.NotificationText);
     }
 

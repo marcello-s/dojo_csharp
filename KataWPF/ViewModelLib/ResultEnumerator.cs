@@ -30,6 +30,11 @@ public class ResultEnumerator(IEnumerable<IResult> children)
         }
 
         var next = enumerator.Current;
+        if (next == null)
+        {
+            return;
+        }
+
         next.Completed += ChildCompleted;
         next.Execute();
     }

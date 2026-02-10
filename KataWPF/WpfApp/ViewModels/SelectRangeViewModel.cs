@@ -8,6 +8,8 @@
 using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
+using ViewModelLib.Messaging;
+using WpfApp.ActionResults;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
@@ -158,21 +160,106 @@ public class SelectRangeViewModel(SharedState state) : ViewModelBase, IScreen
         TubeRangeLowerValue = state.RangeTubesLowerValue;
         TubeRangeUpperValue = state.RangeTubesUpperValue;
 
+        var broker = IoC.GetInstance<IMessageBroker>();
+        broker?.Send(
+            new GenericMessage<NavigationViewModelState>(GetNavigationStateForMode(state.Mode))
+        );
+        broker?.Register<NotificationMessageAction<IEnumerable<IResult>>>(
+            this,
+            HandleNotificationActions
+        );
+        broker?.Register<NotificationMessageAction<IResult>>(this, HandleNotificationAction);
+
+        // enable import menu
+        if (state.Mode == ModeEnum.WeighSolid || state.Mode == ModeEnum.Dilute)
+        {
+            var menuState = new MenuViewModelState();
+            menuState.EnableImport();
+            broker?.Send(new GenericMessage<MenuViewModelState>(menuState));
+        }
+
         Validate();
     }
 
-    public void Deactivate() { }
+    public void Deactivate()
+    {
+        var broker = IoC.GetInstance<IMessageBroker>();
+        broker?.Unregister<NotificationMessageAction<IEnumerable<IResult>>>(
+            this,
+            HandleNotificationActions
+        );
+        broker?.Unregister<NotificationMessageAction<IResult>>(this, HandleNotificationAction);
+    }
 
     public bool CanClose()
     {
         return true;
     }
 
-    public void Validate() { }
+    public void Validate()
+    {
+        if (allTubes || specifyRange)
+        {
+            var broker = IoC.GetInstance<IMessageBroker>();
+            var navigationState = new NavigationViewModelState();
+            navigationState.SetGoState();
+            broker?.Send(new GenericMessage<NavigationViewModelState>(navigationState));
+        }
+    }
 
     public void WithMode(ModeEnum mode)
     {
         state.Mode = mode;
         Title = mode.ToString();
+    }
+
+    public static NavigationViewModelState GetNavigationStateForMode(ModeEnum mode)
+    {
+        var navigationState = new NavigationViewModelState();
+        switch (mode)
+        {
+            case ModeEnum.Tare:
+                navigationState.SetSelectTareState();
+                break;
+            case ModeEnum.WeighSolid:
+                navigationState.SetSelectWeighSolidState();
+                break;
+            case ModeEnum.Dilute:
+                navigationState.SetSelectDiluteState();
+                break;
+            default:
+                navigationState.SetWelcomeState();
+                break;
+        }
+
+        return navigationState;
+    }
+
+    public void HandleNotificationActions(NotificationMessageAction<IEnumerable<IResult>> message)
+    {
+        if (message.Notification.Equals(NavigationEventEnum.BeginGo.ToString()))
+        {
+            var results = new List<IResult>()
+            {
+                IoC.GetInstance<SelectRangeResult>()!
+                    .With(
+                        AllTubes,
+                        TubeRangeLowerValue,
+                        TubeRangeUpperValue,
+                        TubeRangeMinimum,
+                        TubeRangeMaximum
+                    ),
+            };
+
+            message.Execute(results);
+        }
+    }
+
+    public static void HandleNotificationAction(NotificationMessageAction<IResult> message)
+    {
+        if (message.Notification.Equals(MenuEventEnum.Import.ToString()))
+        {
+            message.Execute(IoC.GetInstance<ImportResult>()!);
+        }
     }
 }

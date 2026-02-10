@@ -84,20 +84,20 @@ public class NavigationViewModel : ViewModelBase
 
     public bool CanBack
     {
-        get { return state.BackState.CanExecute; }
+        get { return state.BackState!.CanExecute; }
         set
         {
-            state.BackState = state.BackState with { CanExecute = value };
+            state.BackState = state.BackState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanBack);
         }
     }
 
     public bool BackVisibility
     {
-        get { return state.BackState.IsVisible; }
+        get { return state.BackState!.IsVisible; }
         set
         {
-            state.BackState = state.BackState with { IsVisible = value };
+            state.BackState = state.BackState! with { IsVisible = value };
             NotifyOfPropertyChange(() => BackVisibility);
         }
     }
@@ -119,8 +119,8 @@ public class NavigationViewModel : ViewModelBase
             }
 
             yield return new ShowScreenResult(navigator?.Current.Target as Type ?? typeof(object));
-            results.Clear();
 
+            results.Clear();
             yield return new NotificationActionResultGeneric<IEnumerable<IResult>>(
                 NavigationEventEnum.EndBack.ToString(),
                 EnqueuResult
@@ -136,30 +136,30 @@ public class NavigationViewModel : ViewModelBase
 
     public bool CanSelectTare
     {
-        get { return state.SelectTareState.CanExecute; }
+        get { return state.SelectTareState!.CanExecute; }
         set
         {
-            state.SelectTareState = state.SelectTareState with { CanExecute = value };
+            state.SelectTareState = state.SelectTareState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanSelectTare);
         }
     }
 
     public bool SelectTareVisibility
     {
-        get { return state.SelectTareState.IsVisible; }
+        get { return state.SelectTareState!.IsVisible; }
         set
         {
-            state.SelectTareState = state.SelectTareState with { IsVisible = value };
+            state.SelectTareState = state.SelectTareState! with { IsVisible = value };
             NotifyOfPropertyChange(() => SelectTareVisibility);
         }
     }
 
     public bool IsSelectTareChecked
     {
-        get { return state.SelectTareState.IsChecked ?? false; }
+        get { return state.SelectTareState!.IsChecked ?? false; }
         set
         {
-            state.SelectTareState = state.SelectTareState with { IsChecked = value };
+            state.SelectTareState = state.SelectTareState! with { IsChecked = value };
             NotifyOfPropertyChange(() => IsSelectTareChecked);
         }
     }
@@ -176,30 +176,30 @@ public class NavigationViewModel : ViewModelBase
 
     public bool CanSelectWeighSolid
     {
-        get { return state.SelectWeighSolidState.CanExecute; }
+        get { return state.SelectWeighSolidState!.CanExecute; }
         set
         {
-            state.SelectWeighSolidState = state.SelectWeighSolidState with { CanExecute = value };
+            state.SelectWeighSolidState = state.SelectWeighSolidState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanSelectWeighSolid);
         }
     }
 
     public bool SelectWeighSolidVisibility
     {
-        get { return state.SelectWeighSolidState.IsVisible; }
+        get { return state.SelectWeighSolidState!.IsVisible; }
         set
         {
-            state.SelectWeighSolidState = state.SelectWeighSolidState with { IsVisible = value };
+            state.SelectWeighSolidState = state.SelectWeighSolidState! with { IsVisible = value };
             NotifyOfPropertyChange(() => SelectWeighSolidVisibility);
         }
     }
 
     public bool IsSelectWeighSolidChecked
     {
-        get { return state.SelectWeighSolidState.IsChecked ?? false; }
+        get { return state.SelectWeighSolidState!.IsChecked ?? false; }
         set
         {
-            state.SelectWeighSolidState = state.SelectWeighSolidState with { IsChecked = value };
+            state.SelectWeighSolidState = state.SelectWeighSolidState! with { IsChecked = value };
             NotifyOfPropertyChange(() => IsSelectWeighSolidChecked);
         }
     }
@@ -216,30 +216,30 @@ public class NavigationViewModel : ViewModelBase
 
     public bool CanSelectDilute
     {
-        get { return state.SelectDiluteState.CanExecute; }
+        get { return state.SelectDiluteState!.CanExecute; }
         set
         {
-            state.SelectDiluteState = state.SelectDiluteState with { CanExecute = value };
+            state.SelectDiluteState = state.SelectDiluteState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanSelectDilute);
         }
     }
 
     public bool SelectDiluteVisibility
     {
-        get { return state.SelectDiluteState.IsVisible; }
+        get { return state.SelectDiluteState!.IsVisible; }
         set
         {
-            state.SelectDiluteState = state.SelectDiluteState with { IsVisible = value };
+            state.SelectDiluteState = state.SelectDiluteState! with { IsVisible = value };
             NotifyOfPropertyChange(() => SelectDiluteVisibility);
         }
     }
 
     public bool IsDiluteChecked
     {
-        get { return state.SelectDiluteState.IsChecked ?? false; }
+        get { return state.SelectDiluteState!.IsChecked ?? false; }
         set
         {
-            state.SelectDiluteState = state.SelectDiluteState with { IsChecked = value };
+            state.SelectDiluteState = state.SelectDiluteState! with { IsChecked = value };
             NotifyOfPropertyChange(() => IsDiluteChecked);
         }
     }
@@ -256,20 +256,20 @@ public class NavigationViewModel : ViewModelBase
 
     public bool CanGo
     {
-        get { return state.GoState.CanExecute; }
+        get { return state.GoState!.CanExecute; }
         set
         {
-            state.GoState = state.GoState with { CanExecute = value };
+            state.GoState = state.GoState! with { CanExecute = value };
             NotifyOfPropertyChange(() => CanGo);
         }
     }
 
     public bool GoVisibility
     {
-        get { return state.GoState.IsVisible; }
+        get { return state.GoState!.IsVisible; }
         set
         {
-            state.GoState = state.GoState with { IsVisible = value };
+            state.GoState = state.GoState! with { IsVisible = value };
             NotifyOfPropertyChange(() => GoVisibility);
         }
     }
@@ -291,8 +291,8 @@ public class NavigationViewModel : ViewModelBase
             }
 
             yield return new ShowScreenResult(navigator?.Current.Target as Type ?? typeof(object));
-            results.Clear();
 
+            results.Clear();
             yield return new NotificationActionResultGeneric<IEnumerable<IResult>>(
                 NavigationEventEnum.EndGo.ToString(),
                 EnqueuResult
@@ -309,22 +309,38 @@ public class NavigationViewModel : ViewModelBase
     public void ApplyState(GenericMessage<NavigationViewModelState> message)
     {
         state = message.Content;
-        CanSelectTare = state.SelectTareState.CanExecute;
-        SelectTareVisibility = state.SelectTareState.IsVisible;
-        IsSelectTareChecked = state.SelectTareState.IsChecked ?? false;
+        if (state.SelectTareState != null)
+        {
+            CanSelectTare = state.SelectTareState.CanExecute;
+            SelectTareVisibility = state.SelectTareState.IsVisible;
+            IsSelectTareChecked = state.SelectTareState.IsChecked ?? false;
+        }
 
-        CanSelectWeighSolid = state.SelectWeighSolidState.CanExecute;
-        SelectWeighSolidVisibility = state.SelectWeighSolidState.IsVisible;
-        IsSelectWeighSolidChecked = state.SelectWeighSolidState.IsChecked ?? false;
+        if (state.SelectWeighSolidState != null)
+        {
+            CanSelectWeighSolid = state.SelectWeighSolidState.CanExecute;
+            SelectWeighSolidVisibility = state.SelectWeighSolidState.IsVisible;
+            IsSelectWeighSolidChecked = state.SelectWeighSolidState.IsChecked ?? false;
+        }
 
-        CanSelectDilute = state.SelectDiluteState.CanExecute;
-        SelectDiluteVisibility = state.SelectDiluteState.IsVisible;
-        IsDiluteChecked = state.SelectDiluteState.IsChecked ?? false;
+        if (state.SelectDiluteState != null)
+        {
+            CanSelectDilute = state.SelectDiluteState.CanExecute;
+            SelectDiluteVisibility = state.SelectDiluteState.IsVisible;
+            IsDiluteChecked = state.SelectDiluteState.IsChecked ?? false;
+        }
 
-        CanBack = state.BackState.CanExecute;
-        BackVisibility = state.BackState.IsVisible;
-        CanGo = state.GoState.CanExecute;
-        GoVisibility = state.GoState.IsVisible;
+        if (state.BackState != null)
+        {
+            CanBack = state.BackState.CanExecute;
+            BackVisibility = state.BackState.IsVisible;
+        }
+
+        if (state.GoState != null)
+        {
+            CanGo = state.GoState.CanExecute;
+            GoVisibility = state.GoState.IsVisible;
+        }
     }
 
     public void EnqueuResult(IEnumerable<IResult> results)
