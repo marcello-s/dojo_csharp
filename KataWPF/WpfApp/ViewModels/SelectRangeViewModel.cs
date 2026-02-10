@@ -202,7 +202,7 @@ public class SelectRangeViewModel(SharedState state) : ViewModelBase, IScreen
         {
             var broker = IoC.GetInstance<IMessageBroker>();
             var navigationState = new NavigationViewModelState();
-            navigationState.SetGoState();
+            navigationState.EnableGo();
             broker?.Send(new GenericMessage<NavigationViewModelState>(navigationState));
         }
     }

@@ -14,14 +14,15 @@ namespace WpfApp.State;
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class SharedState
 {
-    public const string NOTIFICATION_SHAREDSTATEUPDATE = "shared state update";
-    public const double LOW_VOLUME = 5.0;
+    public const string UpdatedMessage = "shared state update";
+    public const double LowVolume = 5.0;
     public static bool IsCommandResponseNeeded { get; set; }
     public ModeEnum Mode { get; set; }
 
     public bool AllTubesSelected { get; set; }
     public int RangeTubesLowerValue { get; set; }
     public int RangeTubesUpperValue { get; set; }
+    public IList<SampleInfo> SampleInfoList { get; set; } = [];
 
     public double MaxVolume { get; set; } = 4.0;
 

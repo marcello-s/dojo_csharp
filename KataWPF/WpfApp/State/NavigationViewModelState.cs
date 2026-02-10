@@ -52,8 +52,18 @@ public class NavigationViewModelState
         BackState = new CommandState(true, true, null);
     }
 
-    public void SetGoState()
+    public void EnableGo()
     {
         GoState = new CommandState(true, true, false);
+    }
+
+    public void DisableGo()
+    {
+        GoState = new CommandState(false, true, false);
+    }
+
+    public void DisableBack()
+    {
+        BackState = new CommandState(false, true, null);
     }
 }

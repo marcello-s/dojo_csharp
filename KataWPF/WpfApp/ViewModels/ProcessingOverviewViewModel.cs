@@ -8,6 +8,9 @@
 using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
+using ViewModelLib.Messaging;
+using ViewModelLib.Navigation;
+using WpfApp.ActionResults;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
@@ -64,20 +67,115 @@ public class ProcessingOverviewViewModel(SharedState state) : ViewModelBase, ISc
     public IResult View()
     {
         System.Diagnostics.Trace.WriteLine("view details");
+        var navigator = IoC.GetInstance<IScreenNavigator>();
+        switch (state.Mode)
+        {
+            case ModeEnum.Tare:
+                navigator?.NavigateTo(typeof(TareProcessingDetailsViewModel));
+                return new ShowScreenResultGeneric<TareProcessingDetailsViewModel>();
+            case ModeEnum.WeighSolid:
+                navigator?.NavigateTo(typeof(WeighSolidProcessingDetailsViewModel));
+                return new ShowScreenResultGeneric<WeighSolidProcessingDetailsViewModel>();
+            case ModeEnum.Dilute:
+                navigator?.NavigateTo(typeof(DiluteProcessingDetailsViewModel));
+                return new ShowScreenResultGeneric<DiluteProcessingDetailsViewModel>();
+        }
+
         return null!;
     }
 
     public void Activate()
     {
         UpdateFigures();
+        var broker = IoC.GetInstance<IMessageBroker>();
+        broker?.Register<NotificationMessage>(this, HandleNotification);
+        broker?.Register<NotificationMessageAction<IEnumerable<IResult>>>(
+            this,
+            HandleNotificationActions
+        );
+        broker?.Register<NotificationMessageAction<IResult>>(this, HandleNotificationAction);
+        var disableBack = new NavigationViewModelState();
+        disableBack.DisableBack();
+        broker?.Send(new GenericMessage<NavigationViewModelState>(disableBack));
+        var showExport = new MenuViewModelState();
+        showExport.ShowExport();
+        broker?.Send(new GenericMessage<MenuViewModelState>(showExport));
+
+        if (state.Mode == ModeEnum.Tare || state.Mode == ModeEnum.WeighSolid)
+        {
+            var hideImport = new MenuViewModelState();
+            hideImport.HideImport();
+            broker?.Send(new GenericMessage<MenuViewModelState>(hideImport));
+        }
+
+        if (state.Mode == ModeEnum.Dilute)
+        {
+            if (state.ProcessingDataList == null || state.ProcessingDataList.Count == 0)
+            {
+                ErrorSummary = "List does not contain any samples";
+            }
+
+            var disableGo = new NavigationViewModelState();
+            disableGo.DisableGo();
+            broker?.Send(new GenericMessage<NavigationViewModelState>(disableGo));
+
+            var showImport = new MenuViewModelState();
+            showImport.ShowImport();
+            broker?.Send(new GenericMessage<MenuViewModelState>(showImport));
+        }
+
         UpdateButtons();
     }
 
-    public void Deactivate() { }
+    public void Deactivate()
+    {
+        var broker = IoC.GetInstance<IMessageBroker>();
+        broker?.Unregister<NotificationMessage>(this, HandleNotification);
+        broker?.Unregister<NotificationMessageAction<IEnumerable<IResult>>>(
+            this,
+            HandleNotificationActions
+        );
+        broker?.Unregister<NotificationMessageAction<IResult>>(this, HandleNotificationAction);
+    }
 
     public bool CanClose()
     {
         return true;
+    }
+
+    private void HandleNotification(NotificationMessage message)
+    {
+        if (message.Notification.Equals(SharedState.UpdatedMessage))
+        {
+            UpdateFigures();
+            UpdateButtons();
+        }
+    }
+
+    public void HandleNotificationActions(NotificationMessageAction<IEnumerable<IResult>> message)
+    {
+        if (message.Notification.Equals(NavigationEventEnum.BeginGo.ToString()))
+        {
+            var results = new List<IResult>()
+            {
+                IoC.GetInstance<CreateWorklistResult>()!,
+                IoC.GetInstance<CommitValidProcessingDataResult>()!,
+            };
+            message.Execute(results);
+        }
+    }
+
+    public void HandleNotificationAction(NotificationMessageAction<IResult> message)
+    {
+        if (message.Notification.Equals(MenuEventEnum.Export.ToString()))
+        {
+            message.Execute(IoC.GetInstance<ExportResult>()!);
+        }
+
+        if (message.Notification.Equals(MenuEventEnum.Import.ToString()))
+        {
+            message.Execute(IoC.GetInstance<ImportConcentrationResult>()!);
+        }
     }
 
     public void UpdateFigures()

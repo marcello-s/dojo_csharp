@@ -77,7 +77,7 @@ public class GridRowDiluteValidationRule : ValidationRule
             var state = IoC.GetInstance<SharedState>();
             ProcessingDataValidation.ValidateVolumeRange(
                 record.Data,
-                SharedState.LOW_VOLUME,
+                SharedState.LowVolume,
                 state!.MaxVolume
             );
 

@@ -14,38 +14,48 @@ using WpfApp.State;
 
 namespace WpfApp.ActionResults;
 
-[Export(typeof(ImportResult))]
-public class ImportResult : IResult
+[Export(typeof(ExportResult))]
+public class ExportResult : IResult
 {
-    [Import]
-    public IMessageBroker Broker { get; set; } = null!;
-
     [Import]
     public SharedState State { get; set; } = null!;
 
-    // [Import]
-    // public IDataStoreService DataStore { get; set; }
+    [Import]
+    public IMessageBroker Broker { get; set; } = null!;
+
+    #region IResult Members
 
     public void Execute()
     {
-        // import processing data
-        Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+        // export valid processing data
+        Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+        dialog.FileName =
+            "WeighStation_"
+            + State.Mode.ToString()
+            + "_Export_"
+            + DateTime.Now.ToString("yyyyMMddHHmm");
         dialog.DefaultExt = ".csv";
         dialog.Filter = "Comma Separated Values (.csv)|*.csv";
         bool? result = dialog.ShowDialog();
+
         if (result.HasValue && result == true)
         {
             try
             {
                 var filename = dialog.FileName;
                 System.Diagnostics.Trace.WriteLine("file: " + filename);
-                var text = System.IO.File.ReadAllText(filename, Encoding.Default);
-                System.Diagnostics.Trace.WriteLine(text);
-                var records = ParseImportData(State.Mode, text);
-                // foreach (var record in records)
-                // {
-                //    DataStore.Wrapper.Save(DataStoreMapper.MapToDatastore(record));
-                // }
+                var validRecords = State.ProcessingDataList.Where(
+                    (p) => p.Processing.Equals(ProcessingDataValidation.PROCESSING_PROCESS)
+                );
+
+                if (State.Mode == ModeEnum.Dilute)
+                {
+                    validRecords = State.ProcessingDataList;
+                }
+
+                var exportdata = RenderExportData(State, validRecords);
+                System.Diagnostics.Trace.WriteLine(exportdata);
+                System.IO.File.WriteAllText(filename, exportdata, Encoding.Default);
 
                 var notification = new MenuViewModelState();
                 notification.SetNotification(System.IO.Path.GetFileName(filename) + "  OK");
@@ -59,19 +69,21 @@ public class ImportResult : IResult
                 Broker.Send(new GenericMessage<MenuViewModelState>(notification));
             }
         }
-
         Completed(this, EventArgs.Empty);
     }
 
     public event EventHandler Completed = delegate { };
 
-    public static IList<ProcessingData> ParseImportData(ModeEnum mode, string text)
+    #endregion
+
+    public static string RenderExportData(SharedState state, IEnumerable<ProcessingData> data)
     {
-        return mode switch
+        return state.Mode switch
         {
-            ModeEnum.WeighSolid => CsvFormatHelper.ParseTaraImport(text),
-            ModeEnum.Dilute => CsvFormatHelper.ParseWeighSolidImport(text),
-            _ => new List<ProcessingData>(),
+            ModeEnum.Tare => CsvFormatHelper.RenderTaraExport(data),
+            ModeEnum.WeighSolid => CsvFormatHelper.RenderWeighSolidExport(data),
+            ModeEnum.Dilute => CsvFormatHelper.RenderDiluteExport(data, state.SampleInfoList),
+            _ => string.Empty,
         };
     }
 }

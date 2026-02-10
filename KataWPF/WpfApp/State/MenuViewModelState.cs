@@ -25,6 +25,26 @@ public class MenuViewModelState
         ImportState = new CommandState(true, true, null);
     }
 
+    public void ShowImport()
+    {
+        ImportState = new CommandState(false, true, null);
+    }
+
+    public void HideImport()
+    {
+        ImportState = new CommandState(false, false, null);
+    }
+
+    public void EnableExport()
+    {
+        ExportState = new CommandState(true, true, null);
+    }
+
+    public void ShowExport()
+    {
+        ExportState = new CommandState(false, true, null);
+    }
+
     public void SetNotification(string text)
     {
         NotificationText = text;
