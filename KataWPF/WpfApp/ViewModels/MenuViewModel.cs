@@ -130,20 +130,21 @@ public class MenuViewModel : ViewModelBase
 
     public void ApplyState(GenericMessage<MenuViewModelState> message)
     {
-        state = message.Content;
-        if (state.ExportState != null)
+        var c = message.Content;
+        if (c.ExportState != null)
         {
-            CanExport = state.ExportState.CanExecute;
-            ExportVisibility = state.ExportState.IsVisible;
-        }
-        if (state.ImportState != null)
-        {
-            CanImport = state.ImportState.CanExecute;
-            ImportVisibility = state.ImportState.IsVisible;
+            CanExport = c.ExportState.CanExecute;
+            ExportVisibility = c.ExportState.IsVisible;
         }
 
-        NotificationText = state.NotificationText ?? string.Empty;
-        Notification = !string.IsNullOrEmpty(state.NotificationText);
+        if (c.ImportState != null)
+        {
+            CanImport = c.ImportState.CanExecute;
+            ImportVisibility = c.ImportState.IsVisible;
+        }
+
+        NotificationText = c.NotificationText ?? string.Empty;
+        Notification = !string.IsNullOrEmpty(c.NotificationText);
     }
 
     public void EnqueueResult(IResult result)

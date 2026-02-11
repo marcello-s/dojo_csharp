@@ -22,6 +22,7 @@ public class NavigationViewModel : ViewModelBase
 
     public NavigationViewModel()
     {
+        state.SetWelcomeState();
         var broker = IoC.GetInstance<IMessageBroker>();
         broker?.Register<GenericMessage<NavigationViewModelState>>(this, ApplyState);
     }
@@ -308,38 +309,38 @@ public class NavigationViewModel : ViewModelBase
 
     public void ApplyState(GenericMessage<NavigationViewModelState> message)
     {
-        state = message.Content;
-        if (state.SelectTareState != null)
+        var c = message.Content;
+        if (c.SelectTareState != null)
         {
-            CanSelectTare = state.SelectTareState.CanExecute;
-            SelectTareVisibility = state.SelectTareState.IsVisible;
-            IsSelectTareChecked = state.SelectTareState.IsChecked ?? false;
+            CanSelectTare = c.SelectTareState.CanExecute;
+            SelectTareVisibility = c.SelectTareState.IsVisible;
+            IsSelectTareChecked = c.SelectTareState.IsChecked ?? false;
         }
 
-        if (state.SelectWeighSolidState != null)
+        if (c.SelectWeighSolidState != null)
         {
-            CanSelectWeighSolid = state.SelectWeighSolidState.CanExecute;
-            SelectWeighSolidVisibility = state.SelectWeighSolidState.IsVisible;
-            IsSelectWeighSolidChecked = state.SelectWeighSolidState.IsChecked ?? false;
+            CanSelectWeighSolid = c.SelectWeighSolidState.CanExecute;
+            SelectWeighSolidVisibility = c.SelectWeighSolidState.IsVisible;
+            IsSelectWeighSolidChecked = c.SelectWeighSolidState.IsChecked ?? false;
         }
 
-        if (state.SelectDiluteState != null)
+        if (c.SelectDiluteState != null)
         {
-            CanSelectDilute = state.SelectDiluteState.CanExecute;
-            SelectDiluteVisibility = state.SelectDiluteState.IsVisible;
-            IsDiluteChecked = state.SelectDiluteState.IsChecked ?? false;
+            CanSelectDilute = c.SelectDiluteState.CanExecute;
+            SelectDiluteVisibility = c.SelectDiluteState.IsVisible;
+            IsDiluteChecked = c.SelectDiluteState.IsChecked ?? false;
         }
 
-        if (state.BackState != null)
+        if (c.BackState != null)
         {
-            CanBack = state.BackState.CanExecute;
-            BackVisibility = state.BackState.IsVisible;
+            CanBack = c.BackState.CanExecute;
+            BackVisibility = c.BackState.IsVisible;
         }
 
-        if (state.GoState != null)
+        if (c.GoState != null)
         {
-            CanGo = state.GoState.CanExecute;
-            GoVisibility = state.GoState.IsVisible;
+            CanGo = c.GoState.CanExecute;
+            GoVisibility = c.GoState.IsVisible;
         }
     }
 

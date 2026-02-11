@@ -185,8 +185,16 @@ public class ProcessingOverviewViewModel(SharedState state) : ViewModelBase, ISc
             return;
         }
 
+        barcodeErrors = NumberOfBarcodeErrors(state.ProcessingDataList);
+        weighingErrors = NumberOfTaraErrors(state.ProcessingDataList);
+        if (state.Mode == ModeEnum.WeighSolid)
+        {
+            weighingErrors += NumberOfWeightErrors(state.ProcessingDataList);
+        }
+
         NotifyOfPropertyChange(() => BarcodeErrors);
         NotifyOfPropertyChange(() => WeighingErrors);
+
         ErrorPanel = (barcodeErrors > 0 || weighingErrors > 0) ? true : false;
         if (!ErrorPanel)
         {
@@ -214,5 +222,60 @@ public class ProcessingOverviewViewModel(SharedState state) : ViewModelBase, ISc
         }
     }
 
-    public void UpdateButtons() { }
+    public void UpdateButtons()
+    {
+        var broker = IoC.GetInstance<IMessageBroker>();
+        if (
+            state.ProcessingDataList != null
+            && ContainsAnyValidProcessingData(state.ProcessingDataList)
+        )
+        {
+            if (state.Mode == ModeEnum.Tare || state.Mode == ModeEnum.WeighSolid)
+            {
+                var enableExport = new MenuViewModelState();
+                enableExport.EnableExport();
+                broker?.Send(new GenericMessage<MenuViewModelState>(enableExport));
+            }
+        }
+        if (
+            state.ProcessingDataList != null
+            && state.ProcessingDataList.Count > 0
+            && state.Mode == ModeEnum.Dilute
+        )
+        {
+            var enableGo = new NavigationViewModelState();
+            enableGo.EnableGo();
+            broker?.Send(new GenericMessage<NavigationViewModelState>(enableGo));
+
+            var enableImport = new MenuViewModelState();
+            enableImport.EnableImport();
+            broker?.Send(new GenericMessage<MenuViewModelState>(enableImport));
+
+            var enableExport = new MenuViewModelState();
+            enableExport.EnableExport();
+            broker?.Send(new GenericMessage<MenuViewModelState>(enableExport));
+        }
+    }
+
+    public static int NumberOfBarcodeErrors(IEnumerable<ProcessingData> data)
+    {
+        return data.Sum(
+            (p) => p.Barcode.Equals("***") || p.Status.ToLower().Contains("duplicate") ? 1 : 0
+        );
+    }
+
+    public static int NumberOfTaraErrors(IEnumerable<ProcessingData> data)
+    {
+        return data.Sum((p) => p.Tara <= 0 ? 1 : 0);
+    }
+
+    public static int NumberOfWeightErrors(IEnumerable<ProcessingData> data)
+    {
+        return data.Sum((p) => p.SolidWeight <= p.Tara ? 1 : 0);
+    }
+
+    public static bool ContainsAnyValidProcessingData(IEnumerable<ProcessingData> data)
+    {
+        return data.Any((p) => p.Processing.Equals(ProcessingDataValidation.PROCESSING_PROCESS));
+    }
 }
