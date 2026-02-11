@@ -8,6 +8,7 @@
 using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
+using WpfApp.Services;
 using WpfApp.State;
 
 namespace WpfApp.ActionResults;
@@ -18,8 +19,8 @@ public class CommitValidProcessingDataResult : IResult
     [Import]
     public SharedState State { get; set; } = null!;
 
-    // [Import]
-    // public IDataStoreService DataStore { get; set; }
+    [Import]
+    public IDataStoreService DataStore { get; set; } = null!;
 
     public void Execute()
     {
@@ -30,10 +31,10 @@ public class CommitValidProcessingDataResult : IResult
                 (p) => p.Processing.Equals(ProcessingDataValidation.PROCESSING_PROCESS)
             );
 
-            // foreach (var record in validRecords)
-            // {
-            //    DataStore.Wrapper.Save(DataStoreMapper.MapToDatastore(record));
-            // }
+            foreach (var record in validRecords)
+            {
+                DataStore.Wrapper.Save(DataStoreMapper.MapToDatastore(record));
+            }
 
             // clear list
             State.ProcessingDataList.Clear();

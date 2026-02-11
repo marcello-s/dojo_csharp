@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
 using ViewModelLib.Messaging;
+using ViewModelLib.Services;
 using WpfApp.ActionResults;
 using WpfApp.State;
 
@@ -16,7 +17,9 @@ namespace WpfApp.ViewModels;
 
 [Export(typeof(SelectRangeViewModel))]
 [method: ImportingConstructor]
-public class SelectRangeViewModel(SharedState state) : ViewModelBase, IScreen
+public class SelectRangeViewModel(SharedState state, ILocalizationService localization)
+    : ViewModelBase,
+        IScreen
 {
     private string title = "Select Range ViewModel";
     public string Title
@@ -210,7 +213,7 @@ public class SelectRangeViewModel(SharedState state) : ViewModelBase, IScreen
     public void WithMode(ModeEnum mode)
     {
         state.Mode = mode;
-        Title = mode.ToString();
+        Title = localization.TranslateString(() => Title, state.Mode.ToString());
     }
 
     public static NavigationViewModelState GetNavigationStateForMode(ModeEnum mode)

@@ -10,6 +10,7 @@ using System.Windows;
 using ViewModelLib;
 using ViewModelLib.Messaging;
 using ViewModelLib.Navigation;
+using ViewModelLib.Services;
 using WpfApp.ActionResults;
 using WpfApp.State;
 
@@ -17,7 +18,9 @@ namespace WpfApp.ViewModels;
 
 [Export(typeof(ProcessingOverviewViewModel))]
 [method: ImportingConstructor]
-public class ProcessingOverviewViewModel(SharedState state) : ViewModelBase, IScreen
+public class ProcessingOverviewViewModel(SharedState state, ILocalizationService localization)
+    : ViewModelBase,
+        IScreen
 {
     private string title = "Processing Overview ViewModel";
     public string Title
@@ -86,6 +89,7 @@ public class ProcessingOverviewViewModel(SharedState state) : ViewModelBase, ISc
 
     public void Activate()
     {
+        Title = localization.TranslateString(() => Title, state.Mode.ToString());
         UpdateFigures();
         var broker = IoC.GetInstance<IMessageBroker>();
         broker?.Register<NotificationMessage>(this, HandleNotification);
