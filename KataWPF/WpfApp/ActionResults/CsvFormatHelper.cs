@@ -11,9 +11,15 @@ using WpfApp.State;
 
 namespace WpfApp.ActionResults;
 
-public class CsvFormatHelper
+public partial class CsvFormatHelper
 {
     public const string Delimiter = ";";
+
+    [GeneratedRegex(Delimiter)]
+    private static partial Regex DelimiterPattern();
+
+    [GeneratedRegex("\r\n")]
+    private static partial Regex NewLinePattern();
 
     public static string RenderTaraExport(IEnumerable<ProcessingData> data)
     {
@@ -222,8 +228,7 @@ public class CsvFormatHelper
     public static void ScanCSV(string text, out IList<string> columns, out List<List<string>> rows)
     {
         // split into lines
-        Regex regex = new Regex(Environment.NewLine);
-        var lines = regex.Split(text);
+        var lines = NewLinePattern().Split(text);
         if (lines.GetUpperBound(0) <= 1)
         {
             throw new Exception("incorrect file format");
@@ -231,8 +236,7 @@ public class CsvFormatHelper
 
         // split column header
         columns = new List<string>();
-        regex = new Regex(Delimiter);
-        var header = regex.Split(lines[0]);
+        var header = DelimiterPattern().Split(lines[0]);
         foreach (string column in header)
         {
             columns.Add(column);
@@ -243,7 +247,7 @@ public class CsvFormatHelper
         for (int i = 1; i < lines.GetUpperBound(0); i++)
         {
             var rowData = new List<string>();
-            var line = regex.Split(lines[i]);
+            var line = DelimiterPattern().Split(lines[i]);
             foreach (string value in line)
             {
                 rowData.Add(value);
