@@ -9,17 +9,18 @@ using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
 using ViewModelLib.Messaging;
-using ViewModelLib.Services;
 using WpfApp.ActionResults;
+using WpfApp.Services;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
 
 [Export(typeof(TareProcessingDetailsViewModel))]
 [method: ImportingConstructor]
-public class TareProcessingDetailsViewModel(SharedState state, ILocalizationService localization)
-    : ViewModelBase,
-        IScreen
+public class TareProcessingDetailsViewModel(
+    SharedState state,
+    ITextLocalizationService localization
+) : ViewModelBase, IScreen
 {
     private string title = "Tare Processing Details ViewModel";
     private GridRecordCollection recordCollection = null!;

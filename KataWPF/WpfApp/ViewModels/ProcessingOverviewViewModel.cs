@@ -10,15 +10,15 @@ using System.Windows;
 using ViewModelLib;
 using ViewModelLib.Messaging;
 using ViewModelLib.Navigation;
-using ViewModelLib.Services;
 using WpfApp.ActionResults;
+using WpfApp.Services;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
 
 [Export(typeof(ProcessingOverviewViewModel))]
 [method: ImportingConstructor]
-public class ProcessingOverviewViewModel(SharedState state, ILocalizationService localization)
+public class ProcessingOverviewViewModel(SharedState state, ITextLocalizationService localization)
     : ViewModelBase,
         IScreen
 {

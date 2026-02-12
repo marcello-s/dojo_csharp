@@ -11,15 +11,17 @@ using ViewModelLib;
 using ViewModelLib.Messaging;
 using ViewModelLib.Services;
 using WpfApp.ActionResults;
+using WpfApp.Services;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
 
 [Export(typeof(DiluteProcessingDetailsViewModel))]
 [method: ImportingConstructor]
-public class DiluteProcessingDetailsViewModel(SharedState state, ILocalizationService localization)
-    : ViewModelBase,
-        IScreen
+public class DiluteProcessingDetailsViewModel(
+    SharedState state,
+    ITextLocalizationService localization
+) : ViewModelBase, IScreen
 {
     private string title = "Dilute Processing Details ViewModel";
     private GridRecordCollection recordCollection = null!;

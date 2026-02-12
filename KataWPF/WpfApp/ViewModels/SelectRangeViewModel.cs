@@ -9,15 +9,15 @@ using System.ComponentModel.Composition;
 using System.Windows;
 using ViewModelLib;
 using ViewModelLib.Messaging;
-using ViewModelLib.Services;
 using WpfApp.ActionResults;
+using WpfApp.Services;
 using WpfApp.State;
 
 namespace WpfApp.ViewModels;
 
 [Export(typeof(SelectRangeViewModel))]
 [method: ImportingConstructor]
-public class SelectRangeViewModel(SharedState state, ILocalizationService localization)
+public class SelectRangeViewModel(SharedState state, ITextLocalizationService localization)
     : ViewModelBase,
         IScreen
 {

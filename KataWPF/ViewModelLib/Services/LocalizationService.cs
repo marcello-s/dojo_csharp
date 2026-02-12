@@ -14,14 +14,7 @@ namespace ViewModelLib.Services;
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class LocalizationService : ILocalizationService
 {
-    #region ILocalizationService Members
-
-    public string TranslateString(string key)
-    {
-        return MapTitleForMode(key);
-    }
-
-    public string TranslateString<T>(Expression<Func<T>> property, string key)
+    public virtual string TranslateString<T>(Expression<Func<T>> property, string key)
     {
         var lambda = (LambdaExpression)property;
 
@@ -36,19 +29,6 @@ public class LocalizationService : ILocalizationService
             memberExpression = (MemberExpression)lambda.Body;
         }
 
-        return TranslateString(memberExpression.Member.Name + "_" + key);
-    }
-
-    #endregion
-
-    private static string MapTitleForMode(string titleKey)
-    {
-        return titleKey switch
-        {
-            "Title_Tare" => "TARE MODE",
-            "Title_WeighSolid" => "WEIGH SOLID MODE",
-            "Title_Dilute" => "DILUTE MODE",
-            _ => string.Empty,
-        };
+        return memberExpression.Member.Name + "_" + key;
     }
 }
