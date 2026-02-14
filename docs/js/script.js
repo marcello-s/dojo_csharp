@@ -460,8 +460,8 @@ const images = [
         alt: "app welcome screen"
     },
     {
-        src: "img/vmlib/2_slider_control.png",
-        title: "Slider Control",
+        src: "img/vmlib/2_Processing.png",
+        title: "Input Correction",
         alt: "app screen slider control"
     },
     {
