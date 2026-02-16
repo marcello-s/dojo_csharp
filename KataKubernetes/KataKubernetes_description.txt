@@ -53,32 +53,43 @@ https://kubernetes.anjikeesari.com/kubernetes/2-deploy-api/#implementation-detai
 
 enable local registry for minikube
 podman > Settings > Resources > Minikube create new
-$ minikube start
+podman > Settings > Proxy NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.59.0/24,192.168.49.0/24,192.168.39.0/24
+(admin powershell)
+$ minikube delete
+$ minikube start --insecure-registry "10.0.0.0/24"
 $ minikube addons enable registry
-$ podman push marcellos/simpleapi localhost:42195/marcellos/simpleapi --tls-verify=false
+(Registry addon with podman driver uses port 34483 please use that instead of default port 5000)
+(Using image docker.io/registry:3.0.0)
+(Using image registry.k8s.io/minikube/kube-registry-proxy:v0.0.11)
+$ kubectl get service --namespace kube-system
+
+(
+port forwarding in background 
+$ kubectl port-forward --namespace kube-system service/registry 34483:80 &
+$ podman push marcellos/simpleapi localhost:34483/marcellos/simpleapi --tls-verify=false
+*oudtdated*
+
+$ kubectl port-forward --namespace kube-system service/registry 5000:80 
+    keep running
+> http://localhost:5000/v2/_catalog
+$ podman run --rm -it --network=host alpine ash -c "apk add socat && socat TCP-LISTEN:5000,reuseaddr,fork TCP:host.docker.internal:5000"
+    keep running
+$ podman tag localhost/marcellos/simpleapi localhost:5000/marcellos/simpleapi
+$ podman push localhost:5000/marcellos/simpleapi
+)
+
+$ minikube image load localhost:34483/marcellos/simpleapi
+$ minikube image list
+(localhost:41555/marcellos/simpleapi:latest)
+
 (in UI> Images> push to minikube cluster)
 
-apiVersion: v1
-kind: Pod
-metadata:
-  creationTimestamp: "2026-02-16T16:03:36Z"
-  labels:
-    app: simpleapi-pod
-  name: simpleapi-pod
-spec:
-  containers:
-  - image: localhost/marcellos/simpleapi:latest
-    name: simpleapi
-    ports:
-    - containerPort: 5102
-      hostPort: 5102
-
-
 $ cp .\deploy\*.yaml .
-$ kubectl apply -f deployment.yaml
+$ kubectl apply -f .\deployment.yaml
     (deployment.apps/simpleapi-deployment created)
-$ kubectl apply -f service.yaml
+    >> verify pod status, image pulling
+$ kubectl apply -f .\service.yaml
     (service/simpleapi-service created)
-$ kubectl apply -f ingress.yaml
+$ kubectl apply -f .\ingress.yaml
     (ingress.networking.k8s.io/simpleapi-ingress created)
 $ rm *.yaml

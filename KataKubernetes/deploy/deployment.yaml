@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: simpleapi
-        image: localhost/marcellos/simpleapi:latest # Your container image, myregistry.azurecr.io/myapp:v1
+        image: localhost:5000/marcellos/simpleapi # Your container image, myregistry.azurecr.io/myapp:v1
         ports:
         - containerPort: 5102 # The port your app listens on
