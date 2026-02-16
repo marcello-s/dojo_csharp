@@ -38,7 +38,7 @@ $ podman build . -t marcellos/simpleapi
 $ rm .\Dockerfile
 
 push image (need to connect to a container registry)
-$ podman push localhost/marcellos/simpleapi
+$ podman push marcellos/simpleapi
 
 run locally
 $ podman run -d -p 5102:5102 --name simpleapi marcellos/simpleapi
@@ -51,4 +51,34 @@ $ podman image rm hash
 https://stackoverflow.com/questions/65803681/how-to-setup-a-k8s-dotnet-core-api-with-replicas-and-ingress-as-load-balancer-on
 https://kubernetes.anjikeesari.com/kubernetes/2-deploy-api/#implementation-details
 
+enable local registry for minikube
+podman > Settings > Resources > Minikube create new
+$ minikube start
+$ minikube addons enable registry
+$ podman push marcellos/simpleapi localhost:42195/marcellos/simpleapi --tls-verify=false
+(in UI> Images> push to minikube cluster)
 
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-02-16T16:03:36Z"
+  labels:
+    app: simpleapi-pod
+  name: simpleapi-pod
+spec:
+  containers:
+  - image: localhost/marcellos/simpleapi:latest
+    name: simpleapi
+    ports:
+    - containerPort: 5102
+      hostPort: 5102
+
+
+$ cp .\deploy\*.yaml .
+$ kubectl apply -f deployment.yaml
+    (deployment.apps/simpleapi-deployment created)
+$ kubectl apply -f service.yaml
+    (service/simpleapi-service created)
+$ kubectl apply -f ingress.yaml
+    (ingress.networking.k8s.io/simpleapi-ingress created)
+$ rm *.yaml
