@@ -33,7 +33,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipelin
+// Configure the HTTP request pipeline
 app.UseAuthorization();
 app.MapControllers();
 if (app.Environment.IsDevelopment())
@@ -41,6 +41,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.Run();

@@ -22,9 +22,33 @@ $dotnet run
 >> http://localhost:5102/api/v1/hello?name=Marcus
 
 2) Docker container and Registry
+https://bterkaly.medium.com/running-asp-net-applications-in-kubernetes-a-detailed-step-by-step-approach-96c98f273d1a
 
+tools:
+Azure CLI
+Podman/Docker for local builds
+    Podman is a local docker container. It has the same command line syntax but uses 'podman' instead of 'docker'.
+
+[optional] pull base image (https://hub.docker.com/r/microsoft/dotnet-sdk)
+$ podman pull mcr.microsoft.com/dotnet/sdk:10.0
+
+build & tag image
+$ cp .\deploy\Dockerfile .
+$ podman build . -t marcellos/simpleapi
+$ rm .\Dockerfile
+
+push image (need to connect to a container registry)
+$ podman push localhost/marcellos/simpleapi
+
+run locally
+$ podman run -d -p 5102:5102 --name simpleapi marcellos/simpleapi
+..
+$ podman container stop hash
+$ podman container rm hash
+$ podman image rm hash
 
 3) Kubernetes Manifests
 https://stackoverflow.com/questions/65803681/how-to-setup-a-k8s-dotnet-core-api-with-replicas-and-ingress-as-load-balancer-on
+https://kubernetes.anjikeesari.com/kubernetes/2-deploy-api/#implementation-details
 
 
