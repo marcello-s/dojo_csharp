@@ -1,0 +1,6 @@
+@KataKubernetes_HostAddress = http://localhost:5102
+
+GET {{KataKubernetes_HostAddress}}/hello/
+Accept: application/json
+
+###

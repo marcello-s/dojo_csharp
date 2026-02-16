@@ -1,0 +1,30 @@
+/*
+ * The MIT License, Copyright (c) 2011-2026 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataKubernetes
+==============
+
+I have a REST API written in C#/NET that I want to deploy to Azure Kubernetes. 
+The deployment should contain two pods with ingress on a load balancer. 
+What is needed to support the load balancer? And how is the app deployed to Azure Kubernetes?
+
+1) The API is very simple and delivers a "hello world" response.
+
+$ dotnet new webapi --output KataKubernetes
+cd KataKubernetes
+$ dotnet add package Microsoft.AspNetCore.OpenApi
+$ dotnet sln migrate
+remove .sln file
+
+$dotnet run
+>> http://localhost:5102/api/v1/hello?name=Marcus
+
+2) Docker container and Registry
+
+
+3) Kubernetes Manifests
+https://stackoverflow.com/questions/65803681/how-to-setup-a-k8s-dotnet-core-api-with-replicas-and-ingress-as-load-balancer-on
+
+
