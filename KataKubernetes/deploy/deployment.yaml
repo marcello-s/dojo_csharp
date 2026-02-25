@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simpleapi-deployment
+spec:
+  selector:
+    matchLabels:
+      app: simpleapi
+  replicas: 2 # Specifies two pods
+  template:
+    metadata:
+      labels:
+        app: simpleapi
+    spec:
+      containers:
+      - name: simpleapi
+        image: marcelschn/myapp:v1.0 # Your container image, myregistry.azurecr.io/myapp:v1
+        ports:
+        - containerPort: 5102 # The port your app listens on

@@ -1,0 +1,153 @@
+/*
+ * The MIT License, Copyright (c) 2011-2026 Marcel Schneider
+ * for details see License.txt
+ */
+
+KataKubernetes
+==============
+
+I have a REST API written in C#/NET that I want to deploy to Azure Kubernetes. 
+The deployment should contain two pods with ingress on a load balancer. 
+What is needed to support the load balancer? And how is the app deployed to Azure Kubernetes?
+
+1) The API is very simple and delivers a "hello world" response.
+
+$ dotnet new webapi --output KataKubernetes
+cd KataKubernetes
+$ dotnet add package Microsoft.AspNetCore.OpenApi
+$ dotnet sln migrate
+remove .sln file
+
+$dotnet run
+>> http://localhost:5102/api/v1/hello?name=Marcus
+
+2) Docker container and Registry
+https://bterkaly.medium.com/running-asp-net-applications-in-kubernetes-a-detailed-step-by-step-approach-96c98f273d1a
+
+tools:
+Rancher-Desktop
+k3d
+
+[optional] pull base image (https://hub.docker.com/r/microsoft/dotnet-sdk)
+$ docker pull mcr.microsoft.com/dotnet/sdk:10.0
+
+build & tag image
+$ cp .\deploy\Dockerfile .
+$ docker build . -t marcellos/simpleapi
+$ rm .\Dockerfile
+
+push image (tag image accoring to repository, need to connect to a container registry)
+see further down below
+$ docker push marcellos/simpleapi
+
+run locally
+$ docker run -d -p 5102:5102 --name simpleapi marcellos/simpleapi
+..
+$ docker container stop hash
+$ docker container rm hash
+$ docker image rm hash
+
+3) Kubernetes Manifests
+https://stackoverflow.com/questions/65803681/how-to-setup-a-k8s-dotnet-core-api-with-replicas-and-ingress-as-load-balancer-on
+https://kubernetes.anjikeesari.com/kubernetes/2-deploy-api/#implementation-details
+
+==== ==== ====
+
+Rancher Desktop and k3d
+> rancher dektop default installation
+
+build image & run
+$ cp .\deploy\Dockerfile .
+$ docker build . -t marcellos/simpleapi
+$ docker image ls
+> marcellos/simpleapi:latest
+
+$ docker run -d -p 5102:5102 --name simpleapi marcellos/simpleapi
+>> container is running, http://localhost:5102/api/v1/hello?name=Marcus
+
+stop & remove
+$ docker container ls
+> hash for marcellos/simpleapi
+$ docker container stop hash
+$ docker container rm hash
+rm .\Dockerfile
+
+Kubernetes cluster (k3d-windows.am63.exe), copy to k3d.exe
+try deployment
+$ kubectl config current-context
+> rancher-desktop
+
+create a new cluster with k3d
+$ k3d cluster create mycluster
+> kubectl config use-context kd3-mycluster
+$ kubectl config current-context
+> k3d-mycluster
+> kubectl cluster-info
+
+verify
+$ docker container ls
+> 'mycluster' containers
+
+list pods
+$ kubectl get pods -A
+list nodes 
+$ kubectl get nodes 
+> k3d-mycluseter-server-0
+
+delete the cluster 
+$ k3d cluster delete mycluster 
+
+create using config file
+$ k3d cluster create --config k3d.yaml
+
+creating the config file 
+$ k3d kubeconfig write mycluster 
+> home .config/k3d/kubeconfig-mycluster.yaml
+
+image push 
+$ docker push marcellos/simpleapi
+fails [docker.io/marcellos/simpleapi]
+
+create registry
+$ k3d registry create myregistry
+>> k3d cluster create --registry-use k3d-myregistry:55567
+tag an image and push
+>> docker tag marcellos/simpleapi:latest k3-myregistry:55567/marcellos/simpleapi:v0.1
+>> docker push k3d-myregistry:55567/marcellos/simpleapi:v.01
+>> kubectl run marcellos/simpleapi --image k3-myregistry:5567/marcellos/simpleapi:v0.1
+
+$ k3d registry list
+> k3d-myregistry
+
+create a cluster using the registry
+$ k3d cluster create --registry-use k3d-myregistry:55567 mycluster
+set tag on image
+$ docker tag marcellos/simpleapi:latest k3-myregistry:55567/marcellos/simpleapi
+push image
+$ docker push k3-myregistry:55567/marcellos/simpleapi
+failed to do request: Head "https://k3-myregistry:55567/v2/marcellos/simpleapi/blobs/sha256:494b8981775c65d42977b25343c9b7aa68db789373703950941bac9c66da2276": dial tcp: lookup k3-myregistry on 192.168.127.1:53: no such host
+
+something running here: http://localhost:55567/v2/
+$ docker tag marcellos/simpleapi:latest localhost:55567/marcellos/simpleapi
+$ docker push localhost:55567/marcellos/simpleapi 
+>> OK
+
+
+=== what actually worked to deploy in the default Kubernetes cluster ===
+
+docker.io > create a repository online with docker.io
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+> repo > myapp
+docker push marcelschn/myapp:tagname
+
+> the tag name could be 'v1.0' or 'latest'
+$ docker tag marcellos/simpleapi marcelschn/myapp:v1.0
+$ docker push marcelschn/myapp:v1.0
+> OK
+
+$ cd .\deploy
+$ kubectl apply -f .\deployment.yaml
+$ kubectl apply -f .\service.yaml
+$ kubectl apply -f .\ingress.yaml
+> OK
